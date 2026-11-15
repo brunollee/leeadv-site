@@ -1,10 +1,12 @@
-/* A identidade do sistema, levada para o site público.
+/* A identidade do escritório, levada para o site público.
  *
- * As cores e as duas fontes são as do estilo.css do Sistema Lee Advogado,
- * sem retoque e com os mesmos nomes curtos (--tx, --bd, --ink). Os nomes são
- * os de lá de propósito: assim um pedaço de estilo pode ir de um lado para o
- * outro sem tradução no meio, e tradução no meio é onde a cor erra. Duas
- * telas da mesma banca com tipografia diferente parecem duas bancas.
+ * As cores são as do estilo.css do Sistema Lee Advogado, sem retoque e com os
+ * mesmos nomes curtos (--tx, --bd, --ink). Os nomes são os de lá de
+ * propósito: assim um pedaço de estilo pode ir de um lado para o outro sem
+ * tradução no meio, e tradução no meio é onde a cor erra.
+ *
+ * A tipografia, desde 15/11/2026, não é mais a do sistema: é a dos documentos
+ * do escritório. A razão está logo abaixo.
  *
  * Nada aqui vem de endereço de terceiro. Nem fonte, nem estilo, nem script.
  * A Content-Security-Policy declarada em cada página (default-src 'self',
@@ -18,28 +20,51 @@
 
 /* -- as duas fontes, guardadas em casa ------------------------------------ */
 /*
- * Arquivos VARIÁVEIS, e não estáticos: a Archivo dos títulos é esticada
- * (font-stretch: 125%) e o eixo de largura mora dentro do arquivo variável.
- * Com estática, font-stretch não tem onde agir e os títulos sairiam em
- * largura normal.
+ * Caladea nos títulos, Carlito no corpo.
  *
- * As faixas abaixo (font-weight: 100 900, font-stretch: 62% 125%) não são
- * enfeite: sem elas o navegador assume que o arquivo só tem o peso e a
- * largura padrão, e ignora os pedidos fora disso.
+ * A escolha não é estética, é de continuidade: a Caladea é metricamente
+ * compatível com a Cambria e a Carlito com a Calibri, que são as fontes das
+ * peças do escritório. Cambria e Calibri são proprietárias da Microsoft e não
+ * podem ser hospedadas num site público; estas duas ocupam as mesmas medidas
+ * sem esse impedimento. O desenho não é idêntico; as métricas são.
+ *
+ * São arquivos ESTÁTICOS, um por peso, e não variáveis como os de antes. Por
+ * isso são quatro declarações e não duas, e por isso nenhuma regra desta
+ * folha pede font-stretch: não há eixo de largura dentro destes arquivos, e
+ * pedir largura a uma fonte que não a tem faz o navegador desenhar a letra
+ * esticada por conta própria, que é como se estraga uma serifada.
+ *
+ * Licença das duas: SIL Open Font License 1.1, ao lado dos arquivos. A
+ * procedência, com os resumos SHA-256, está no PROCEDENCIA.md.
  */
 @font-face {
-    font-family: "Archivo";
-    src: url("/estatico/fontes/archivo-variavel.woff2") format("woff2");
-    font-weight: 100 900;
-    font-stretch: 62% 125%;
+    font-family: "Caladea";
+    src: url("/estatico/fontes/caladea-regular.woff2") format("woff2");
+    font-weight: 400;
     font-style: normal;
     font-display: swap;
 }
 
 @font-face {
-    font-family: "Montserrat";
-    src: url("/estatico/fontes/montserrat-variavel.woff2") format("woff2");
-    font-weight: 100 900;
+    font-family: "Caladea";
+    src: url("/estatico/fontes/caladea-bold.woff2") format("woff2");
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Carlito";
+    src: url("/estatico/fontes/carlito-regular.woff2") format("woff2");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Carlito";
+    src: url("/estatico/fontes/carlito-bold.woff2") format("woff2");
+    font-weight: 700;
     font-style: normal;
     font-display: swap;
 }
@@ -58,8 +83,11 @@
     --on-ink: #fff;
     --soft: #ececea;
 
-    --titulo: "Archivo", "Arial Black", Arial, sans-serif;
-    --texto: "Montserrat", "Segoe UI", Arial, sans-serif;
+    /* As alternativas não são enfeite: quem já tem Cambria e Calibri
+     * instaladas (praticamente todo Windows) vê a página nas métricas certas
+     * mesmo antes de a fonte baixar, e sem salto quando ela chega. */
+    --titulo: "Caladea", Cambria, Georgia, serif;
+    --texto: "Carlito", Calibri, "Segoe UI", sans-serif;
 
     --larg: 1080px;
     --gutter: 32px;
@@ -122,16 +150,21 @@ body {
     -webkit-font-smoothing: antialiased;
 }
 
-/* Archivo esticada: é o que faz um título ser desta banca e não de um
- * formulário qualquer. */
+/* Todo título e todo subtítulo em CAIXA ALTA, por decisão 7 do PRD.
+ *
+ * O letter-spacing positivo não é estilo, é legibilidade: letra maiúscula foi
+ * desenhada para aparecer entre minúsculas, e uma palavra inteira em caixa
+ * alta no espaçamento normal fica com as hastes grudadas. A folga é maior nos
+ * rótulos pequenos, onde o problema é pior, e menor nos títulos grandes, onde
+ * o olho já separa as letras sozinho. */
 h1, h2, h3, h4 {
     font-family: var(--titulo);
-    font-stretch: 125%;
     font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.045em;
     color: var(--tx);
     margin: 0 0 14px;
-    line-height: 1.18;
-    letter-spacing: -0.01em;
+    line-height: 1.22;
 }
 
 p { margin: 0 0 16px; }
@@ -156,12 +189,17 @@ img { display: block; max-width: 100%; }
     padding: 0 var(--gutter);
 }
 
-/* A sobrelinha de cada seção: caixa alta espaçada, em Archivo. O
- * margin-right negativo desconta o espaço que o letter-spacing acrescenta
+/* A sobrelinha de cada seção.
+ *
+ * Em Carlito, e não em Caladea: o PRD põe títulos e subtítulos na serifada e
+ * corpo e rótulos na sem serifa, e isto é rótulo. Também é o que funciona na
+ * tela — uma serifada a 11,5px em caixa alta com folga grande perde as
+ * serifas na renderização e fica suja.
+ *
+ * O margin-right negativo desconta o espaço que o letter-spacing acrescenta
  * depois da última letra. Sem ele, o bloco fica fora do prumo à direita. */
 .sobrelinha {
-    font-family: var(--titulo);
-    font-stretch: 125%;
+    font-family: var(--texto);
     font-size: 11.5px;
     font-weight: 700;
     text-transform: uppercase;
@@ -257,7 +295,6 @@ img { display: block; max-width: 100%; }
     right: 4rem;
     top: 1.5rem;
     font-family: var(--titulo);
-    font-stretch: 125%;
     font-weight: 700;
     font-size: 22rem;
     line-height: 0.78;
@@ -326,7 +363,6 @@ img { display: block; max-width: 100%; }
 
 .grupo-areas {
     font-family: var(--titulo);
-    font-stretch: 125%;
     font-size: 13px;
     font-weight: 700;
     text-transform: uppercase;
@@ -357,8 +393,7 @@ img { display: block; max-width: 100%; }
 
 .area-num {
     display: block;
-    font-family: var(--titulo);
-    font-stretch: 125%;
+    font-family: var(--texto);
     font-size: 13px;
     font-weight: 700;
     letter-spacing: 0.14em;
@@ -404,8 +439,7 @@ img { display: block; max-width: 100%; }
 .quadro > div:last-child { border-bottom: none; }
 
 .quadro dt {
-    font-family: var(--titulo);
-    font-stretch: 125%;
+    font-family: var(--texto);
     font-size: 11.5px;
     font-weight: 700;
     text-transform: uppercase;
@@ -436,8 +470,7 @@ img { display: block; max-width: 100%; }
 .etapa:last-child { border-bottom: 1px solid var(--bd); }
 
 .etapa-num {
-    font-family: var(--titulo);
-    font-stretch: 125%;
+    font-family: var(--texto);
     font-size: 13px;
     font-weight: 700;
     text-transform: uppercase;
@@ -538,6 +571,7 @@ img { display: block; max-width: 100%; }
 .rodape-logo { height: 26px; width: auto; margin-bottom: 14px; }
 
 .rodape-col h2 {
+    font-family: var(--texto);
     font-size: 11.5px;
     text-transform: uppercase;
     letter-spacing: 0.18em;
@@ -599,8 +633,7 @@ img { display: block; max-width: 100%; }
     /* O botão aparece e o menu passa a depender da caixa de marcar. */
     .menu-botao {
         display: inline-block;
-        font-family: var(--titulo);
-        font-stretch: 125%;
+        font-family: var(--texto);
         font-size: 12px;
         font-weight: 700;
         text-transform: uppercase;
