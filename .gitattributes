@@ -1,0 +1,7 @@
+# Sem conversão de fim de linha, em arquivo nenhum.
+#
+# O PROCEDENCIA.md registra o SHA-256 de cada arquivo que veio de fora, e a
+# conferência só fecha se o arquivo no disco for byte a byte igual ao que foi
+# copiado. Deixar o Git trocar LF por CRLF num clone do Windows mudaria o
+# resumo dos SVGs e dos arquivos de licença, e a procedência pararia de bater.
+* -text

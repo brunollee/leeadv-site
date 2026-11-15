@@ -1,0 +1,41 @@
+# Publica o site no GitHub Pages a cada envio para main.
+# Sem etapa de construção: o que está no repositório é o que é servido.
+name: Publicar
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Uma publicação por vez. Envios em sequência esperam, em vez de
+# cancelar a publicação que já começou.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  publicar:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.publicacao.outputs.page_url }}
+    steps:
+      - name: Obter o repositório
+        uses: actions/checkout@v4
+
+      - name: Configurar o Pages
+        uses: actions/configure-pages@v5
+
+      - name: Empacotar a raiz do repositório
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: .
+
+      - name: Publicar
+        id: publicacao
+        uses: actions/deploy-pages@v4
