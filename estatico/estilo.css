@@ -1,0 +1,673 @@
+/* A identidade do sistema, levada para o site público.
+ *
+ * As cores e as duas fontes são as do estilo.css do Sistema Lee Advogado,
+ * sem retoque e com os mesmos nomes curtos (--tx, --bd, --ink). Os nomes são
+ * os de lá de propósito: assim um pedaço de estilo pode ir de um lado para o
+ * outro sem tradução no meio, e tradução no meio é onde a cor erra. Duas
+ * telas da mesma banca com tipografia diferente parecem duas bancas.
+ *
+ * Nada aqui vem de endereço de terceiro. Nem fonte, nem estilo, nem script.
+ * A Content-Security-Policy declarada em cada página (default-src 'self',
+ * sem unsafe-inline) recusaria de qualquer jeito, e a razão é a mesma do
+ * sistema: uma página que busca fonte fora conta a esse terceiro cada vez que
+ * alguém a abre, e deixa de desenhar no dia em que o terceiro é o problema.
+ *
+ * Essa mesma política é o motivo de esta folha existir como arquivo: sem
+ * unsafe-inline, estilo embutido na página não pinta nada.
+ */
+
+/* -- as duas fontes, guardadas em casa ------------------------------------ */
+/*
+ * Arquivos VARIÁVEIS, e não estáticos: a Archivo dos títulos é esticada
+ * (font-stretch: 125%) e o eixo de largura mora dentro do arquivo variável.
+ * Com estática, font-stretch não tem onde agir e os títulos sairiam em
+ * largura normal.
+ *
+ * As faixas abaixo (font-weight: 100 900, font-stretch: 62% 125%) não são
+ * enfeite: sem elas o navegador assume que o arquivo só tem o peso e a
+ * largura padrão, e ignora os pedidos fora disso.
+ */
+@font-face {
+    font-family: "Archivo";
+    src: url("/estatico/fontes/archivo-variavel.woff2") format("woff2");
+    font-weight: 100 900;
+    font-stretch: 62% 125%;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Montserrat";
+    src: url("/estatico/fontes/montserrat-variavel.woff2") format("woff2");
+    font-weight: 100 900;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* -- as cores -------------------------------------------------------------- */
+
+:root {
+    --bg: #f1f1f0;
+    --card: #fff;
+    --tx: #141414;
+    --tx2: #585858;
+    --mut: #8c8c8c;
+    --bd: #dcdcdc;
+    --bd2: #ececea;
+    --ink: #141414;
+    --on-ink: #fff;
+    --soft: #ececea;
+
+    --titulo: "Archivo", "Arial Black", Arial, sans-serif;
+    --texto: "Montserrat", "Segoe UI", Arial, sans-serif;
+
+    --larg: 1080px;
+    --gutter: 32px;
+}
+
+/* O :root:not([data-theme=light]) deixa a preferência do sistema operacional
+ * valer sozinha hoje e já abre a porta para um botão de claro/escuro amanhã,
+ * sem mexer nesta folha. Mesma construção do sistema. */
+@media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+        --bg: #121212;
+        --card: #1c1c1c;
+        --tx: #ededed;
+        --tx2: #b4b4b4;
+        --mut: #7d7d7d;
+        --bd: #2f2f2f;
+        --bd2: #262626;
+        --ink: #ededed;
+        --on-ink: #121212;
+        --soft: #262626;
+    }
+}
+
+:root[data-theme="dark"] {
+    --bg: #121212;
+    --card: #1c1c1c;
+    --tx: #ededed;
+    --tx2: #b4b4b4;
+    --mut: #7d7d7d;
+    --bd: #2f2f2f;
+    --bd2: #262626;
+    --ink: #ededed;
+    --on-ink: #121212;
+    --soft: #262626;
+}
+
+/* -- o corpo --------------------------------------------------------------- */
+
+* { box-sizing: border-box; }
+
+html {
+    scroll-behavior: smooth;
+    /* O cabeçalho é fixo: sem esta folga, a âncora para no meio do título. */
+    scroll-padding-top: 88px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    * { transition: none !important; }
+}
+
+body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--tx);
+    font-family: var(--texto);
+    font-size: 16.5px;
+    font-weight: 400;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* Archivo esticada: é o que faz um título ser desta banca e não de um
+ * formulário qualquer. */
+h1, h2, h3, h4 {
+    font-family: var(--titulo);
+    font-stretch: 125%;
+    font-weight: 700;
+    color: var(--tx);
+    margin: 0 0 14px;
+    line-height: 1.18;
+    letter-spacing: -0.01em;
+}
+
+p { margin: 0 0 16px; }
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+a:focus-visible,
+.menu-estado:focus-visible + .menu-botao {
+    outline: 2px solid var(--tx);
+    outline-offset: 3px;
+    border-radius: 2px;
+}
+
+img { display: block; max-width: 100%; }
+
+.dentro {
+    max-width: var(--larg);
+    margin: 0 auto;
+    padding: 0 var(--gutter);
+}
+
+/* A sobrelinha de cada seção: caixa alta espaçada, em Archivo. O
+ * margin-right negativo desconta o espaço que o letter-spacing acrescenta
+ * depois da última letra. Sem ele, o bloco fica fora do prumo à direita. */
+.sobrelinha {
+    font-family: var(--titulo);
+    font-stretch: 125%;
+    font-size: 11.5px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    margin-right: -0.2em;
+    color: var(--tx2);
+    margin-bottom: 14px;
+}
+
+/* -- o cabeçalho ----------------------------------------------------------- */
+
+.topo {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: var(--card);
+    border-bottom: 1px solid var(--bd);
+}
+
+.topo .dentro {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    padding-top: 18px;
+    padding-bottom: 18px;
+}
+
+.topo-logo { height: 30px; width: auto; }
+
+/* O logotipo preto é um traço só, preto puro, e sumiria no fundo escuro.
+ * Invertê-lo devolve branco puro: mesmo desenho, mesma proporção, mesmo
+ * arquivo. Trocar pelo `logo-lee-advogado-branco.svg` não serve aqui — aquele
+ * é o conjunto completo, com outra proporção, e a marca mudaria de forma
+ * conforme o modo do sistema operacional de quem abre a página. */
+@media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) .topo-logo,
+    :root:not([data-theme="light"]) .rodape-logo { filter: invert(1); }
+}
+
+:root[data-theme="dark"] .topo-logo,
+:root[data-theme="dark"] .rodape-logo { filter: invert(1); }
+
+.menu {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    font-size: 14.5px;
+}
+
+.menu a { color: var(--tx2); transition: color .2s; }
+.menu a:hover { color: var(--tx); }
+
+.restrita {
+    font-size: 13.5px;
+    color: var(--tx2);
+    border: 1px solid var(--bd);
+    border-radius: 2px;
+    padding: 8px 14px;
+    white-space: nowrap;
+    transition: border-color .2s, color .2s;
+}
+
+.restrita:hover { color: var(--tx); border-color: var(--tx2); }
+
+/* O menu de tela pequena, só em CSS: uma caixa de marcar escondida comanda a
+ * abertura. Sem script porque não há script nenhum nesta página, e porque um
+ * menu que depende de JavaScript é um menu que não abre quando o JavaScript
+ * falha. A caixa continua alcançável e operável pelo teclado. */
+.menu-estado {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+    margin: 0;
+}
+
+.menu-botao { display: none; }
+
+/* -- a abertura ------------------------------------------------------------ */
+
+.abertura {
+    position: relative;
+    overflow: hidden;
+    border-bottom: 1px solid var(--bd);
+    padding: 104px 0 92px;
+}
+
+/* A letra de fundo. Marcada com aria-hidden no HTML: é desenho, não
+ * conteúdo, e um leitor de tela não tem o que fazer com um "L" solto. */
+.marca-fundo {
+    position: absolute;
+    right: 4rem;
+    top: 1.5rem;
+    font-family: var(--titulo);
+    font-stretch: 125%;
+    font-weight: 700;
+    font-size: 22rem;
+    line-height: 0.78;
+    color: var(--bd2);
+    user-select: none;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.abertura .dentro { position: relative; z-index: 1; }
+
+.abertura h1 {
+    font-size: 3.1rem;
+    max-width: 19ch;
+    margin-bottom: 24px;
+}
+
+.abertura .apoio {
+    font-size: 1.12rem;
+    color: var(--tx2);
+    max-width: 58ch;
+    margin-bottom: 34px;
+}
+
+.botoes { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; }
+
+.botao {
+    display: inline-block;
+    background: var(--ink);
+    color: var(--on-ink);
+    font-size: 14.5px;
+    font-weight: 600;
+    padding: 14px 26px;
+    border: 1px solid var(--ink);
+    border-radius: 2px;
+    transition: opacity .2s;
+}
+
+.botao:hover { opacity: .85; }
+
+.botao-vazado {
+    display: inline-block;
+    background: transparent;
+    color: var(--tx);
+    font-size: 14.5px;
+    font-weight: 600;
+    padding: 14px 26px;
+    border: 1px solid var(--bd);
+    border-radius: 2px;
+    transition: border-color .2s;
+}
+
+.botao-vazado:hover { border-color: var(--tx2); }
+
+/* -- seções em geral ------------------------------------------------------- */
+
+.secao { padding: 84px 0; }
+
+.secao-cabeca { max-width: 62ch; margin-bottom: 48px; }
+.secao-cabeca h2 { font-size: 2rem; }
+.secao-cabeca .apoio { color: var(--tx2); margin: 0; }
+
+/* -- áreas de atuação ------------------------------------------------------ */
+
+.areas { border-bottom: 1px solid var(--bd); }
+
+.grupo-areas {
+    font-family: var(--titulo);
+    font-stretch: 125%;
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: var(--tx);
+    margin: 0 0 20px;
+}
+
+.grade { margin-bottom: 52px; }
+.grade:last-child { margin-bottom: 0; }
+
+/* O fundo da grade aparece pelo vão de 1px entre as caixas: é isso que
+ * desenha as divisórias, sem borda dupla em lugar nenhum. */
+.grade {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--bd);
+    border: 1px solid var(--bd);
+}
+
+.area {
+    background: var(--card);
+    padding: 32px 28px;
+}
+
+.area-larga { grid-column: 1 / -1; }
+
+.area-num {
+    display: block;
+    font-family: var(--titulo);
+    font-stretch: 125%;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    color: var(--mut);
+    margin-bottom: 14px;
+}
+
+.area h4 { font-size: 1.18rem; margin-bottom: 10px; }
+.area p { font-size: .95rem; color: var(--tx2); margin: 0; }
+
+/* -- trajetória ------------------------------------------------------------ */
+
+.trajetoria {
+    background: var(--card);
+    border-bottom: 1px solid var(--bd);
+}
+
+.trajetoria .dentro {
+    display: grid;
+    grid-template-columns: 1.15fr 1fr;
+    gap: 64px;
+    align-items: start;
+}
+
+.trajetoria h2 { font-size: 2rem; }
+.trajetoria p { color: var(--tx2); }
+.trajetoria p:last-child { margin-bottom: 0; }
+
+/* O quadro de dados. Uma lista de definição porque é rótulo e conteúdo, e
+ * não uma lista de frases soltas. */
+.quadro { margin: 0; }
+
+.quadro > div {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 24px;
+    padding: 20px 0;
+    border-bottom: 1px solid var(--bd);
+}
+
+.quadro > div:first-child { padding-top: 0; }
+.quadro > div:last-child { border-bottom: none; }
+
+.quadro dt {
+    font-family: var(--titulo);
+    font-stretch: 125%;
+    font-size: 11.5px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: var(--tx2);
+    white-space: nowrap;
+}
+
+.quadro dd {
+    margin: 0;
+    font-size: .95rem;
+    text-align: right;
+    color: var(--tx);
+}
+
+/* -- como conduzo cada caso ------------------------------------------------ */
+
+.etapas { display: flex; flex-direction: column; }
+
+.etapa {
+    display: grid;
+    grid-template-columns: 110px 1fr;
+    gap: 28px;
+    padding: 26px 0;
+    border-top: 1px solid var(--bd);
+}
+
+.etapa:last-child { border-bottom: 1px solid var(--bd); }
+
+.etapa-num {
+    font-family: var(--titulo);
+    font-stretch: 125%;
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--mut);
+    padding-top: 4px;
+}
+
+.etapa h3 { font-size: 1.15rem; margin-bottom: 8px; }
+.etapa p { font-size: .95rem; color: var(--tx2); max-width: 62ch; margin: 0; }
+
+/* -- publicações ----------------------------------------------------------- */
+
+.publicacoes { border-top: 1px solid var(--bd); }
+
+.vazio {
+    border: 1px dashed var(--bd);
+    border-radius: 2px;
+    padding: 36px 28px;
+    color: var(--mut);
+    font-size: .95rem;
+    margin: 0;
+}
+
+/* -- a faixa de contato ---------------------------------------------------- */
+
+/* --ink e --on-ink valem #141414 e branco no modo claro, que é o que a seção
+ * 6 do PRD pede, e acompanham o modo escuro do sistema quando ele está
+ * ligado. A borda existe para a faixa não sumir no fundo escuro. */
+.contato {
+    background: var(--ink);
+    color: var(--on-ink);
+    border-top: 1px solid var(--bd);
+    border-bottom: 1px solid var(--bd);
+    padding: 72px 0;
+}
+
+.contato .dentro {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 36px;
+}
+
+.contato h2 {
+    color: var(--on-ink);
+    font-size: 1.75rem;
+    max-width: 30ch;
+    margin: 0;
+}
+
+.contato-acoes { display: flex; flex-wrap: wrap; gap: 12px; }
+
+.botao-claro {
+    display: inline-block;
+    background: var(--on-ink);
+    color: var(--ink);
+    font-size: 14.5px;
+    font-weight: 600;
+    padding: 14px 24px;
+    border: 1px solid var(--on-ink);
+    border-radius: 2px;
+    transition: opacity .2s;
+}
+
+.botao-claro:hover { opacity: .85; }
+
+.botao-borda {
+    display: inline-block;
+    color: var(--on-ink);
+    font-size: 14.5px;
+    font-weight: 600;
+    padding: 14px 24px;
+    border: 1px solid var(--mut);
+    border-radius: 2px;
+    transition: border-color .2s;
+}
+
+.botao-borda:hover { border-color: var(--on-ink); }
+
+.contato a:focus-visible { outline-color: var(--on-ink); }
+
+/* -- o rodapé -------------------------------------------------------------- */
+
+.rodape { padding: 56px 0 36px; }
+
+/* Grade, e não flex com quebra: com quatro colunas de larguras diferentes, a
+ * quebra do flex deixava a última sozinha numa segunda linha e abria um vão
+ * no meio do rodapé em qualquer tela entre 900 e 1080px. */
+.rodape-colunas {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr 1fr;
+    gap: 40px;
+    margin-bottom: 40px;
+}
+
+.rodape-logo { height: 26px; width: auto; margin-bottom: 14px; }
+
+.rodape-col h2 {
+    font-size: 11.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: var(--tx2);
+    margin-bottom: 14px;
+}
+
+.rodape-col p,
+.rodape-col a {
+    display: block;
+    font-size: .93rem;
+    margin: 0 0 8px;
+    color: var(--tx);
+}
+
+.rodape-col a:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+.rodape-marca p { color: var(--tx2); max-width: 28ch; font-size: .93rem; }
+
+.rodape-fim {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+    border-top: 1px solid var(--bd);
+    padding-top: 24px;
+    font-size: .85rem;
+    color: var(--tx2);
+}
+
+/* -- as páginas de texto corrido (aviso e privacidade) --------------------- */
+
+.texto { padding: 72px 0 84px; }
+.texto .dentro { max-width: 68ch; }
+.texto h1 { font-size: 2.3rem; margin-bottom: 28px; }
+.texto p { color: var(--tx2); font-size: 1.05rem; }
+.texto p:last-child { margin-bottom: 0; }
+
+.voltar {
+    display: inline-block;
+    margin-top: 36px;
+    font-size: .93rem;
+    color: var(--tx2);
+    border-bottom: 1px solid var(--bd);
+    padding-bottom: 2px;
+}
+
+.voltar:hover { color: var(--tx); border-color: var(--tx2); }
+
+/* -- tela pequena ---------------------------------------------------------- */
+
+@media (max-width: 860px) {
+    :root { --gutter: 20px; }
+
+    html { scroll-padding-top: 76px; }
+
+    .topo .dentro { flex-wrap: wrap; padding-top: 14px; padding-bottom: 14px; }
+
+    /* O botão aparece e o menu passa a depender da caixa de marcar. */
+    .menu-botao {
+        display: inline-block;
+        font-family: var(--titulo);
+        font-stretch: 125%;
+        font-size: 12px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.16em;
+        color: var(--tx);
+        border: 1px solid var(--bd);
+        border-radius: 2px;
+        padding: 9px 14px;
+        cursor: pointer;
+    }
+
+    .menu {
+        display: none;
+        flex-basis: 100%;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0;
+        order: 4;
+    }
+
+    .menu a {
+        display: block;
+        width: 100%;
+        padding: 13px 0;
+        border-top: 1px solid var(--bd);
+        color: var(--tx);
+    }
+
+    .menu-estado:checked ~ .menu { display: flex; }
+
+    .menu-botao { order: 2; }
+    .restrita { order: 3; }
+
+    .abertura { padding: 72px 0 64px; }
+    .abertura h1 { font-size: 2.1rem; }
+    .abertura .apoio { font-size: 1.02rem; }
+    .marca-fundo { font-size: 18rem; top: -0.18em; right: -0.08em; }
+
+    .secao { padding: 60px 0; }
+    .secao-cabeca { margin-bottom: 34px; }
+    .secao-cabeca h2 { font-size: 1.6rem; }
+
+    .grade { grid-template-columns: 1fr; }
+
+    .trajetoria .dentro { grid-template-columns: 1fr; gap: 40px; }
+    .trajetoria h2 { font-size: 1.6rem; }
+
+    .quadro > div { flex-direction: column; gap: 6px; }
+    .quadro dd { text-align: left; }
+
+    .etapa { grid-template-columns: 1fr; gap: 10px; }
+    .etapa-num { padding-top: 0; }
+
+    .contato { padding: 56px 0; }
+    .contato .dentro { flex-direction: column; align-items: flex-start; gap: 28px; }
+    .contato h2 { font-size: 1.45rem; }
+
+    .rodape-colunas { grid-template-columns: 1fr 1fr; gap: 32px; }
+
+    .texto { padding: 52px 0 64px; }
+    .texto h1 { font-size: 1.8rem; }
+}
+
+/* Abaixo de 400px a letra de fundo começa a disputar com o título, e o botão
+ * em linha fica estreito demais para o dedo. */
+@media (max-width: 400px) {
+    .marca-fundo { font-size: 13rem; }
+    .rodape-colunas { grid-template-columns: 1fr; }
+    .botao, .botao-vazado, .botao-claro, .botao-borda { width: 100%; text-align: center; }
+}
