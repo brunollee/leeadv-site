@@ -187,6 +187,50 @@ veda é o cenário: escritório, fachada, prateleira de livros ou qualquer
 elemento que sugira estrutura física. Por isso o fundo foi removido, e não
 apenas desfocado.
 
+## A imagem de compartilhamento
+
+Tratada **fora do repositório** e trazida pronta em 15/11/2026, como o
+retrato: nada aqui foi gerado, convertido ou alterado por quem escreveu estas
+linhas. Os dois arquivos foram conferidos, medidos e registrados como
+chegaram. É o retrato sobre o fundo da página, com o nome e a inscrição na
+OAB em Caladea, conforme a seção 6.4 do PRD.
+
+| Arquivo guardado | Formato | Dimensões | Tamanho | SHA-256 |
+|---|---|---|---|---|
+| `estatico/retrato/og-image.webp` | WebP | 1200x630 | 34.304 B | `73fb1d1075754d1053bbc1ab493a085e3f2de2a265ea9c01844251d91ce7a284` |
+| `estatico/retrato/og-image.avif` | AVIF | 1200x630 | 28.841 B | `806a0cfff852f618f905ac16a56e57c3d286273babeafac68941e44d979d12db` |
+
+Formato e dimensões lidos dos próprios bytes, e não do nome do arquivo: as
+caixas `ftypavif` e `ispe` no AVIF, o cabeçalho `RIFF`/`WEBP` com bloco
+`VP8 ` no WebP.
+
+### Qual está em uso, e por quê
+
+**Em uso: o WebP, candidato único.** O AVIF fica no repositório sem ser
+referenciado por marcação nenhuma.
+
+O Open Graph define `og:image` como lista, e seria possível declarar os dois
+candidatos, cada um com o seu `og:image:type`, deixando o leitor que não
+decodifica AVIF pular para o seguinte. A lista existe no protocolo; o que o
+protocolo **não** define é como cada leitor escolhe dentro dela.
+
+Daí a decisão, tomada pelo titular em 15/11/2026: dois candidatos trocariam
+um risco conhecido, o leitor que não lê AVIF, por um risco que ninguém
+consegue medir, o leitor que escolhe o candidato errado. Com um candidato só,
+em formato amplamente lido, não há escolha a adivinhar.
+
+O custo é de 5.463 B, a diferença entre os dois arquivos. Não é peso de
+página: a imagem de compartilhamento é buscada pelo robô de prévia, uma vez,
+e o visitante do site nunca a carrega.
+
+**Quando revisar:** no dia em que o AVIF for lido universalmente pelos
+leitores de prévia, o candidato passa a ser o AVIF e o WebP sai, ou entra
+como segundo da lista. Até lá, o arquivo AVIF fica guardado justamente para
+essa troca não precisar de nova geração.
+
+A URL declarada é absoluta, e não relativa: o leitor de prévia lê a marcação
+fora do contexto da página e não resolve caminho relativo.
+
 ## Os logotipos
 
 `logo-lee-preto.svg` e `logo-lee-advogado-branco.svg` são do titular. São

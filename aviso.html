@@ -13,6 +13,24 @@
 <meta property="og:url" content="https://leeadv.com.br/aviso.html">
 <meta property="og:title" content="Aviso | Lee Advogado">
 <meta property="og:description" content="O conteúdo deste site tem caráter informativo e não constitui consulta nem orientação jurídica para caso concreto.">
+<!-- A URL é absoluta: leitor de prévia não resolve caminho relativo, porque
+     lê a marcação fora do contexto da página.
+
+     Um candidato só, em WebP, e não o AVIF que também está no repositório. O
+     protocolo define og:image como lista, mas não define como cada leitor
+     escolhe dentro dela. Dois candidatos trocariam um risco conhecido, o
+     leitor que não decodifica AVIF, por um que ninguém consegue medir, o
+     leitor que escolhe o candidato errado. Com um candidato em formato
+     amplamente lido não há escolha a adivinhar. Os 5,5 KB a mais são de um
+     arquivo que só o robô de prévia baixa, uma vez: o visitante nunca o
+     carrega. Revisar quando o AVIF for universal entre leitores de prévia. -->
+<meta property="og:image" content="https://leeadv.com.br/estatico/retrato/og-image.webp">
+<meta property="og:image:type" content="image/webp">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Lee Advogado, advocacia empresarial e cível">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://leeadv.com.br/estatico/retrato/og-image.webp">
 <link rel="icon" href="/estatico/logo-lee-advogado-branco.svg" type="image/svg+xml">
 <link rel="stylesheet" href="/estatico/estilo.css">
 </head>
