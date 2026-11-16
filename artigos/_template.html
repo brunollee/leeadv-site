@@ -1,0 +1,256 @@
+<!doctype html>
+<!--
+  MODELO DE PÁGINA DE ARTIGO. Este arquivo não é publicado como página: é a
+  base a copiar para cada artigo novo.
+
+  Para criar um artigo: copie este arquivo para /artigos/nome-do-artigo.html
+  e substitua os marcadores abaixo. Nenhum marcador pode sobrar no arquivo
+  publicado: um marcador esquecido aparece cru na tela e no resultado de
+  busca. Repare que esta documentação não escreve nenhum marcador de
+  exemplo entre chaves duplas, de propósito, para que uma busca por
+  marcadores sobrando no arquivo pronto não tropece neste comentário.
+
+  MARCADORES
+
+    {{TITLE}}             etiqueta da aba e do resultado de busca, com o
+                          sufixo " | Lee Advogado"
+    {{DESCRIPTION}}       uma frase, entre 120 e 155 caracteres
+    {{CANONICAL}}         endereço absoluto, https://leeadv.com.br/artigos/...
+    {{H1}}                o título na página, em caixa mista
+    {{DATA_PUBLICACAO}}   data por extenso, para o leitor: 16 de novembro de 2026
+    {{DATA_PUBLICACAO_ISO}}  a mesma data em AAAA-MM-DD, para o atributo e o JSON-LD
+    {{DATA_ATUALIZACAO}}     data por extenso
+    {{DATA_ATUALIZACAO_ISO}} a mesma em AAAA-MM-DD
+    {{CORPO}}             o texto do artigo, em <p> e <h2> por seção
+    {{LEIA_TAMBEM}}       a lista de outros artigos
+
+  SEM SEÇÃO DE PERGUNTAS E RESPOSTAS, por decisão de 16/11/2026. O modelo
+  tinha uma seção de perguntas e um terceiro bloco de dados estruturados para
+  descrevê-la, e os dois saíram: o Google aposentou o resultado enriquecido
+  correspondente em maio de 2026, e a marcação deixou de pagar o que custava
+  manter. Com ela saíram os dois marcadores que existiam só para alimentá-la.
+
+  Se um artigo precisar responder a perguntas, elas entram como seção comum
+  do {{CORPO}}, com um título de seção e um subtítulo por pergunta. O que não
+  volta é o bloco de dados estruturados que as descrevia.
+
+  Esta nota evita de propósito escrever o nome daquele tipo de dado
+  estruturado: uma busca por ele neste arquivo deve voltar vazia, e não
+  tropeçar no comentário que registra a sua retirada.
+
+  CAIXA ALTA: os títulos sobem para maiúsculas pelo CSS. Escreva {{H1}} e os
+  <h2> em caixa mista. Ver a seção 6.5 do PRD.
+
+  REGRAS QUE VALEM AQUI COMO NO RESTO DO SITE: nenhum script, nenhum recurso
+  de terceiro, nenhum estilo embutido, nenhum atributo style. Todo texto novo
+  passa pela conferência de publicidade do Provimento 205/2021 antes de
+  subir.
+-->
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; form-action 'none'">
+<!-- VERIFICACAO-SEARCH-CONSOLE: substituir por meta tag -->
+<title>{{TITLE}}</title>
+<meta name="description" content="{{DESCRIPTION}}">
+<link rel="canonical" href="{{CANONICAL}}">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Lee Advogado">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:url" content="{{CANONICAL}}">
+<meta property="og:title" content="{{TITLE}}">
+<meta property="og:description" content="{{DESCRIPTION}}">
+<meta property="og:image" content="https://leeadv.com.br/estatico/retrato/og-image.webp">
+<meta property="og:image:type" content="image/webp">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Lee Advogado, advocacia empresarial, cível e trabalhista">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://leeadv.com.br/estatico/retrato/og-image.webp">
+<link rel="icon" href="/estatico/logo-lee-advogado-branco.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/estatico/estilo.css">
+
+<!-- Os três blocos de dados estruturados. São bloco de dados, não script: o
+     navegador nunca avalia um `script` cujo tipo não é JavaScript, e por
+     isso convivem com a política declarada acima. -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "{{H1}}",
+  "description": "{{DESCRIPTION}}",
+  "datePublished": "{{DATA_PUBLICACAO_ISO}}",
+  "dateModified": "{{DATA_ATUALIZACAO_ISO}}",
+  "mainEntityOfPage": { "@type": "WebPage", "@id": "{{CANONICAL}}" },
+  "image": "https://leeadv.com.br/estatico/retrato/og-image.webp",
+  "inLanguage": "pt-BR",
+  "author": {
+    "@type": "Person",
+    "name": "Bruno Lee",
+    "jobTitle": "Advogado",
+    "identifier": {
+      "@type": "PropertyValue",
+      "name": "OAB/SP",
+      "value": "425.768"
+    },
+    "url": "https://leeadv.com.br/#trajetoria"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Lee Advogado",
+    "url": "https://leeadv.com.br/",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://leeadv.com.br/estatico/logo-lee-advogado-branco.svg"
+    }
+  }
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Início",  "item": "https://leeadv.com.br/" },
+    { "@type": "ListItem", "position": 2, "name": "Artigos", "item": "https://leeadv.com.br/artigos/" },
+    { "@type": "ListItem", "position": 3, "name": "{{H1}}",  "item": "{{CANONICAL}}" }
+  ]
+}
+</script>
+</head>
+<body>
+
+<header class="topo">
+  <div class="dentro">
+    <a href="/"><img src="/estatico/logo-lee-advogado-branco.svg" alt="Lee Advogado" class="topo-logo" width="143" height="30"></a>
+    <!-- A caixa de marcar comanda a abertura do menu em tela pequena. Fica
+         escondida, mas continua alcançável pelo teclado: sem ela, o menu
+         dependeria de script, e não há script nenhum nesta página. -->
+    <input type="checkbox" id="abrir-menu" class="menu-estado">
+    <label for="abrir-menu" class="menu-botao">Menu</label>
+    <nav class="menu">
+      <a href="/#areas">Áreas de Atuação</a>
+      <a href="/#trajetoria">Trajetória</a>
+      <a href="/#metodo">Método de Trabalho</a>
+      <a href="/artigos/">Artigos</a>
+      <a href="/#contato">Contato</a>
+    </nav>
+    <a href="https://sistema.leeadv.com.br" class="restrita">Área Restrita</a>
+  </div>
+</header>
+
+<main class="texto">
+  <div class="dentro">
+
+    <nav class="trilha" aria-label="Trilha de navegação">
+      <a href="/">Início</a>
+      <span aria-hidden="true">›</span>
+      <a href="/artigos/">Artigos</a>
+      <span aria-hidden="true">›</span>
+      <span aria-current="page">{{H1}}</span>
+    </nav>
+
+    <h1>{{H1}}</h1>
+
+    <p class="datas">
+      Publicado em <time datetime="{{DATA_PUBLICACAO_ISO}}">{{DATA_PUBLICACAO}}</time>
+      · Atualizado em <time datetime="{{DATA_ATUALIZACAO_ISO}}">{{DATA_ATUALIZACAO}}</time>
+    </p>
+
+    <!-- O corpo do artigo. Uma <h2> por seção, parágrafos em <p>. Não pular
+         nível de título: depois de <h2> vem <h3>, nunca <h4> direto. -->
+    {{CORPO}}
+
+    <!-- O bloco do autor. O texto aqui é o mesmo que já consta do rodapé e
+         da seção de trajetória: nada de credencial nova sem conferência. -->
+    <div class="area autor">
+      <picture>
+        <source srcset="/estatico/retrato/retrato-branco.avif" type="image/avif">
+        <img src="/estatico/retrato/retrato-branco.webp" alt="Bruno Lee, advogado" class="autor-retrato" width="600" height="600">
+      </picture>
+      <div>
+        <h2>Bruno Lee</h2>
+        <p>Advogado inscrito na OAB/SP sob o nº 425.768. Atuação contenciosa e consultiva para pequenas e médias empresas, seus sócios e administradores.</p>
+        <a href="/#trajetoria" class="voltar">Ver trajetória completa</a>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<section class="contato" id="contato">
+  <div class="dentro">
+    <h2>Tem uma questão jurídica para resolver?</h2>
+    <div class="contato-acoes">
+      <a href="https://wa.me/5511954220474" class="botao-zap" rel="noopener noreferrer">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
+          <path d="M12 3C7.03 3 3 6.58 3 11c0 2.4 1.2 4.55 3.1 6.01L5.5 21l4.2-2.1c.74.13 1.51.2 2.3.2 4.97 0 9-3.58 9-8s-4.03-8-9-8z"/>
+        </svg>
+        WhatsApp
+      </a>
+      <a href="mailto:contato@leeadv.com.br" class="botao-borda botao-email">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
+          <path d="M4 5h16a2 2 0 0 1 2 2v.35l-10 5.6-10-5.6V7a2 2 0 0 1 2-2z"/>
+          <path d="M2 9.6V17a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9.6l-10 5.6z"/>
+        </svg>
+        contato@leeadv.com.br
+      </a>
+    </div>
+    <p class="contato-nota">Atendimento por agendamento, com resposta em até um dia útil.</p>
+  </div>
+</section>
+
+<section class="secao leia-tambem">
+  <div class="dentro">
+    <div class="secao-cabeca">
+      <p class="sobrelinha">Leia também</p>
+      <h2>Outros artigos</h2>
+    </div>
+    <!-- Cada item é um <li> com link e uma linha de resumo, no mesmo formato
+         do índice em /artigos/. -->
+    {{LEIA_TAMBEM}}
+  </div>
+</section>
+
+<footer class="rodape">
+  <div class="dentro">
+    <div class="rodape-colunas">
+      <div class="rodape-col rodape-marca">
+        <img src="/estatico/logo-lee-advogado-branco.svg" alt="Lee Advogado" class="rodape-logo" width="124" height="26">
+        <p>Advocacia Empresarial, Cível e Trabalhista.</p>
+      </div>
+      <div class="rodape-col">
+        <h2>Contato</h2>
+        <a href="mailto:contato@leeadv.com.br">contato@leeadv.com.br</a>
+        <a href="tel:+5511954220474">11 95422-0474</a>
+        <a href="https://wa.me/5511954220474" rel="noopener noreferrer">WhatsApp</a>
+        <a href="https://www.linkedin.com/in/brunollee/" rel="noopener noreferrer">LinkedIn</a>
+      </div>
+      <div class="rodape-col">
+        <h2>Registro</h2>
+        <p>OAB/SP nº 425.768</p>
+      </div>
+      <div class="rodape-col">
+        <h2>Links</h2>
+        <a href="/artigos/">Artigos</a>
+        <a href="/privacidade.html">Política de privacidade</a>
+        <a href="/aviso.html">Aviso</a>
+        <a href="https://sistema.leeadv.com.br">Área Restrita</a>
+      </div>
+    </div>
+    <div class="rodape-fim">
+      <span>© 2026 Lee Advogado. Todos os direitos reservados.</span>
+    </div>
+  </div>
+</footer>
+
+<a href="https://wa.me/5511954220474" class="contato-fixo" rel="noopener noreferrer" aria-label="WhatsApp">
+  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
+    <path d="M12 3C7.03 3 3 6.58 3 11c0 2.4 1.2 4.55 3.1 6.01L5.5 21l4.2-2.1c.74.13 1.51.2 2.3.2 4.97 0 9-3.58 9-8s-4.03-8-9-8z"/>
+  </svg>
+</a>
+
+</body>
+</html>

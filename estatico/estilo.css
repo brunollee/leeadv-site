@@ -1021,6 +1021,85 @@ img { display: block; max-width: 100%; }
     .rodape-colunas { grid-template-columns: 1fr; }
 }
 
+/* -- os artigos ------------------------------------------------------------ */
+
+/* Acrescentado em 16/11/2026, com a pasta /artigos/. Oito regras, e nada
+ * além delas: tudo o mais que as páginas de artigo usam já existe nesta
+ * folha — .texto, .dentro, .area, .secao, .secao-cabeca, .sobrelinha,
+ * .voltar e os botões da faixa de contato. A folha não foi reescrita. */
+
+/* A trilha. Os separadores são aria-hidden no HTML: quem ouve a página
+ * recebe a estrutura pelo <nav> e pelo aria-current, não por um sinal de
+ * maior solto no meio da frase. */
+.trilha {
+    font-size: .85rem;
+    color: var(--mut);
+    margin-bottom: 28px;
+}
+
+.trilha a { color: var(--tx2); }
+.trilha a:hover { color: var(--tx); }
+.trilha span { margin: 0 6px; }
+
+/* A linha de datas, abaixo do título do artigo. Mesmo tamanho e mesma cor
+ * da nota de fonte: é informação de apoio, e a discrição vem do tamanho. */
+.datas {
+    font-size: .85rem;
+    color: var(--tx2);
+    margin: -14px 0 32px;
+}
+
+/* O índice de artigos. Lista sem marcador: o título de cada item já é a
+ * marca visual, e o ponto antes dele só competiria com ele. */
+.lista-artigos {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.item-artigo {
+    padding: 28px 0;
+    border-top: 1px solid var(--bd);
+}
+
+.item-artigo:last-child { border-bottom: 1px solid var(--bd); }
+.item-artigo h2 { font-size: 1.3rem; margin-bottom: 10px; }
+.item-artigo p { color: var(--tx2); margin: 0 0 6px; }
+
+/* O bloco do autor, ao fim do artigo. Reaproveita o cartão .area e só
+ * acrescenta a disposição em duas colunas e o tamanho do retrato. */
+.autor {
+    display: grid;
+    grid-template-columns: 96px 1fr;
+    gap: 24px;
+    align-items: start;
+    margin-top: 56px;
+}
+
+.autor h2 { font-size: 1.15rem; }
+.autor p { font-size: .95rem; }
+
+.autor-retrato {
+    width: 96px;
+    height: 96px;
+    border-radius: 50%;
+}
+
+/* A nota da faixa de contato. Em --tx2 e não em --mut: é prosa, não rótulo,
+ * e sobre o degradê do bloco o --mut não alcança 4,5 de contraste. */
+.contato-nota {
+    flex-basis: 100%;
+    font-size: .9rem;
+    color: var(--tx2);
+    margin: 0;
+}
+
+.leia-tambem { border-top: 1px solid var(--bd); }
+
+@media (max-width: 860px) {
+    .autor { grid-template-columns: 1fr; gap: 16px; }
+}
+
 /* -- movimento zerado ------------------------------------------------------ */
 
 /* Obrigatório, e não opcional: quem pede menos movimento no sistema
