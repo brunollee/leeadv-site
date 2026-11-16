@@ -455,6 +455,15 @@ img { display: block; max-width: 100%; }
 
 .area-larga { grid-column: 1 / -1; }
 
+/* O limite vai no PARÁGRAFO, não no cartão: o cartão continua ocupando a
+ * linha inteira, e só o texto para antes.
+ *
+ * Sem isso, a 1440px, os três cartões largos davam 144, 150 e 156 caracteres
+ * por linha, contra 69 a 73 dos seis estreitos. A faixa em que o olho acha o
+ * começo da linha seguinte sem se perder é de 45 a 75; acima disso ele volta
+ * para a linha errada e relê. Era a maior perda de leitura da página. */
+.area-larga p { max-width: 62ch; }
+
 /* A numeração em pílula, conforme a seção 6.2.1. */
 .area-num {
     display: inline-block;
@@ -724,6 +733,43 @@ img { display: block; max-width: 100%; }
     outline-offset: 3px;
 }
 
+/* O botão recolhe quando a faixa de contato entra na tela.
+ *
+ * No celular os dois botões de WhatsApp ficavam a centímetros um do outro,
+ * dois caminhos para o mesmo lugar competindo no mesmo campo de visão.
+ *
+ * Feito com linha do tempo de rolagem, sem script. O `timeline-scope` no
+ * `:root` é o que permite o botão enxergar uma linha do tempo declarada na
+ * faixa, que não é sua ascendente: sem ele o nome não seria encontrado.
+ *
+ * O @supports NÃO é enfeite. Sem ele, um navegador que ignora
+ * `animation-timeline` aplicaria a animação na linha do tempo padrão, de
+ * duração zero, e com `both` o botão saltaria direto para o estado final e
+ * sumiria para sempre. Dentro do @supports, quem não suporta simplesmente
+ * não recebe regra nenhuma e o botão fica visível o tempo todo, que é o
+ * estado anterior e a degradação que a seção 5.8.1 pede.
+ *
+ * A `visibility` entra junto com a opacidade para o botão sair também da
+ * ordem de tabulação enquanto está recolhido: link invisível que ainda
+ * recebe foco é armadilha para quem navega por teclado. */
+@supports (animation-timeline: view()) {
+    :root { timeline-scope: --faixa-contato; }
+
+    .contato { view-timeline-name: --faixa-contato; }
+
+    .contato-fixo {
+        animation: recolher-botao-fixo linear both;
+        animation-timeline: --faixa-contato;
+        animation-range: entry 0% entry 60%;
+    }
+
+    @keyframes recolher-botao-fixo {
+        0%   { opacity: 1; visibility: visible; }
+        99%  { visibility: visible; }
+        100% { opacity: 0; visibility: hidden; }
+    }
+}
+
 /* -- o rodapé -------------------------------------------------------------- */
 
 /* O padding de baixo abre espaço para o botão fixo: 52px do disco, mais a
@@ -839,7 +885,30 @@ img { display: block; max-width: 100%; }
     .menu-estado:checked ~ .menu { display: flex; }
 
     .menu-botao { order: 2; }
-    .restrita { order: 3; }
+
+    /* "Área restrita" entra no bloco que a caixa de marcar abre, como a
+     * última linha do menu, em vez de disputar a primeira linha com o
+     * logotipo e o botão. Assim o cabeçalho volta a ter uma linha só, e
+     * altura no topo é onde ela mais custa. Ver a seção 5.1.1.
+     *
+     * É o mesmo elemento, não uma cópia: o seletor de irmão geral alcança
+     * o link porque ele vem depois da caixa na marcação. Duplicar o link
+     * daria dois destinos iguais para quem navega por teclado. */
+    .restrita {
+        order: 5;
+        flex-basis: 100%;
+        display: none;
+        border: none;
+        border-top: 1px solid var(--bd);
+        border-radius: 0;
+        padding: 13px 0;
+        font-size: 14.5px;
+        color: var(--tx);
+    }
+
+    .menu-estado:checked ~ .restrita { display: block; }
+
+    .restrita:hover { border-color: var(--bd); }
 
     .abertura { padding: 72px 0 64px; }
     .abertura h1 { font-size: 2.1rem; }
