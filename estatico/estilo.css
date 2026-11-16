@@ -270,22 +270,53 @@ img { display: block; max-width: 100%; }
     padding: 104px 0 92px;
 }
 
-/* A letra de fundo. Marcada com aria-hidden no HTML: é desenho, não
- * conteúdo, e um leitor de tela não tem o que fazer com um "L" solto.
- * Sobre o degradê ela some se for cinza chapada, então vai em branco com
- * opacidade baixa, que acompanha a ponta clara do degradê. */
-.marca-fundo {
+/* O elemento gráfico da abertura: o L do próprio logotipo.
+ *
+ * Substituiu, em 16/11/2026, um "L" tipográfico desenhado em Caladea. A
+ * razão está na seção 6.8: é a única forma da página que só pode ser desta
+ * banca. O traço está embutido na marcação, não carregado como arquivo.
+ *
+ * Três camadas, nesta ordem de pilha: o campo de luz, a arte, e o texto.
+ * Todas as três com z-index declarado, para a ordem não depender da ordem
+ * dos elementos na marcação. */
+
+/* O campo de luz, em camada própria e não como fundo da seção: assim ele
+ * não entra na máscara da arte, que o cortaria junto com a letra. */
+.luz {
     position: absolute;
-    right: 4rem;
-    top: 1.5rem;
-    font-family: var(--titulo);
-    font-weight: 700;
-    font-size: 22rem;
-    line-height: 0.78;
-    color: rgba(255, 255, 255, 0.05);
-    user-select: none;
-    pointer-events: none;
+    inset: 0;
     z-index: 0;
+    pointer-events: none;
+    background: radial-gradient(820px 480px at 82% 14%, rgba(255, 255, 255, .08), transparent 62%);
+}
+
+/* O contêiner da arte, e a máscara.
+ *
+ * A máscara é o que resolve o defeito que derrubou as versões anteriores da
+ * abertura: a arte atrapalhava a leitura. Baixar opacidade não resolveria,
+ * porque o traço continuaria por baixo das letras. Isto apaga o desenho
+ * antes da coluna de texto — "to left" faz o gradiente correr da direita
+ * para a esquerda, então os 42% da direita ficam opacos, a transição vai
+ * até 64%, e o terço esquerdo, onde o texto vive, fica limpo.
+ *
+ * O prefixo -webkit- vem junto e primeiro: sem ele a máscara não pinta em
+ * parte dos navegadores baseados em WebKit, e a letra apareceria inteira. */
+.arte {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+    pointer-events: none;
+    -webkit-mask-image: linear-gradient(to left, #000 0%, #000 42%, transparent 64%);
+    mask-image: linear-gradient(to left, #000 0%, #000 42%, transparent 64%);
+}
+
+.ele {
+    position: absolute;
+    right: -300px;
+    top: 40px;
+    height: 520px;
+    width: auto;
 }
 
 .abertura .dentro { position: relative; z-index: 1; }
@@ -841,6 +872,27 @@ img { display: block; max-width: 100%; }
 
 .voltar:hover { color: var(--tx); border-color: var(--bd-hover); }
 
+/* -- o limite da arte da abertura ------------------------------------------ */
+
+/* A marca sai de cena abaixo de 1020px, e não de 860px como as demais
+ * regras de tela pequena. O número não é escolhido, é medido.
+ *
+ * A marca passa por trás do texto de propósito, e a máscara a apaga o
+ * bastante para a leitura continuar. Até cerca de 1144px isso se sustenta
+ * sozinho, porque a coluna de texto encolhe junto com a tela e acompanha a
+ * rampa da máscara. Abaixo disso a coluna para de encolher: ela passa a
+ * ocupar a tela inteira menos as margens, a borda direita do texto fica
+ * parada, e a rampa continua andando para a esquerda. A opacidade da marca
+ * atrás do texto sobe até 1, e o contraste do parágrafo cai de 5,2:1 para
+ * 4,0:1, abaixo do mínimo AA de 4,5.
+ *
+ * Medido em 16/11/2026, no pior ponto de cada largura, que é a borda
+ * direita do parágrafo: 1100px dá 5,16:1, 1020px dá 4,56:1, e 980px já dá
+ * 4,17:1. Daí o corte em 1020px. */
+@media (max-width: 1020px) {
+    .ele { display: none; }
+}
+
 /* -- tela pequena ---------------------------------------------------------- */
 
 @media (max-width: 860px) {
@@ -913,8 +965,6 @@ img { display: block; max-width: 100%; }
     .abertura { padding: 72px 0 64px; }
     .abertura h1 { font-size: 2.1rem; }
     .abertura .apoio { font-size: 1.02rem; }
-    .marca-fundo { font-size: 18rem; top: -0.18em; right: -0.08em; }
-
     /* Respiro de 40px abaixo de 860px, conforme a seção 6.2.1. */
     .secao { padding: 60px 0; }
     .secao-cabeca { margin-bottom: 34px; }
@@ -957,7 +1007,6 @@ img { display: block; max-width: 100%; }
 /* Abaixo de 400px a letra de fundo começa a disputar com o título, e o botão
  * em linha fica estreito demais para o dedo. */
 @media (max-width: 400px) {
-    .marca-fundo { font-size: 13rem; }
 
     /* O .botao-zap entra junto, senão o botão de preferência fica mais
      * estreito que o secundário justamente na tela em que o alvo do dedo

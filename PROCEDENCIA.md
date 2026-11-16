@@ -244,8 +244,38 @@ foram calculados em 15/11/2026 e são a referência deste repositório.
 
 | Arquivo guardado | Tamanho | SHA-256 |
 |---|---|---|
-| `estatico/logo-lee-preto.svg` | 11.134 B | `3fd42a96db0c8715828c3b66b0c10bc132974b4efbfbc116234484a18f093269` |
-| `estatico/logo-lee-advogado-branco.svg` | 15.429 B | `1d3cdc7e193b4e9d25575ed4a79e05a9d7a9cf66ef74f5a08a5aefd3f02dfc52` |
+| `estatico/logo-lee-preto.svg` | 3.360 B | `b630b6e451f3bd60cb23f8d609dfb65f503e8a99c352c95c5aa22ece9136a9b3` |
+| `estatico/logo-lee-advogado-branco.svg` | 7.655 B | `5bf25c05c14c056af34a58747c26352a0e0c9958e3360ba3d7d1174bde21c9ac` |
+
+### O manifesto C2PA foi retirado em 16/11/2026
+
+Os dois arquivos carregavam um bloco `<metadata>` de 7.736 B cada, com um
+manifesto C2PA de procedência de imagem, e o atributo `xmlns:c2pa` no
+elemento raiz. Num site é peso morto: nenhum navegador o lê, e a procedência
+que importa aqui é esta página.
+
+**A alteração foi de metadado, não de desenho.** Conferido antes de gravar,
+comparando o estado anterior com o posterior: mesmo `viewBox`, mesmo número
+de `path`, mesmos valores de `fill`, e o mesmo resumo SHA-256 do conteúdo
+concatenado dos atributos `d`, que é o que define o traço.
+
+| Arquivo | Antes | Depois | SHA-256 dos traços, antes e depois |
+|---|---|---|---|
+| `logo-lee-preto.svg` | 11.134 B | 3.360 B | `6a06e04981514efcaf4caec39e5b066684835692bedca969…` nos dois |
+| `logo-lee-advogado-branco.svg` | 15.429 B | 7.655 B | `6f777df9c27c395fa662e84cc33520db382ca19d63d69933…` nos dois |
+
+Os resumos da tabela acima são os dos arquivos novos e passam a ser a
+referência. Os anteriores, para quem precisar rastrear o histórico, eram
+`3fd42a96db0c8715828c3b66b0c10bc132974b4efbfbc116234484a18f093269` e
+`1d3cdc7e193b4e9d25575ed4a79e05a9d7a9cf66ef74f5a08a5aefd3f02dfc52`.
+
+Registro, porque confunde: o arquivo chamado `logo-lee-advogado-branco.svg`
+desenha apenas a palavra "Lee". O "advogado" que aparece ao lado, no site, é
+texto, não faz parte do SVG.
+
+O traço do `logo-lee-preto.svg` também está **embutido na marcação** do
+`index.html`, como elemento gráfico da abertura. É cópia do mesmo `d`, não
+uma requisição: a página não baixa esse arquivo.
 
 No modo escuro, o site não troca de arquivo: inverte o preto por CSS. Os dois
 logotipos são composições diferentes, com proporções diferentes, e trocar um
