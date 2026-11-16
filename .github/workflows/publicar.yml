@@ -31,6 +31,35 @@ jobs:
       - name: Configurar o Pages
         uses: actions/configure-pages@v5
 
+      # O que vai ao ar é só o site. Este passo age na cópia do runner, nunca
+      # no repositório: o modelo de artigo, a documentação e os arquivos de
+      # configuração continuam versionados e continuam aqui.
+      #
+      # Por que cada um sai:
+      #   artigos/_template.html  é servido com os marcadores crus à vista
+      #   LEIA-ME.md              documentação interna, servida como texto
+      #   PROCEDENCIA.md          idem, com os resumos SHA-256 de cada ativo
+      #   .gitignore              configuração, sem uso para quem visita
+      #   .gitattributes          idem
+      #   .claude                 pasta de trabalho local
+      #
+      # A pasta .github fica FORA da lista, de propósito. Medido em
+      # 16/11/2026: /.github/workflows/publicar.yml já responde 404, ou seja,
+      # nunca esteve no pacote. Apagá-la não tiraria nada do ar e mexeria,
+      # durante a execução, na pasta que define a própria execução. Risco sem
+      # contrapartida.
+      #
+      # O CNAME fica, e não é descuido: sem ele cada publicação apaga o
+      # domínio personalizado configurado no painel.
+      - name: Tirar do pacote o que não é site
+        run: |
+          rm -f  artigos/_template.html
+          rm -f  ./*.md
+          rm -f  .gitignore .gitattributes
+          rm -rf .claude
+          echo "Sobrou para publicar:"
+          ls -A
+
       - name: Empacotar a raiz do repositório
         uses: actions/upload-pages-artifact@v3
         with:
