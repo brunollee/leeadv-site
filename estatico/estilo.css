@@ -324,7 +324,8 @@ img { display: block; max-width: 100%; }
 .botao,
 .botao-vazado,
 .botao-claro,
-.botao-borda {
+.botao-borda,
+.botao-zap {
     display: inline-block;
     font-size: 14.5px;
     font-weight: 700;
@@ -338,13 +339,50 @@ img { display: block; max-width: 100%; }
 .botao:hover,
 .botao-vazado:hover,
 .botao-claro:hover,
-.botao-borda:hover { transform: translateY(-3px); }
+.botao-borda:hover,
+.botao-zap:hover { transform: translateY(-3px); }
 
 .botao,
-.botao-claro {
+.botao-claro,
+.botao-zap {
     background: var(--btn);
     color: var(--on-ink);
     border: 1px solid var(--btn);
+}
+
+/* O botão de preferência da faixa de contato. Fica maior que o vizinho e
+ * leva o ícone: é por tamanho e por desenho que ele se destaca, e não por
+ * uma frase dizendo que é o canal preferido. Frase dessas seria texto novo,
+ * e num site de advogado texto novo passa por conferência de publicidade
+ * antes de existir. */
+.botao-zap {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 16px;
+    padding: 17px 32px;
+}
+
+/* O e-mail acompanha com o envelope, no mesmo desenho preenchido do balão:
+ * ícone vazado ao lado de ícone cheio faz os dois parecerem de famílias
+ * diferentes. Fica um ponto menor que o do WhatsApp, porque o botão também
+ * é menor, e assim a hierarquia entre os dois se mantém. */
+.botao-email {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+}
+
+.botao-zap svg {
+    width: 21px;
+    height: 21px;
+    flex: none;
+}
+
+.botao-email svg {
+    width: 18px;
+    height: 18px;
+    flex: none;
 }
 
 .botao-vazado,
@@ -673,10 +711,16 @@ img { display: block; max-width: 100%; }
 
 .contato-fixo svg { width: 24px; height: 24px; display: block; }
 
-/* O anel de foco do botão fixo é escuro, e não branco: ele fica sobre um
- * disco branco, e branco sobre branco não se vê. */
+/* O anel de foco é branco, como o dos demais links.
+ *
+ * Correção de 16/11/2026: estava em --on-ink, na ideia de que o anel cairia
+ * sobre o disco branco. Não cai. O outline é desenhado FORA da caixa, e o
+ * outline-offset o afasta ainda mais, então ele aparece sobre o fundo
+ * escuro da página, onde um anel #111 some. Branco sobre #0f0f0f dá 16,67:1,
+ * e a folga de 3px deixa uma faixa escura entre o disco e o anel, de modo
+ * que o branco do anel não se funde com o branco do disco. */
 .contato-fixo:focus-visible {
-    outline: 3px solid var(--on-ink);
+    outline: 3px solid var(--tx);
     outline-offset: 3px;
 }
 
@@ -846,9 +890,14 @@ img { display: block; max-width: 100%; }
 @media (max-width: 400px) {
     .marca-fundo { font-size: 13rem; }
 
-    .botao, .botao-vazado, .botao-claro, .botao-borda {
+    /* O .botao-zap entra junto, senão o botão de preferência fica mais
+     * estreito que o secundário justamente na tela em que o alvo do dedo
+     * mais importa. O justify-content centra o par ícone e texto quando a
+     * pílula passa a ocupar a linha inteira. */
+    .botao, .botao-vazado, .botao-claro, .botao-borda, .botao-zap {
         width: 100%;
         text-align: center;
+        justify-content: center;
     }
 
     .rodape-colunas { grid-template-columns: 1fr; }
@@ -877,6 +926,7 @@ img { display: block; max-width: 100%; }
     .botao-vazado:hover,
     .botao-claro:hover,
     .botao-borda:hover,
+    .botao-zap:hover,
     .contato-fixo:hover {
         transform: none !important;
     }
