@@ -132,6 +132,42 @@ precisar delas de volta tem acima tudo o que é preciso para refazê-las iguais.
 
 Licença: SIL Open Font License 1.1, nos dois casos.
 
+## O retrato
+
+Foto do titular, tratada **fora do repositório** e trazida pronta em
+15/11/2026. Nada aqui foi gerado, convertido ou alterado por quem escreveu
+estas linhas: os quatro arquivos foram conferidos, medidos e registrados como
+chegaram.
+
+A foto original, o script de tratamento e os arquivos em tamanho cheio ficam
+na pasta de trabalho do titular, fora deste repositório. O que entra aqui são
+só os quatro derivados de 600x600 que a página usa.
+
+O recorte separou fundo e pele pela diferença entre o vermelho e o verde, e o
+fundo foi substituído: `--bd2` #ececea na versão clara e #1f1f1f na escura. É
+por isso que são quatro arquivos e não dois, e é por isso que o CSS não
+desenha fundo nem borda atrás do círculo: o fundo já está dentro da imagem.
+
+| Arquivo guardado | Formato | Dimensões | Tamanho | SHA-256 |
+|---|---|---|---|---|
+| `estatico/retrato/retrato-claro.avif` | AVIF | 600x600 | 29.393 B | `545887fffb56ad75c16afad9f9b5ba5455b737d6d8cd6998156611160cef2d18` |
+| `estatico/retrato/retrato-claro.webp` | WebP | 600x600 | 28.986 B | `95e5a7888b25a6577a5b7b43f1508965c0d21bf308cd4c20a4e8d58fca3ac4a8` |
+| `estatico/retrato/retrato-escuro.avif` | AVIF | 600x600 | 29.374 B | `ba467c1034f1eddcab7597fc949c2bcb319b761c896eec70c70ee15d3e2b1848` |
+| `estatico/retrato/retrato-escuro.webp` | WebP | 600x600 | 28.536 B | `40ddb9a5d7c14e6bccf57e61fd5d6d86374cb4f3503879f97098e3f4e85f2091` |
+
+Os formatos e as dimensões foram lidos dos próprios bytes, e não do nome do
+arquivo: as caixas `ftypavif` e `ispe` nos AVIF, o cabeçalho `RIFF`/`WEBP` nos
+WebP. Nenhum PNG e nenhum JPEG entram no site.
+
+O navegador baixa **um** desses quatro, não os quatro: o `<picture>` escolhe
+pelo modo de cor e pelo formato que o navegador aceita.
+
+**Publicar a foto é permitido.** O art. 5º, § 2º, do Provimento 205/2021 do
+CFOAB admite imagens, inclusive fotografias dos advogados. O que o art. 6º
+veda é o cenário: escritório, fachada, prateleira de livros ou qualquer
+elemento que sugira estrutura física. Por isso o fundo foi removido, e não
+apenas desfocado.
+
 ## Os logotipos
 
 `logo-lee-preto.svg` e `logo-lee-advogado-branco.svg` são do titular. São

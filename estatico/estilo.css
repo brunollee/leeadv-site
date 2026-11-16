@@ -374,6 +374,14 @@ img { display: block; max-width: 100%; }
 .grade { margin-bottom: 52px; }
 .grade:last-child { margin-bottom: 0; }
 
+/* A linha que abre o terceiro bloco. Só ele tem uma: é onde o site explica
+ * por que empresa e sócio estão na mesma página. */
+.abre-bloco {
+    color: var(--tx2);
+    max-width: 62ch;
+    margin: -6px 0 22px;
+}
+
 /* O fundo da grade aparece pelo vão de 1px entre as caixas: é isso que
  * desenha as divisórias, sem borda dupla em lugar nenhum. */
 .grade {
@@ -421,6 +429,24 @@ img { display: block; max-width: 100%; }
 .trajetoria h2 { font-size: 2rem; }
 .trajetoria p { color: var(--tx2); }
 .trajetoria p:last-child { margin-bottom: 0; }
+
+/* O retrato, acima do quadro de dados.
+ *
+ * O fundo já vem recortado e substituído dentro do próprio arquivo, um para
+ * o modo claro e outro para o escuro, trocados por <picture> e não por
+ * script. Por isso aqui não há cor de fundo nem borda: o círculo é só o
+ * recorte, e qualquer borda desenharia uma aresta onde a imagem já encosta
+ * no fundo da página.
+ *
+ * width e height estão declarados também no HTML, para o navegador reservar
+ * o espaço antes de a imagem chegar e a página não dar um salto. */
+.retrato {
+    display: block;
+    width: 190px;
+    height: 190px;
+    border-radius: 50%;
+    margin: 0 0 32px;
+}
 
 /* O quadro de dados. Uma lista de definição porque é rótulo e conteúdo, e
  * não uma lista de frases soltas. */
@@ -481,6 +507,28 @@ img { display: block; max-width: 100%; }
 
 .etapa h3 { font-size: 1.15rem; margin-bottom: 8px; }
 .etapa p { font-size: .95rem; color: var(--tx2); max-width: 62ch; margin: 0; }
+
+/* -- por que esse recorte -------------------------------------------------- */
+
+/* Coluna única e estreita, de propósito: é a única seção da página que se lê
+ * como texto corrido, e não como lista ou quadro. O limite de 66 caracteres
+ * é a medida em que a linha ainda se lê sem o olho perder a volta. */
+.recorte {
+    background: var(--card);
+    border-bottom: 1px solid var(--bd);
+}
+
+.recorte .dentro > * { max-width: 66ch; }
+.recorte h2 { font-size: 2rem; }
+.recorte p { color: var(--tx2); }
+
+/* A nota de fonte. O dado do Sebrae não sai sem ela, nunca: número de
+ * terceiro sem procedência à vista é número que o leitor não pode conferir. */
+.nota-fonte {
+    font-size: .82rem;
+    color: var(--mut);
+    margin: 28px 0 0;
+}
 
 /* -- publicações ----------------------------------------------------------- */
 
@@ -681,8 +729,14 @@ img { display: block; max-width: 100%; }
     .trajetoria .dentro { grid-template-columns: 1fr; gap: 40px; }
     .trajetoria h2 { font-size: 1.6rem; }
 
+    /* Em coluna única o retrato fica centralizado acima do quadro: encostado
+     * à esquerda, num bloco estreito, ele desequilibra a página. */
+    .retrato { width: 150px; height: 150px; margin: 0 auto 28px; }
+
     .quadro > div { flex-direction: column; gap: 6px; }
     .quadro dd { text-align: left; }
+
+    .recorte h2 { font-size: 1.6rem; }
 
     .etapa { grid-template-columns: 1fr; gap: 10px; }
     .etapa-num { padding-top: 0; }
