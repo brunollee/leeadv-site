@@ -17,7 +17,7 @@
      conforme a seção 6.4 do PRD. Declarar o campo apontando para um arquivo
      que não existe é pior do que não declarar: o leitor de prévia mostra
      espaço vazio em vez de cair no texto. -->
-<link rel="icon" href="/estatico/logo-lee-preto.svg" type="image/svg+xml">
+<link rel="icon" href="/estatico/logo-lee-advogado-branco.svg" type="image/svg+xml">
 <link rel="stylesheet" href="/estatico/estilo.css">
 <!-- Bloco de dados, não script: o navegador nunca avalia um `script` cujo
      tipo não é JavaScript, e por isso ele convive com a política acima.
@@ -59,7 +59,7 @@
 
 <header class="topo">
   <div class="dentro">
-    <a href="/"><img src="/estatico/logo-lee-preto.svg" alt="Lee Advogado" class="topo-logo" width="69" height="30"></a>
+    <a href="/"><img src="/estatico/logo-lee-advogado-branco.svg" alt="Lee Advogado" class="topo-logo" width="143" height="30"></a>
     <!-- A caixa de marcar comanda a abertura do menu em tela pequena. Fica
          escondida, mas continua alcançável pelo teclado: sem ela, o menu
          dependeria de script, e não há script nenhum nesta página. -->
@@ -174,15 +174,14 @@
       <p>Por isso atendo os dois lados ao mesmo tempo, e procuro manter ambos em dia antes que um contamine o outro. Cada caso é estudado por mim: leio os documentos, pesquiso a questão específica que ele levanta e construo a tese a partir dela. Cada processo traz uma pergunta própria, e é ela que organiza o trabalho.</p>
     </div>
     <div>
-      <!-- O fundo já vem recortado e substituído dentro de cada arquivo, um
-           para o modo claro e outro para o escuro. A troca é do navegador,
-           pelo media do <picture>, sem uma linha de script. AVIF primeiro;
-           quem não o lê cai no WebP. -->
+      <!-- Fundo branco puro, já recortado dentro do próprio arquivo: sobre a
+           página escura o disco funciona como destaque. Com o escuro fixo
+           não há mais troca de tom, então o picture ficou só com o AVIF e a
+           alternativa em WebP, para quem não lê AVIF. Um arquivo baixado,
+           29 KB. -->
       <picture>
-        <source srcset="/estatico/retrato/retrato-escuro.avif" type="image/avif" media="(prefers-color-scheme: dark)">
-        <source srcset="/estatico/retrato/retrato-escuro.webp" type="image/webp" media="(prefers-color-scheme: dark)">
-        <source srcset="/estatico/retrato/retrato-claro.avif" type="image/avif">
-        <img src="/estatico/retrato/retrato-claro.webp" alt="Bruno Lee, advogado" class="retrato" width="600" height="600">
+        <source srcset="/estatico/retrato/retrato-branco.avif" type="image/avif">
+        <img src="/estatico/retrato/retrato-branco.webp" alt="Bruno Lee, advogado" class="retrato" width="600" height="600">
       </picture>
       <dl class="quadro">
         <div>
@@ -297,7 +296,7 @@
   <div class="dentro">
     <div class="rodape-colunas">
       <div class="rodape-col rodape-marca">
-        <img src="/estatico/logo-lee-preto.svg" alt="Lee Advogado" class="rodape-logo" width="60" height="26">
+        <img src="/estatico/logo-lee-advogado-branco.svg" alt="Lee Advogado" class="rodape-logo" width="124" height="26">
         <p>Advocacia Empresarial e Cível.</p>
       </div>
       <div class="rodape-col">
@@ -319,10 +318,17 @@
       </div>
     </div>
     <div class="rodape-fim">
-      <span>© Lee Advogado. Todos os direitos reservados a Bruno Lee, OAB/SP nº 425.768, desde 2019.</span>
+      <span>© 2019 Lee Advogado. Todos os direitos reservados.</span>
     </div>
   </div>
 </footer>
+
+
+<a href="https://wa.me/5511954220474" class="contato-fixo" rel="noopener noreferrer" aria-label="WhatsApp">
+  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
+    <path d="M12 3C7.03 3 3 6.58 3 11c0 2.4 1.2 4.55 3.1 6.01L5.5 21l4.2-2.1c.74.13 1.51.2 2.3.2 4.97 0 9-3.58 9-8s-4.03-8-9-8z"/>
+  </svg>
+</a>
 
 </body>
 </html>

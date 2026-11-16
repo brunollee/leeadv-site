@@ -148,6 +148,25 @@ fundo foi substituído: `--bd2` #ececea na versão clara e #1f1f1f na escura. É
 por isso que são quatro arquivos e não dois, e é por isso que o CSS não
 desenha fundo nem borda atrás do círculo: o fundo já está dentro da imagem.
 
+### O arquivo em uso desde 15/11/2026
+
+Com a decisão do escuro fixo, o fundo do retrato passou a ser **branco puro**,
+recortado: sobre a página escura o disco branco funciona como destaque. É este
+o par que a página carrega, e dele o navegador baixa **um** arquivo só.
+
+| Arquivo guardado | Formato | Dimensões | Tamanho | SHA-256 |
+|---|---|---|---|---|
+| `estatico/retrato/retrato-branco.avif` | AVIF | 600x600 | 29.388 B | `e7c021b1852628403aeaa9a2057aca20940ab620edb20225dd810302a875068e` |
+| `estatico/retrato/retrato-branco.webp` | WebP | 600x600 | 29.140 B | `1fc8a89935827890577b66d76c8a9751786e424c1d335caf4dbaf4d6666d6dd9` |
+
+### Os quatro arquivos fora de uso
+
+As versões `retrato-claro` e `retrato-escuro` **deixaram de ser usadas na
+página em 15/11/2026**, com a decisão do escuro fixo. Não foram apagadas:
+ficam como registro do que esteve publicado entre os commits 564e9ab e o do
+passo 4, e para o `og:image` da seção 6.4, que ainda não existe. Nenhuma das
+duas é referenciada por qualquer HTML.
+
 | Arquivo guardado | Formato | Dimensões | Tamanho | SHA-256 |
 |---|---|---|---|---|
 | `estatico/retrato/retrato-claro.avif` | AVIF | 600x600 | 29.393 B | `545887fffb56ad75c16afad9f9b5ba5455b737d6d8cd6998156611160cef2d18` |
