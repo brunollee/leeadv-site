@@ -231,45 +231,53 @@
 
 <section class="secao trajetoria" id="trajetoria">
   <div class="dentro">
-    <div>
+    <!-- Coluna única desde 16/11/2026: retrato centralizado, quadro de dados
+         abaixo dele e o texto por último.
+
+         O primeiro parágrafo do texto antigo repetia formação, pós-graduação e
+         pesquisa, que o quadro já diz linha por linha. Saiu por isso, e não
+         volta: se a informação está no quadro, não se escreve de novo ao lado.
+         O parágrafo que falava de atender empresa e sócio e de estudar cada
+         caso foi para o fim da seção "Por que esse recorte", onde o argumento
+         pesa mais. -->
+    <div class="trajetoria-cabeca">
       <p class="sobrelinha">Trajetória</p>
       <h2>Formação e atuação</h2>
-      <p>Advogado inscrito na OAB/SP sob o nº 425.768, graduado em Direito pela Universidade Presbiteriana Mackenzie, pós-graduado em Direito Processual pela Pontifícia Universidade Católica e pesquisador do Grupo de Estudos Avançados de Direito Recuperacional e Falência da Fundação Arcadas, da Faculdade de Direito da USP.</p>
-      <p>Comecei em 2013, com serviços paralegais, consultoria não jurídica e registro de marcas. Advogado desde 2019, com atuação em contencioso cível, tributário e societário, e em administração judicial. A experiência em insolvência é o que organiza a forma de trabalhar: ver de perto empresas que não resistiram ensinou o que precisa estar resolvido enquanto ainda dá tempo.</p>
-      <p>Por isso atendo a empresa e o sócio ao mesmo tempo, e procuro manter ambos em dia antes que um contamine o outro. Cada caso é estudado por mim: leio os documentos, pesquiso a questão específica que ele levanta e construo a tese a partir dela. Cada processo traz uma pergunta própria, e é ela que organiza o trabalho.</p>
     </div>
-    <div>
-      <!-- Fundo branco puro, já recortado dentro do próprio arquivo: sobre a
-           página escura o disco funciona como destaque. Com o escuro fixo
-           não há mais troca de tom, então o picture ficou só com o AVIF e a
-           alternativa em WebP, para quem não lê AVIF. Um arquivo baixado,
-           29 KB. -->
-      <picture>
-        <source srcset="/estatico/retrato/retrato-branco.avif" type="image/avif">
-        <img src="/estatico/retrato/retrato-branco.webp" alt="Bruno Lee, advogado" class="retrato" width="600" height="600">
-      </picture>
-      <dl class="quadro">
-        <div>
-          <dt>Formação</dt>
-          <dd>Direito, Universidade Presbiteriana Mackenzie</dd>
-        </div>
-        <div>
-          <dt>Pós-graduação</dt>
-          <dd>Direito Processual, Pontifícia Universidade Católica</dd>
-        </div>
-        <div>
-          <dt>Pesquisa</dt>
-          <dd>Grupo de Estudos Avançados de Direito Recuperacional e Falência, Fundação Arcadas, Faculdade de Direito da USP</dd>
-        </div>
-        <div>
-          <dt>Registro</dt>
-          <dd>OAB/SP nº 425.768</dd>
-        </div>
-        <div>
-          <dt>Atuação</dt>
-          <dd>Empresarial, societário, tributário, trabalhista, cível, imobiliário e sucessões</dd>
-        </div>
-      </dl>
+    <!-- Fundo branco puro, já recortado dentro do próprio arquivo: sobre a
+         página escura o disco funciona como destaque. Com o escuro fixo
+         não há mais troca de tom, então o picture ficou só com o AVIF e a
+         alternativa em WebP, para quem não lê AVIF. Um arquivo baixado,
+         29 KB. -->
+    <picture>
+      <source srcset="/estatico/retrato/retrato-branco.avif" type="image/avif">
+      <img src="/estatico/retrato/retrato-branco.webp" alt="Bruno Lee, advogado" class="retrato" width="600" height="600">
+    </picture>
+    <dl class="quadro">
+      <div>
+        <dt>Formação</dt>
+        <dd>Direito, Universidade Presbiteriana Mackenzie</dd>
+      </div>
+      <div>
+        <dt>Pós-graduação</dt>
+        <dd>Direito Processual, Pontifícia Universidade Católica</dd>
+      </div>
+      <div>
+        <dt>Pesquisa</dt>
+        <dd>Grupo de Estudos Avançados de Direito Recuperacional e Falência, Fundação Arcadas, Faculdade de Direito da USP</dd>
+      </div>
+      <div>
+        <dt>Registro</dt>
+        <dd>OAB/SP nº 425.768</dd>
+      </div>
+      <div>
+        <dt>Atuação</dt>
+        <dd>Crédito e recebíveis, societário, tributário, trabalhista pelo empregador, contratos, imobiliário, sucessões e marcas</dd>
+      </div>
+    </dl>
+    <div class="trajetoria-texto">
+      <p>Comecei em 2013, com serviços paralegais, consultoria não jurídica e registro de marcas. Advogado desde 2019, trabalhei em contencioso cível, tributário e societário, e em processos de insolvência, onde acompanhei de perto empresas que não resistiram e a verificação dos créditos de quem tinha a receber delas.</p>
+      <p>Escolhi atuar antes disso. Hoje trabalho com a empresa que está crescendo, com o sócio que responde por ela e com o crédito que ela tem a receber, porque é onde uma decisão tomada a tempo ainda altera o resultado. O que vi na insolvência é o que organiza essa escolha, e está explicado na seção seguinte.</p>
     </div>
   </div>
 </section>
@@ -281,6 +289,12 @@
     <p>A lei trata a preservação da empresa como interesse social que ultrapassa o do seu dono, e há razão para isso: empresa em funcionamento sustenta emprego, contrato, fornecedor e arrecadação. Proteger isso é trabalho jurídico de rotina, feito enquanto está tudo bem.</p>
     <p>É na pequena e na média empresa que isso pesa mais. Levantamento do Sebrae a partir do Caged aponta que, no primeiro semestre de 2026, as micro e pequenas empresas responderam por 543,5 mil dos 921,6 mil empregos formais abertos no país. E é nelas que o jurídico costuma chegar por último, quando chega.</p>
     <p>A prática em insolvência mostrou um padrão: na maior parte das empresas que chegam à crise, o problema não começou no faturamento, e sim no que ficou sem tratamento jurídico enquanto a empresa ia bem. Recebível sem garantia, rotina trabalhista sem documento, sociedade sem acordo entre os sócios, patrimônio pessoal confundido com o da empresa. Escolhi trabalhar com quem está crescendo porque é ali que uma decisão tomada a tempo ainda muda o rumo das coisas.</p>
+    <!-- Este parágrafo veio da seção Trajetória em 16/11/2026. É o fecho da
+         seção, e descreve como o trabalho é feito. Cuidado ao reescrevê-lo: o
+         Provimento 205/2021 permite descrever o método como processo e veda
+         promessa de resultado e comparação com outros profissionais. Não entra
+         aqui adjetivo de superioridade nem convite para contratar. -->
+    <p>É por isso que trato a empresa e o sócio na mesma mesa, e procuro manter os dois em dia antes que um contamine o outro. Cada caso é estudado por mim: leio os documentos, pesquiso a questão específica que ele levanta e construo a tese a partir dela. Não há caso padronizado nem peça de modelo, porque cada processo traz uma pergunta própria, e é ela que organiza o trabalho.</p>
     <!-- O dado do Sebrae não sai sem esta nota. Se o número for atualizado,
          a nota é atualizada junto, com o novo período. -->
     <p class="nota-fonte">Fonte: Sebrae, com base no Cadastro Geral de Empregados e Desempregados (Caged). Dados de janeiro a junho de 2026.</p>
