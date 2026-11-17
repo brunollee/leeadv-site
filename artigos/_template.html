@@ -1,42 +1,56 @@
 <!doctype html>
 <!--
   MODELO DE PÁGINA DE ARTIGO. Este arquivo não é publicado como página: é a
-  base a copiar para cada artigo novo.
+  base a copiar para cada artigo novo. O fluxo .github/workflows/publicar.yml
+  o apaga da cópia publicada, e a linha robots mais abaixo é a segunda
+  barreira.
 
-  Para criar um artigo: copie este arquivo para /artigos/nome-do-artigo.html
-  e substitua os marcadores abaixo. Nenhum marcador pode sobrar no arquivo
-  publicado: um marcador esquecido aparece cru na tela e no resultado de
-  busca. Repare que esta documentação não escreve nenhum marcador de
-  exemplo entre chaves duplas, de propósito, para que uma busca por
-  marcadores sobrando no arquivo pronto não tropece neste comentário.
+  Para criar um artigo: copie este arquivo para /artigos/nome-do-artigo.html,
+  apague este comentário inteiro, apague a linha robots indicada adiante e
+  substitua os marcadores. Nenhum marcador pode sobrar no arquivo publicado:
+  um marcador esquecido aparece cru na tela e no resultado de busca.
 
-  MARCADORES
+  CONFERÊNCIA DE MARCADOR SOBRANDO. A lista abaixo escreve os marcadores
+  literalmente, porque é isso que a torna útil. Quem conferir se sobrou
+  marcador tem de apagar os comentários HTML antes de procurar, senão acusa
+  este próprio comentário. Corrigido em 16/11/2026: a redação anterior
+  afirmava que esta documentação não escrevia marcador literal, e escrevia
+  onze deles logo abaixo.
 
-    {{TITLE}}             etiqueta da aba e do resultado de busca, com o
-                          sufixo " | Lee Advogado"
-    {{DESCRIPTION}}       uma frase, entre 120 e 155 caracteres
-    {{CANONICAL}}         endereço absoluto, https://leeadv.com.br/artigos/...
-    {{H1}}                o título na página, em caixa mista
-    {{DATA_PUBLICACAO}}   data por extenso, para o leitor: 16 de novembro de 2026
-    {{DATA_PUBLICACAO_ISO}}  a mesma data em AAAA-MM-DD, para o atributo e o JSON-LD
-    {{DATA_ATUALIZACAO}}     data por extenso
-    {{DATA_ATUALIZACAO_ISO}} a mesma em AAAA-MM-DD
-    {{CORPO}}             o texto do artigo, em <p> e <h2> por seção
-    {{LEIA_TAMBEM}}       a lista de outros artigos
+  MARCADORES, onze no total
 
-  SEM SEÇÃO DE PERGUNTAS E RESPOSTAS, por decisão de 16/11/2026. O modelo
-  tinha uma seção de perguntas e um terceiro bloco de dados estruturados para
-  descrevê-la, e os dois saíram: o Google aposentou o resultado enriquecido
-  correspondente em maio de 2026, e a marcação deixou de pagar o que custava
-  manter. Com ela saíram os dois marcadores que existiam só para alimentá-la.
+    {{TITLE}}                 etiqueta da aba e do resultado de busca
+    {{DESCRIPTION}}           uma frase, entre 120 e 155 caracteres
+    {{CANONICAL}}             endereço absoluto, https://leeadv.com.br/artigos/...
+    {{H1}}                    o título na página, em caixa mista
+    {{DATA_PUBLICACAO}}       data por extenso: 16 de novembro de 2026
+    {{DATA_PUBLICACAO_ISO}}   a mesma data em AAAA-MM-DD
+    {{DATA_ATUALIZACAO}}      data por extenso
+    {{DATA_ATUALIZACAO_ISO}}  a mesma em AAAA-MM-DD
+    {{CORPO}}                 o texto do artigo, em <p> e <h2> por seção
+    {{FECHO}}                 a primeira frase do fecho, escrita para o
+                              assunto do artigo. É a única parte do fecho que
+                              muda de um artigo para outro.
+    {{ITENS_LEIA_TAMBEM}}     os <li> da lista de outros artigos
 
-  Se um artigo precisar responder a perguntas, elas entram como seção comum
-  do {{CORPO}}, com um título de seção e um subtítulo por pergunta. O que não
-  volta é o bloco de dados estruturados que as descrevia.
+  DADOS ESTRUTURADOS: são DOIS blocos, Article e BreadcrumbList. Não existe
+  um terceiro. Corrigido em 16/11/2026: a redação anterior falava em três.
 
-  Esta nota evita de propósito escrever o nome daquele tipo de dado
-  estruturado: uma busca por ele neste arquivo deve voltar vazia, e não
-  tropeçar no comentário que registra a sua retirada.
+  FAQPage não se usa neste site, por decisão de 16/11/2026. O Google
+  aposentou o resultado enriquecido correspondente, e a marcação deixou de
+  pagar o que custava manter. Se um artigo precisar responder a perguntas,
+  elas entram como seção comum do corpo, com um título de seção e um
+  subtítulo por pergunta, sem bloco de dados estruturados para descrevê-las.
+
+  SEÇÃO "LEIA TAMBÉM": delimitada por dois comentários próprios, que não
+  contêm nada além do limite, um começando por #LEIA-TAMBEM e terminando em
+  INICIO, o outro em FIM. Um programa casa o comentário inteiro, com os
+  sinais de abre e fecha comentário, nunca o texto solto: assim estas linhas
+  de documentação, que citam os limites, não são confundidas com eles.
+  Ou se preenche {{ITENS_LEIA_TAMBEM}} com um <li class="item-artigo"> por
+  artigo, no mesmo formato do índice em /artigos/, ou se apaga tudo de um
+  comentário de limite ao outro, os dois incluídos. Seção com lista vazia
+  não fica: ou tem item, ou não existe.
 
   CAIXA ALTA: os títulos sobem para maiúsculas pelo CSS. Escreva {{H1}} e os
   <h2> em caixa mista. Ver a seção 6.5 do PRD.
@@ -79,9 +93,11 @@
 <link rel="icon" href="/estatico/logo-lee-advogado-branco.svg" type="image/svg+xml">
 <link rel="stylesheet" href="/estatico/estilo.css">
 
-<!-- Os três blocos de dados estruturados. São bloco de dados, não script: o
-     navegador nunca avalia um `script` cujo tipo não é JavaScript, e por
-     isso convivem com a política declarada acima. -->
+<!-- Os DOIS blocos de dados estruturados, Article e BreadcrumbList. São
+     bloco de dados, não script: o navegador nunca avalia um `script` cujo
+     tipo não é JavaScript, e por isso convivem com a política declarada
+     acima. Eram três até 16/11/2026, quando o de perguntas e respostas
+     saiu; esta linha ainda dizia três, e foi corrigida. -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -180,47 +196,45 @@
       </picture>
       <div>
         <h2>Bruno Lee</h2>
-        <p>Advogado inscrito na OAB/SP sob o nº 425.768. Atuação contenciosa e consultiva para pequenas e médias empresas, seus sócios e administradores.</p>
-        <a href="/#trajetoria" class="voltar">Ver trajetória completa</a>
+        <p>Bruno Lee, advogado. OAB/SP nº 425.768.</p>
       </div>
     </div>
 
   </div>
 </main>
 
+<!-- O FECHO. Só a primeira frase muda de um artigo para outro, e é o que
+     o marcador recebe. A segunda frase e os dois contatos são fixos.
+
+     O que havia aqui antes, e saiu em 16/11/2026: o título "Tem uma questão
+     jurídica para resolver?" com botão de WhatsApp e botão de e-mail. Motivo
+     da remoção: pergunta dirigida a quem tem o problema, somada a botão de
+     ação, funciona como oferta de serviço, vedada pelo Provimento 205/2021
+     do CFOAB. Não reintroduzir pergunta ao leitor nem verbo no imperativo. -->
 <section class="contato" id="contato">
   <div class="dentro">
-    <h2>Tem uma questão jurídica para resolver?</h2>
+    <h2>{{FECHO}}</h2>
     <div class="contato-acoes">
-      <a href="https://wa.me/5511954220474" class="botao-zap" rel="noopener noreferrer">
-        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
-          <path d="M12 3C7.03 3 3 6.58 3 11c0 2.4 1.2 4.55 3.1 6.01L5.5 21l4.2-2.1c.74.13 1.51.2 2.3.2 4.97 0 9-3.58 9-8s-4.03-8-9-8z"/>
-        </svg>
-        WhatsApp
-      </a>
-      <a href="mailto:contato@leeadv.com.br" class="botao-borda botao-email">
-        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
-          <path d="M4 5h16a2 2 0 0 1 2 2v.35l-10 5.6-10-5.6V7a2 2 0 0 1 2-2z"/>
-          <path d="M2 9.6V17a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9.6l-10 5.6z"/>
-        </svg>
-        contato@leeadv.com.br
-      </a>
+      <a href="mailto:contato@leeadv.com.br" class="botao-claro">contato@leeadv.com.br</a>
+      <a href="tel:+5511954220474" class="botao-borda">11 95422-0474</a>
     </div>
     <p class="contato-nota">Atendimento por agendamento, com resposta em até um dia útil.</p>
   </div>
 </section>
 
+<!-- #LEIA-TAMBEM:INICIO -->
 <section class="secao leia-tambem">
   <div class="dentro">
     <div class="secao-cabeca">
       <p class="sobrelinha">Leia também</p>
       <h2>Outros artigos</h2>
     </div>
-    <!-- Cada item é um <li> com link e uma linha de resumo, no mesmo formato
-         do índice em /artigos/. -->
-    {{LEIA_TAMBEM}}
+    <ul class="lista-artigos">
+{{ITENS_LEIA_TAMBEM}}
+    </ul>
   </div>
 </section>
+<!-- #LEIA-TAMBEM:FIM -->
 
 <footer class="rodape">
   <div class="dentro">
