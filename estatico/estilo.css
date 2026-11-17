@@ -542,12 +542,29 @@ img { display: block; max-width: 100%; }
     margin-bottom: 0;
 }
 
-.trajetoria .dentro {
-    display: grid;
-    grid-template-columns: 1.15fr 1fr;
-    gap: 64px;
-    align-items: start;
+/* Coluna única desde 16/11/2026. Era uma grade de duas colunas, texto à
+ * esquerda e retrato com quadro à direita. O texto perdeu o parágrafo que
+ * repetia o quadro e o parágrafo que foi para a seção seguinte, e com dois
+ * parágrafos curtos a segunda coluna deixaria um vão de altura desigual.
+ *
+ * A largura de leitura vai nos FILHOS, e não no .dentro: o .dentro guarda a
+ * medida e o respiro comuns a todas as seções, e sobrescrevê-lo aqui
+ * desalinharia esta seção das outras na borda. */
+.trajetoria .dentro { display: block; }
+
+.trajetoria-cabeca {
+    text-align: center;
+    margin-bottom: 36px;
 }
+
+.trajetoria .quadro,
+.trajetoria-texto {
+    max-width: 640px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.trajetoria-texto { margin-top: 40px; }
 
 .trajetoria h2 { font-size: 2rem; }
 
@@ -575,7 +592,7 @@ img { display: block; max-width: 100%; }
     width: 190px;
     height: 190px;
     border-radius: 50%;
-    margin: 0 0 32px;
+    margin: 0 auto 36px;
 }
 
 /* O quadro de dados. Uma lista de definição porque é rótulo e conteúdo, e
@@ -972,11 +989,12 @@ img { display: block; max-width: 100%; }
 
     .grade { grid-template-columns: 1fr; margin-bottom: 40px; }
 
-    .trajetoria .dentro { grid-template-columns: 1fr; gap: 40px; }
+    /* A seção já é de coluna única em qualquer largura desde 16/11/2026, então
+       aqui só sobram o tamanho do título, o do retrato e o respiro. */
     .trajetoria h2 { font-size: 1.6rem; }
+    .trajetoria-cabeca { margin-bottom: 28px; }
+    .trajetoria-texto { margin-top: 32px; }
 
-    /* Em coluna única o retrato fica centralizado acima do quadro: encostado
-     * à esquerda, num bloco estreito, ele desequilibra a página. */
     .retrato { width: 150px; height: 150px; margin: 0 auto 28px; }
 
     .quadro > div { flex-direction: column; gap: 6px; }
