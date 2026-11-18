@@ -1,28 +1,37 @@
-/* O site público do Lee Advogado. Claro, com o preto como destaque.
+/* O site público do Lee Advogado. Escuro, com o branco como destaque e um
+ * acento em cobre.
  *
- * INVERTIDO EM 17/11/2026. Até essa data o site era escuro fixo, numa direção
- * em degradê escolhida em 15/11/2026. Passou a ser claro porque era a única
- * peça escura de um sistema inteiramente claro: petição, proposta, planilha,
- * sistema interno e cartão são todos claros, e o cliente via o site e
- * recebia a proposta em PDF com duas identidades diferentes.
+ * A HISTÓRIA DA PALETA, porque ela já mudou duas vezes. Escuro fixo, em
+ * degradê, desde 15/11/2026. Invertido para o claro em 17/11/2026, para
+ * alinhar o site às peças impressas do escritório. De volta ao escuro em
+ * 18/11/2026, por decisão do titular. Da entrega de 17/11/2026 ficou tudo o
+ * que não era cor: as três famílias, a escala, os títulos em caixa mista e
+ * a ausência de degradê. Voltou só a paleta, e entrou o cobre.
  *
- * Com a inversão, o preto deixa de ser o fundo e passa a ser a ferramenta de
- * destaque: o texto, o botão principal, a borda sob o ponteiro e uma única
- * faixa invertida por página (a seção "recorte"). Uma faixa, no máximo: o
- * destaque que se repete deixa de destacar.
+ * No escuro, o branco é a ferramenta de destaque: o texto, o botão
+ * principal, a borda sob o ponteiro e uma única faixa invertida por página,
+ * agora CLARA (a seção "recorte"). Uma faixa, no máximo: o destaque que se
+ * repete deixa de destacar.
  *
- * O site continua com UM sistema de cor, agora claro, e não acompanha o modo
- * de cor do sistema operacional. Não há paleta escura alternativa nesta
- * folha, pela mesma razão de antes: dois sistemas de cor convivendo divergem
- * com o tempo. Quem quiser trazer de volta um modo escuro traz uma decisão de
- * identidade nova, não uma regra de CSS.
+ * O site tem UM sistema de cor, escuro, e não acompanha o modo de cor do
+ * sistema operacional. Não há paleta clara alternativa nesta folha: dois
+ * sistemas de cor convivendo divergem com o tempo. Quem quiser um modo claro
+ * traz uma decisão de identidade nova, não uma regra de CSS.
  *
- * Sem cor de acento e sem degradê. O contraste vem do preto sobre o branco e
- * de dois tons de papel (--papel-2 e --papel-3), nunca de uma cor nova. Os
- * três degradês da direção anterior (150°, 152° e 154°, sem motivo
- * perceptível para os três ângulos) saíram em 17/11/2026, junto com toda
- * função de degradê: uma busca por ela nesta folha deve voltar vazia, e é
- * assim que se percebe, numa revisão futura, se alguém trouxe uma de volta.
+ * Uma cor de acento só, o cobre (--acento e --acento-filete), nestes
+ * lugares e em nenhum outro: a borda do botão "Área restrita", a pílula da
+ * numeração de área, o filete da sobrelinha (dos dois lados no rótulo
+ * centralizado da trajetória, nenhum na pílula da abertura) e a borda do
+ * botão flutuante de WhatsApp. Nunca em texto
+ * corrido, link, título ou ícone de estado, e nunca carregando informação
+ * sozinho. Fora isso, o contraste vem do branco sobre o preto e de dois tons
+ * de papel (--papel-2 e --papel-3).
+ *
+ * Sem degradê. Os três degradês da direção de 15/11/2026 (150°, 152° e
+ * 154°, sem motivo perceptível para os três ângulos) saíram em 17/11/2026 e
+ * não voltaram com o escuro, junto com toda função de degradê: uma busca
+ * por ela nesta folha deve voltar vazia, e é assim que se percebe, numa
+ * revisão futura, se alguém trouxe uma de volta.
  *
  * Nada aqui vem de endereço de terceiro. Nem fonte, nem estilo, nem script.
  * A Content-Security-Policy declarada em cada página (default-src 'self',
@@ -113,51 +122,64 @@
 /* -- as cores, a escala e as medidas -------------------------------------- */
 
 :root {
-    /* Os contrastes abaixo foram medidos em 17/11/2026 pela fórmula da
+    /* Os contrastes abaixo foram medidos em 18/11/2026 pela fórmula da
      * WCAG 2.x. Quem mudar um valor mede de novo e corrige o número aqui. */
-    --bg: #ffffff;
-    --tx: #141414;      /* 18,42:1 sobre --bg */
-    --tx2: #55555a;     /* 7,41:1 sobre --bg */
+    --bg: #0f0f0f;
+    --tx: #f2f2f2;      /* 17,12:1 sobre --bg, 15,86:1 sobre --papel-2 */
+    --tx2: #b4b4b4;     /* 9,24:1 sobre --bg, 8,56:1 sobre --papel-2 */
 
-    /* Rótulo curto e texto de apoio pequeno. 5,08:1 sobre --bg e 4,70:1
+    /* Rótulo curto e texto de apoio pequeno. 6,84:1 sobre --bg e 6,34:1
      * sobre --papel-2: acima do mínimo AA de 4,5 para texto pequeno nos dois
      * fundos, que é onde o rótulo aparece. Mantém o tom levemente frio. */
-    --mut: #6e6e72;
+    --mut: #9a9a9f;
 
     /* As bordas DECORATIVAS. Separam o que já está separado por outra coisa
      * (o fundo do cartão, o espaço, a hierarquia), e por isso não estão
      * sujeitas ao mínimo de 3:1 da WCAG 1.4.11, que vale para a borda que é
-     * o único indicador visual de um controle. #dcd9d4 dá 1,41:1 e #c6c2bb
-     * dá 1,77:1, e é assim que devem ficar: discretas. */
-    --bd: #dcd9d4;
-    --bd2: #c6c2bb;
+     * o único indicador visual de um controle. #2e2e2e dá 1,41:1 e #3f3f3f
+     * dá 1,82:1, e é assim que devem ficar: discretas. */
+    --bd: #2e2e2e;
+    --bd2: #3f3f3f;
 
     /* A borda de CONTROLE: campo de formulário e qualquer elemento clicável
-     * delimitado só pela borda. Esta sim precisa de 3:1, e dá 3,28:1 sobre
-     * --bg e 3,03:1 sobre --papel-2. Não usar --bd ou --bd2 no lugar dela. */
-    --bd-controle: #8e8e8e;
+     * delimitado só pela borda. Esta sim precisa de 3:1, e dá 3,87:1 sobre
+     * --bg e 3,59:1 sobre --papel-2. Não usar --bd ou --bd2 no lugar dela. */
+    --bd-controle: #707070;
 
-    /* Borda do cartão sob o ponteiro: o preto, que é a ferramenta de
-     * destaque. Nomeada para não repetir o número em quatro regras. */
-    --bd-hover: #141414;
+    /* Borda do cartão sob o ponteiro: o branco, que no tema escuro é a
+     * ferramenta de destaque (no claro, de 17/11/2026, era o preto).
+     * Nomeada para não repetir o número em quatro regras. */
+    --bd-hover: #f2f2f2;
 
-    /* O botão principal é preto com texto branco. --on-ink é o texto sobre
-     * a tinta do botão. */
-    --btn: #141414;
-    --on-ink: #ffffff;
+    /* O botão principal é branco com texto escuro. --on-ink é o texto sobre
+     * a tinta do botão: 18,42:1 sobre o branco. */
+    --btn: #ffffff;
+    --on-ink: #141414;
 
     /* O cabeçalho é fixo e passa por cima de todas as seções, então precisa
      * ser opaco e chapado. */
-    --topo-fundo: #ffffff;
+    --topo-fundo: #0f0f0f;
 
     /* Os dois tons de papel. --papel-2 é o fundo do cartão e dos blocos
      * largos; --papel-3 fica para trilho e campo desabilitado. */
-    --papel-2: #f7f6f4;
-    --papel-3: #eeece8;
+    --papel-2: #181818;
+    --papel-3: #202020;
 
-    /* O bloco invertido: a única faixa escura da página. */
-    --inv-fundo: #141414;
-    --inv-tx: #ffffff;
+    /* O bloco invertido: a única faixa clara da página. 18,42:1. */
+    --inv-fundo: #ffffff;
+    --inv-tx: #141414;
+
+    /* O acento em cobre, adotado em 18/11/2026 para a tela. Nunca carrega
+     * informação sozinho: em todo ponto onde aparece há texto ou forma ao
+     * lado. --acento-filete é só traço, nunca recebe texto. --acento recebe
+     * texto branco e por isso é o tom mais escuro: branco sobre ele dá
+     * 4,94:1, enquanto sobre o --acento-filete daria 4,20:1 e reprovaria. */
+    --acento: #8C6A3F;         /* 3,88:1 sobre --bg */
+    --acento-filete: #9A7545;  /* 4,57:1 sobre --bg, 4,20:1 sobre --inv-fundo */
+
+    /* O texto sobre o --acento: branco, 4,94:1. Nomeado para que nenhuma
+     * cor literal fique fora deste bloco. */
+    --on-acento: #ffffff;
 
     --titulo: "Literata", Constantia, Georgia, serif;
     --texto: "Source Sans 3", Corbel, "Segoe UI", sans-serif;
@@ -242,7 +264,8 @@ a {
     text-decoration: none;
 }
 
-/* O anel de foco é preto, a cor de destaque: sobre o branco dá 18,42:1. */
+/* O anel de foco é branco-gelo (--tx), a cor de destaque do tema escuro:
+ * sobre o --bg dá 17,12:1. */
 a:focus-visible,
 .menu-estado:focus-visible + .menu-botao {
     outline: 2px solid var(--tx);
@@ -278,6 +301,23 @@ img { display: block; max-width: 100%; }
     margin-bottom: 14px;
 }
 
+/* O filete em cobre à esquerda da sobrelinha, desde 18/11/2026. É um dos
+ * três pontos do acento, e é só traço: decorativo, vem num pseudoelemento e
+ * não entra na leitura nem na árvore de acessibilidade, e o rótulo continua
+ * dizendo tudo sozinho ao lado dele. --acento-filete, e não --acento,
+ * porque aqui não há texto sobre a cor. Dentro da faixa clara do recorte
+ * ele dá 4,20:1 sobre o branco, o bastante para um traço que não carrega
+ * informação. */
+.sobrelinha::before {
+    content: "";
+    display: inline-block;
+    width: 36px;
+    height: 2px;
+    background: var(--acento-filete);
+    vertical-align: middle;
+    margin-right: 13px;
+}
+
 /* O lead: a frase de apoio abaixo de um título. No máximo 54 caracteres por
  * linha, mais curto que o corpo, porque está num tamanho maior e porque é
  * lido de uma vez, antes de decidir continuar. */
@@ -306,13 +346,13 @@ img { display: block; max-width: 100%; }
     padding-bottom: 18px;
 }
 
-/* O logotipo é a assinatura completa em preto, "Lee" e "advogado", desde
- * 17/11/2026: logo-lee-advogado-preto.svg, o mesmo desenho do branco com as
- * cores trocadas (o nome em #141414, o descritor no cinza da marca,
- * #6B6B6B). Nenhum filtro de cor: trocar o arquivo preserva a hierarquia
- * entre nome e descritor, que um invert() achataria. O branco continua no
- * repositório para o bloco invertido, e o símbolo isolado, sem descritor,
- * é ativo da marca guardado à parte. */
+/* O logotipo é a assinatura completa em branco, "Lee" e "advogado", desde
+ * 18/11/2026, com a volta ao escuro: logo-lee-advogado-branco.svg, o nome
+ * em branco e o descritor em #CBCBCB. Nenhum filtro de cor: trocar o
+ * arquivo preserva a hierarquia entre nome e descritor, que um invert()
+ * achataria. O preto (logo-lee-advogado-preto.svg), usado no tema claro de
+ * 17/11/2026, continua no repositório para fundo claro, e o símbolo
+ * isolado, sem descritor, é ativo da marca guardado à parte. */
 .topo-logo { height: 30px; width: auto; }
 
 .menu {
@@ -325,12 +365,15 @@ img { display: block; max-width: 100%; }
 .menu a { color: var(--tx2); transition: color var(--transicao) ease; }
 .menu a:hover { color: var(--tx); }
 
-/* Elemento clicável delimitado só pela borda: --bd-controle, e não --bd. */
+/* Elemento clicável delimitado só pela borda, e por isso a borda precisa de
+ * 3:1. Desde 18/11/2026 ela é o cobre (--acento-filete, 4,57:1 sobre o
+ * --bg), um dos três pontos do acento. O texto continua em --tx2: o cobre
+ * fica no traço, e o nome do botão diz o que ele é. */
 .restrita {
     font-size: var(--t0);
     font-weight: 600;
     color: var(--tx2);
-    border: 1px solid var(--bd-controle);
+    border: 1px solid var(--acento-filete);
     border-radius: var(--raio-pilula);
     padding: 8px 16px;
     white-space: nowrap;
@@ -358,9 +401,9 @@ img { display: block; max-width: 100%; }
 /* Fundo da página, chapado. Até 17/11/2026 havia aqui um degradê diagonal,
  * um campo de luz e o L do logotipo em tamanho gigante, desenhado em
  * degradê e apagado por máscara antes da coluna de texto. Saíram os três
- * com a inversão: a abertura agora se sustenta pelo tamanho do título e
- * pelo branco em volta dele, e o L da marca já está no cabeçalho, logo
- * acima. */
+ * com a inversão para o claro e não voltaram com o escuro: a abertura se
+ * sustenta pelo tamanho do título e pelo vazio em volta dele, e o L da
+ * marca já está no cabeçalho, logo acima. */
 .abertura {
     background: var(--bg);
     border-bottom: 1px solid var(--bd);
@@ -381,6 +424,13 @@ img { display: block; max-width: 100%; }
     margin-bottom: 26px;
     color: var(--tx2);
 }
+
+/* Sem filete dentro da pílula. A abertura é o único lugar em que a
+ * sobrelinha tem caixa, e a pílula já é o marcador do rótulo: o filete
+ * dentro dela seria um segundo marcador, e é o que desalinhava a segunda
+ * linha em tela estreita. Sem ele, a 390px, as duas linhas do rótulo
+ * começam no mesmo x. */
+.abertura .sobrelinha::before { display: none; }
 
 .abertura h1 {
     font-size: var(--t6);
@@ -419,7 +469,7 @@ img { display: block; max-width: 100%; }
 .botao-borda:hover,
 .botao-zap:hover { transform: translateY(-3px); }
 
-/* O botão principal: preto, texto branco. É o preto como destaque. */
+/* O botão principal: branco, texto escuro. É o branco como destaque. */
 .botao,
 .botao-claro,
 .botao-zap {
@@ -467,7 +517,7 @@ img { display: block; max-width: 100%; }
 }
 
 /* O botão secundário: borda --tx de 1,5px, que é o único indicador visual
- * do controle e passa os 3:1 com folga (18,42:1). */
+ * do controle e passa os 3:1 com folga (17,12:1). */
 .botao-vazado,
 .botao-borda {
     background: transparent;
@@ -547,15 +597,22 @@ img { display: block; max-width: 100%; }
  * para a linha errada e relê. Era a maior perda de leitura da página. */
 .area-larga p { max-width: 62ch; }
 
-/* A numeração em pílula, conforme a seção 6.2.1. É rótulo. */
+/* A numeração em pílula, conforme a seção 6.2.1. É rótulo.
+ *
+ * Desde 18/11/2026 a pílula é cheia, em cobre, um dos três pontos do
+ * acento: fundo --acento com texto --on-acento, branco sobre cobre a
+ * 4,94:1, acima do mínimo de 4,5 para texto pequeno. É o --acento, o tom
+ * mais escuro, e não o --acento-filete: sobre o filete o branco daria
+ * 4,20:1 e reprovaria. A borda saiu, porque o fundo já desenha a pílula. O
+ * número continua dizendo tudo sozinho: o cobre não carrega informação. */
 .area-num {
     display: inline-block;
     font-family: var(--rotulo);
     font-size: var(--t0);
     font-weight: 400;
     letter-spacing: 0.2em;
-    color: var(--mut);
-    border: 1px solid var(--bd);
+    color: var(--on-acento);
+    background: var(--acento);
     border-radius: var(--raio-pilula);
     padding: 4px 10px 4px 12px;
     margin-bottom: 16px;
@@ -610,6 +667,20 @@ img { display: block; max-width: 100%; }
     margin-bottom: 36px;
 }
 
+/* O filete espelhado. No rótulo centralizado, um filete só à esquerda
+ * entra na centralização e desloca o texto do eixo do título (26px, medido
+ * a 1440px). Com o mesmo filete também à direita, o texto volta ao eixo.
+ * Mesmas medidas e mesma cor do ::before da .sobrelinha. */
+.trajetoria-cabeca .sobrelinha::after {
+    content: "";
+    display: inline-block;
+    width: 36px;
+    height: 2px;
+    background: var(--acento-filete);
+    vertical-align: middle;
+    margin-left: 13px;
+}
+
 .trajetoria .quadro,
 .trajetoria-texto {
     max-width: 640px;
@@ -632,10 +703,12 @@ img { display: block; max-width: 100%; }
 
 /* O retrato, acima do quadro de dados.
  *
- * O fundo branco já vem recortado dentro do próprio arquivo. Sobre o
- * --papel-2 do bloco o disco aparece por um tom só, sem moldura: é a mesma
- * relação de papel sobre papel do resto da página. Por isso aqui não há cor
- * de fundo nem borda: o círculo é só o recorte.
+ * Desde 18/11/2026 a página usa o retrato-escuro, com fundo #1e1e20 já
+ * recortado dentro do próprio arquivo. Sobre o --papel-2 do bloco o disco
+ * aparece por um tom só, sem moldura: é a mesma relação de papel sobre
+ * papel do resto da página. O retrato-branco, de fundo branco, ficaria ali
+ * como um disco aceso. Por isso aqui não há cor de fundo nem borda: o
+ * círculo é só o recorte.
  *
  * width e height estão declarados também no HTML, para o navegador reservar
  * o espaço antes de a imagem chegar e a página não dar um salto. */
@@ -684,18 +757,21 @@ img { display: block; max-width: 100%; }
 
 /* -- por que esse recorte: o bloco invertido ------------------------------- */
 
-/* A ÚNICA faixa escura da página, desde 17/11/2026: fundo #141414, texto
- * branco, filete branco. No máximo uma por página. É onde o preto, que
- * deixou de ser o fundo, aparece como destaque inteiro, e por isso fica na
- * seção que diz por que o escritório trabalha como trabalha.
+/* A ÚNICA faixa CLARA da página, desde 18/11/2026: fundo #ffffff, texto
+ * #141414, filete escuro. No máximo uma por página. Entre 17/11/2026 e
+ * 18/11/2026, com o site claro, era a única faixa escura; com a volta ao
+ * escuro a inversão inverteu junto. É onde o branco, a cor de destaque,
+ * aparece inteiro, e por isso fica na seção que diz por que o escritório
+ * trabalha como trabalha.
  *
  * Coluna única e estreita, de propósito: é a seção da página que se lê como
  * texto corrido, e não como lista ou quadro. O limite de 66 caracteres é a
  * medida em que a linha ainda se lê sem o olho perder a volta.
  *
- * Tudo aqui é branco, inclusive o rótulo e a nota: sobre #141414 o branco dá
- * 18,42:1, e um cinza para hierarquizar abriria a porta para um segundo
- * sistema de cor dentro da faixa. A hierarquia vem do tamanho. */
+ * Todo o texto aqui é --inv-tx, inclusive o rótulo e a nota: #141414 sobre
+ * o branco dá 18,42:1, e um cinza para hierarquizar abriria a porta para um
+ * segundo sistema de cor dentro da faixa. A hierarquia vem do tamanho. A
+ * única outra cor é o filete em cobre da sobrelinha. */
 .recorte {
     background: var(--inv-fundo);
     border-color: var(--inv-fundo);
@@ -716,8 +792,8 @@ img { display: block; max-width: 100%; }
 /* A nota de fonte. O dado do Sebrae não sai sem ela, nunca: número de
  * terceiro sem procedência à vista é número que o leitor não pode conferir.
  *
- * O filete branco do bloco invertido é este: uma linha de 1px que separa a
- * prosa da procedência. A discrição da nota vem do tamanho, que é de onde a
+ * O filete do bloco invertido é este, na cor do texto da faixa: uma linha
+ * de 1px que separa a prosa da procedência. A discrição da nota vem do tamanho, que é de onde a
  * discrição deve vir, e não de um cinza. */
 .nota-fonte {
     font-size: var(--t0);
@@ -778,7 +854,7 @@ img { display: block; max-width: 100%; }
 
 /* Bloco largo de papel, com o raio que a seção 6.2.1 dá aos blocos largos.
  * Não é invertido: o bloco invertido é um por página, e é o recorte. O
- * destaque aqui é o botão preto. */
+ * destaque aqui é o botão branco. */
 .contato {
     background: var(--papel-2);
     margin-top: 56px;
@@ -808,7 +884,13 @@ img { display: block; max-width: 100%; }
  * inclusive aqui, e a sétima conferência de publicidade admite o botão como
  * canal de contato pelo art. 4º, § 3º, do Provimento 205/2021, desde que seja
  * só um caminho de conversa: o rótulo acessível é "WhatsApp" e nada além
- * disso. Nenhum texto de oferta de serviço entra neste botão. */
+ * disso. Nenhum texto de oferta de serviço entra neste botão.
+ *
+ * Sem sombra desde 18/11/2026: sombra escura sobre fundo escuro não aparece.
+ * O contorno do disco é uma borda em cobre, --acento-filete: 4,57:1 sobre o
+ * fundo escuro e 4,20:1 sobre a faixa clara do recorte, sem cor nova no
+ * sistema. Sobre a faixa clara é essa borda que delimita o botão: o disco
+ * é branco como ela, e sem a borda só o ícone ficaria visível. */
 .contato-fixo {
     position: fixed;
     right: 24px;
@@ -822,7 +904,7 @@ img { display: block; max-width: 100%; }
     border-radius: 50%;
     background: var(--btn);
     color: var(--on-ink);
-    box-shadow: 0 6px 20px rgba(20, 20, 20, 0.18);
+    border: 1px solid var(--acento-filete);
     transition: transform var(--transicao) var(--curva-botao);
 }
 
@@ -830,12 +912,12 @@ img { display: block; max-width: 100%; }
 
 .contato-fixo svg { width: 24px; height: 24px; display: block; }
 
-/* O anel de foco é preto, como o dos demais links.
+/* O anel de foco é --tx, como o dos demais links.
  *
  * O outline é desenhado FORA da caixa, e o outline-offset o afasta ainda
- * mais, então ele aparece sobre o fundo branco da página, onde o preto dá
- * 18,42:1. A folga de 3px deixa uma faixa branca entre o disco e o anel, de
- * modo que o preto do anel não se funde com o preto do disco. */
+ * mais, então ele aparece sobre o fundo escuro da página, onde o --tx dá
+ * 17,12:1. A folga de 3px deixa uma faixa escura entre o disco e o anel, de
+ * modo que o claro do anel não se funde com o branco do disco. */
 .contato-fixo:focus-visible {
     outline: 3px solid var(--tx);
     outline-offset: 3px;

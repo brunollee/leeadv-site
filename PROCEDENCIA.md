@@ -56,10 +56,12 @@ conteúdo é byte a byte o do pacote.
 | `jost-regular.woff2` | `@fontsource/jost`, `jost-latin-400-normal.woff2` |
 | `literata-LICENCA.txt`, `source-sans-3-LICENCA.txt`, `jost-LICENCA.txt` | o arquivo de licença de cada pacote |
 
-Os nomes de origem da tabela seguem o padrão de nomenclatura do Fontsource
-(família, subconjunto, peso, estilo). Quem precisar conferir instala o pacote
-na versão indicada e compara o resumo do arquivo correspondente com a tabela
-de somas abaixo.
+Os nomes de origem e o conteúdo foram conferidos contra os pacotes
+`@fontsource/literata` 5.3.0, `@fontsource/source-sans-3` 5.3.1 e
+`@fontsource/jost` 5.3.0: cada arquivo guardado é byte a byte idêntico ao
+arquivo correspondente do pacote. Para reconferir, instale o pacote na versão
+indicada e compare o resumo SHA-256 do arquivo de origem com a tabela de
+somas abaixo.
 
 Como os arquivos são o subconjunto latino do próprio pacote, e não um recorte
 feito aqui, o comando de recorte que aparece no registro das fontes
