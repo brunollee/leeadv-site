@@ -1,19 +1,28 @@
-/* O site público do Lee Advogado. Direção D: escura, em degradê.
+/* O site público do Lee Advogado. Claro, com o preto como destaque.
  *
- * Escolhida em 15/11/2026. O site é ESCURO FIXO: não acompanha mais o modo
- * de cor do sistema operacional, e não existe mais versão clara desta folha.
- * Quem procurar aqui a paleta clara não vai encontrar — ela saiu junto com a
- * regra de modo, de propósito, para não haver dois sistemas de cor
- * convivendo e divergindo com o tempo.
+ * INVERTIDO EM 17/11/2026. Até essa data o site era escuro fixo, numa direção
+ * em degradê escolhida em 15/11/2026. Passou a ser claro porque era a única
+ * peça escura de um sistema inteiramente claro: petição, proposta, planilha,
+ * sistema interno e cartão são todos claros, e o cliente via o site e
+ * recebia a proposta em PDF com duas identidades diferentes.
  *
- * A consulta de mídia que fazia essa troca não existe mais em lugar nenhum
- * do repositório, e uma busca por ela deve voltar vazia. É assim que se
- * percebe, numa revisão futura, se alguém a trouxe de volta sem querer.
+ * Com a inversão, o preto deixa de ser o fundo e passa a ser a ferramenta de
+ * destaque: o texto, o botão principal, a borda sob o ponteiro e uma única
+ * faixa invertida por página (a seção "recorte"). Uma faixa, no máximo: o
+ * destaque que se repete deixa de destacar.
  *
- * Sem cor de acento. O contraste vem do branco e dos degradês de cinza,
- * nunca de uma cor nova. O degradê de preto para cinza é identidade do
- * titular: aparece na abertura, nos cartões e nos blocos largos, sempre na
- * diagonal entre 150° e 154°, e sempre discreto.
+ * O site continua com UM sistema de cor, agora claro, e não acompanha o modo
+ * de cor do sistema operacional. Não há paleta escura alternativa nesta
+ * folha, pela mesma razão de antes: dois sistemas de cor convivendo divergem
+ * com o tempo. Quem quiser trazer de volta um modo escuro traz uma decisão de
+ * identidade nova, não uma regra de CSS.
+ *
+ * Sem cor de acento e sem degradê. O contraste vem do preto sobre o branco e
+ * de dois tons de papel (--papel-2 e --papel-3), nunca de uma cor nova. Os
+ * três degradês da direção anterior (150°, 152° e 154°, sem motivo
+ * perceptível para os três ângulos) saíram em 17/11/2026, junto com toda
+ * função de degradê: uma busca por ela nesta folha deve voltar vazia, e é
+ * assim que se percebe, numa revisão futura, se alguém trouxe uma de volta.
  *
  * Nada aqui vem de endereço de terceiro. Nem fonte, nem estilo, nem script.
  * A Content-Security-Policy declarada em cada página (default-src 'self',
@@ -22,91 +31,154 @@
  * página não pinta nada.
  */
 
-/* -- as duas fontes, guardadas em casa ------------------------------------ */
+/* -- as três fontes, guardadas em casa ------------------------------------ */
 /*
- * Caladea nos títulos, Carlito no corpo.
+ * Literata nos títulos, Source Sans 3 no corpo, Jost nos rótulos.
  *
- * A escolha não é estética, é de continuidade: a Caladea é metricamente
- * compatível com a Cambria e a Carlito com a Calibri, que são as fontes das
- * peças do escritório. Cambria e Calibri são proprietárias da Microsoft e não
- * podem ser hospedadas num site público; estas duas ocupam as mesmas medidas
- * sem esse impedimento. O desenho não é idêntico; as métricas são.
+ * A escolha é de continuidade com as peças do escritório, que passaram a ser
+ * escritas em Constantia e Corbel. As duas são da Microsoft e não podem ser
+ * hospedadas num site público. A Literata e a Source Sans 3 são as
+ * equivalentes de tela, de licença livre: uma serifada de leitura longa no
+ * papel da Constantia, uma sem serifa humanista no papel da Corbel. A Jost,
+ * geométrica, faz o rótulo em caixa alta, que é o papel que a Century Gothic
+ * cumpre nas peças. Não há compatibilidade métrica a prometer aqui, como
+ * havia com as fontes anteriores: a continuidade é de desenho e de função.
  *
- * São arquivos ESTÁTICOS, um por peso. Por isso são quatro declarações e não
- * duas, e por isso nenhuma regra desta folha pede font-stretch: não há eixo
- * de largura dentro destes arquivos, e pedir largura a uma fonte que não a
- * tem faz o navegador esticar a letra por conta própria, o que estraga uma
- * serifada.
+ * Por isso as pilhas de reserva nas variáveis começam por Constantia, Corbel
+ * e Century Gothic: se o arquivo daqui não chegar, quem tem as fontes do
+ * Office vê a página com as letras das peças.
  *
- * Licença das duas: SIL Open Font License 1.1, ao lado dos arquivos. A
+ * São arquivos ESTÁTICOS, um por peso e estilo. Seis declarações para seis
+ * arquivos, e nenhuma regra desta folha pede font-stretch: não há eixo de
+ * largura dentro deles, e pedir largura a uma fonte que não a tem faz o
+ * navegador esticar a letra por conta própria.
+ *
+ * Os pesos existentes são estes, e só estes: Literata 400, 400 itálico e
+ * 700; Source Sans 3 400 e 600; Jost 400. Regra que pede outro peso recebe
+ * o vizinho mais próximo ou um negrito sintetizado, e negrito sintetizado
+ * estraga o desenho. Por isso o corpo destaca com 600, e o rótulo em Jost
+ * fica sempre em 400.
+ *
+ * Licença das três: SIL Open Font License 1.1, ao lado dos arquivos. A
  * procedência, com os resumos SHA-256, está no PROCEDENCIA.md.
  */
 @font-face {
-    font-family: "Caladea";
-    src: url("/estatico/fontes/caladea-regular.woff2") format("woff2");
+    font-family: "Literata";
+    src: url("/estatico/fontes/literata-regular.woff2") format("woff2");
     font-weight: 400;
     font-style: normal;
     font-display: swap;
 }
 
 @font-face {
-    font-family: "Caladea";
-    src: url("/estatico/fontes/caladea-bold.woff2") format("woff2");
+    font-family: "Literata";
+    src: url("/estatico/fontes/literata-italic.woff2") format("woff2");
+    font-weight: 400;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Literata";
+    src: url("/estatico/fontes/literata-bold.woff2") format("woff2");
     font-weight: 700;
     font-style: normal;
     font-display: swap;
 }
 
 @font-face {
-    font-family: "Carlito";
-    src: url("/estatico/fontes/carlito-regular.woff2") format("woff2");
+    font-family: "Source Sans 3";
+    src: url("/estatico/fontes/source-sans-3-regular.woff2") format("woff2");
     font-weight: 400;
     font-style: normal;
     font-display: swap;
 }
 
 @font-face {
-    font-family: "Carlito";
-    src: url("/estatico/fontes/carlito-bold.woff2") format("woff2");
-    font-weight: 700;
+    font-family: "Source Sans 3";
+    src: url("/estatico/fontes/source-sans-3-semibold.woff2") format("woff2");
+    font-weight: 600;
     font-style: normal;
     font-display: swap;
 }
 
-/* -- as cores, os degradês e as medidas ----------------------------------- */
+@font-face {
+    font-family: "Jost";
+    src: url("/estatico/fontes/jost-regular.woff2") format("woff2");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* -- as cores, a escala e as medidas -------------------------------------- */
 
 :root {
-    --bg: #0f0f0f;
-    --tx: #efefef;
-    --tx2: #b4b4b4;
-    --mut: #8c8c8c;
-    --bd: #2a2a2a;
-    --bd2: #3a3a3a;
-    --on-ink: #111;
+    /* Os contrastes abaixo foram medidos em 17/11/2026 pela fórmula da
+     * WCAG 2.x. Quem mudar um valor mede de novo e corrige o número aqui. */
+    --bg: #ffffff;
+    --tx: #141414;      /* 18,42:1 sobre --bg */
+    --tx2: #55555a;     /* 7,41:1 sobre --bg */
 
-    /* O branco dos botões e do disco do retrato. Não é token da tabela da
-     * seção 6.2: é a contraparte do --on-ink, que a tabela define como
-     * "texto sobre o botão branco". */
-    --btn: #fff;
+    /* Rótulo curto e texto de apoio pequeno. 5,08:1 sobre --bg e 4,70:1
+     * sobre --papel-2: acima do mínimo AA de 4,5 para texto pequeno nos dois
+     * fundos, que é onde o rótulo aparece. Mantém o tom levemente frio. */
+    --mut: #6e6e72;
 
-    /* Borda do cartão sob o ponteiro. A tabela da seção 6.2.1 dá o valor
-     * direto, sem nome; fica nomeado aqui para não repetir o número em
-     * quatro regras. */
-    --bd-hover: #4d4d4d;
+    /* As bordas DECORATIVAS. Separam o que já está separado por outra coisa
+     * (o fundo do cartão, o espaço, a hierarquia), e por isso não estão
+     * sujeitas ao mínimo de 3:1 da WCAG 1.4.11, que vale para a borda que é
+     * o único indicador visual de um controle. #dcd9d4 dá 1,41:1 e #c6c2bb
+     * dá 1,77:1, e é assim que devem ficar: discretas. */
+    --bd: #dcd9d4;
+    --bd2: #c6c2bb;
 
-    /* Os três degradês. Sempre na diagonal, sempre discretos. */
-    --card: linear-gradient(154deg, #181818 0%, #202020 100%);
-    --hero: linear-gradient(152deg, #0f0f0f 0%, #161616 42%, #3d3d3d 100%);
-    --bloco: linear-gradient(150deg, #161616, #1f1f1f);
+    /* A borda de CONTROLE: campo de formulário e qualquer elemento clicável
+     * delimitado só pela borda. Esta sim precisa de 3:1, e dá 3,28:1 sobre
+     * --bg e 3,03:1 sobre --papel-2. Não usar --bd ou --bd2 no lugar dela. */
+    --bd-controle: #8e8e8e;
+
+    /* Borda do cartão sob o ponteiro: o preto, que é a ferramenta de
+     * destaque. Nomeada para não repetir o número em quatro regras. */
+    --bd-hover: #141414;
+
+    /* O botão principal é preto com texto branco. --on-ink é o texto sobre
+     * a tinta do botão. */
+    --btn: #141414;
+    --on-ink: #ffffff;
 
     /* O cabeçalho é fixo e passa por cima de todas as seções, então precisa
-     * ser opaco e chapado: um degradê ali brigaria com o degradê de cada
-     * seção que passasse por baixo. Valor derivado da paleta, entre o --bg
-     * e a ponta clara do --bloco. */
-    --topo-fundo: #121212;
+     * ser opaco e chapado. */
+    --topo-fundo: #ffffff;
 
-    --titulo: "Caladea", Cambria, Georgia, serif;
-    --texto: "Carlito", Calibri, "Segoe UI", sans-serif;
+    /* Os dois tons de papel. --papel-2 é o fundo do cartão e dos blocos
+     * largos; --papel-3 fica para trilho e campo desabilitado. */
+    --papel-2: #f7f6f4;
+    --papel-3: #eeece8;
+
+    /* O bloco invertido: a única faixa escura da página. */
+    --inv-fundo: #141414;
+    --inv-tx: #ffffff;
+
+    --titulo: "Literata", Constantia, Georgia, serif;
+    --texto: "Source Sans 3", Corbel, "Segoe UI", sans-serif;
+
+    /* Exclusiva do rótulo em caixa alta: sobrelinha, trilha de navegação,
+     * numeração de área, etiqueta. Sempre pequena (--t0, nunca acima de
+     * 14px) e sempre com letter-spacing de 0.2em. Nunca em título nem em
+     * texto corrido: geométrica em minúscula, num parágrafo, cansa. */
+    --rotulo: "Jost", "Century Gothic", sans-serif;
+
+    /* A escala, de razão única 1,25 a partir de 16px. Substituiu em
+     * 17/11/2026 uma escala de 11,5 / 16,5 / 18,9 / 32 / 49,6px, com razões
+     * irregulares entre 1,15 e 1,69. Nenhum tamanho de letra desta folha é
+     * escrito em número: todo tamanho é um destes sete. */
+    --t0: 12.8px;    /* rótulo */
+    --t1: 16px;      /* corpo */
+    --t2: 20px;      /* lead, título de cartão */
+    --t3: 25px;      /* subtítulo */
+    --t4: 31.25px;   /* título de artigo e de bloco */
+    --t5: 39px;      /* título de seção */
+    --t6: 48.8px;    /* abertura */
 
     --larg: 1080px;
     --gutter: 32px;
@@ -129,28 +201,35 @@ html {
     scroll-padding-top: 88px;
 }
 
+/* Algarismos de altura de maiúscula em todo o site: o algarismo antigo, de
+ * altura variável, é bonito em livro e confuso em data, prazo e valor, que
+ * é o que um site de advogado mais escreve. */
 body {
     margin: 0;
     background: var(--bg);
     color: var(--tx);
     font-family: var(--texto);
-    font-size: 16.5px;
+    font-size: var(--t1);
     font-weight: 400;
+    font-variant-numeric: lining-nums;
     line-height: 1.6;
     -webkit-font-smoothing: antialiased;
 }
 
-/* Todo título e todo subtítulo em CAIXA ALTA, por decisão 7 do PRD.
+/* Todo título em caixa mista, desde 17/11/2026.
  *
- * O letter-spacing positivo não é estilo, é legibilidade: letra maiúscula foi
- * desenhada para aparecer entre minúsculas, e uma palavra inteira em caixa
- * alta no espaçamento normal fica com as hastes grudadas. A folga é maior nos
- * rótulos pequenos, onde o problema é pior, e menor nos títulos grandes. */
+ * Até essa data os títulos eram em CAIXA ALTA, com letter-spacing positivo
+ * para as maiúsculas não grudarem. A caixa alta saiu dos títulos: ela grita,
+ * e lê-se mais devagar, porque a palavra perde o contorno que o olho
+ * reconhece. Ficou só no rótulo pequeno, em --rotulo.
+ *
+ * Em caixa mista a folga positiva abre buracos entre as letras; o
+ * letter-spacing passa a levemente negativo, que é o que uma serifada pede
+ * em tamanho de título. */
 h1, h2, h3, h4 {
     font-family: var(--titulo);
     font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.045em;
+    letter-spacing: -0.005em;
     color: var(--tx);
     margin: 0 0 14px;
     line-height: 1.22;
@@ -163,8 +242,7 @@ a {
     text-decoration: none;
 }
 
-/* O foco do teclado tem de aparecer em fundo escuro, e --bd2 não basta para
- * isso: o anel é branco, que é o que se enxerga sobre #0f0f0f. */
+/* O anel de foco é preto, a cor de destaque: sobre o branco dá 18,42:1. */
 a:focus-visible,
 .menu-estado:focus-visible + .menu-botao {
     outline: 2px solid var(--tx);
@@ -180,24 +258,33 @@ img { display: block; max-width: 100%; }
     padding: 0 var(--gutter);
 }
 
-/* A sobrelinha de cada seção.
+/* O RÓTULO. A sobrelinha de cada seção, e o padrão de todo rótulo da folha:
+ * --rotulo, --t0, caixa alta, 0.2em, peso 400.
  *
- * Em Carlito, e não em Caladea: o PRD põe títulos e subtítulos na serifada e
- * corpo e rótulos na sem serifa, e isto é rótulo. Também é o que funciona na
- * tela — uma serifada a 11,5px em caixa alta com folga grande perde as
- * serifas na renderização e fica suja.
+ * A Jost só tem o peso 400 aqui, e é nele que fica: pedir 700 faria o
+ * navegador sintetizar o negrito. O destaque do rótulo vem da caixa alta e
+ * da folga, não do peso.
  *
  * O margin-right negativo desconta o espaço que o letter-spacing acrescenta
  * depois da última letra. Sem ele, o bloco fica fora do prumo à direita. */
 .sobrelinha {
-    font-family: var(--texto);
-    font-size: 11.5px;
-    font-weight: 700;
+    font-family: var(--rotulo);
+    font-size: var(--t0);
+    font-weight: 400;
     text-transform: uppercase;
     letter-spacing: 0.2em;
     margin-right: -0.2em;
     color: var(--mut);
     margin-bottom: 14px;
+}
+
+/* O lead: a frase de apoio abaixo de um título. No máximo 54 caracteres por
+ * linha, mais curto que o corpo, porque está num tamanho maior e porque é
+ * lido de uma vez, antes de decidir continuar. */
+.apoio {
+    font-size: var(--t2);
+    line-height: 1.5;
+    max-width: 54ch;
 }
 
 /* -- o cabeçalho ----------------------------------------------------------- */
@@ -219,25 +306,39 @@ img { display: block; max-width: 100%; }
     padding-bottom: 18px;
 }
 
-/* O logotipo é sempre o branco, o arquivo do conjunto completo. Com o escuro
- * fixo não há mais o que inverter: o filtro de inversão que existia aqui saiu
- * junto com o modo claro, e também não deve voltar. */
+/* O logotipo é o preto, desde 17/11/2026. O branco continua no repositório
+ * para o bloco invertido. */
 .topo-logo { height: 30px; width: auto; }
+
+/* PONTE PROVISÓRIA, para sair na segunda entrega da identidade.
+ *
+ * As páginas da pasta /artigos/ ficaram fora desta entrega e ainda pedem o
+ * logotipo branco no cabeçalho e no rodapé. Sobre o fundo claro ele sumiria.
+ * Até essas páginas trocarem o arquivo, o filtro inverte o branco para
+ * preto, e só onde o arquivo pedido é o branco: nas páginas já trocadas a
+ * regra não alcança nada. No dia em que nenhuma página pedir o branco no
+ * cabeçalho ou no rodapé, apague esta regra. */
+.topo-logo[src$="logo-lee-advogado-branco.svg"],
+.rodape-logo[src$="logo-lee-advogado-branco.svg"] {
+    filter: invert(1);
+}
 
 .menu {
     display: flex;
     align-items: center;
     gap: 30px;
-    font-size: 14.5px;
+    font-size: var(--t1);
 }
 
 .menu a { color: var(--tx2); transition: color var(--transicao) ease; }
 .menu a:hover { color: var(--tx); }
 
+/* Elemento clicável delimitado só pela borda: --bd-controle, e não --bd. */
 .restrita {
-    font-size: 13.5px;
+    font-size: var(--t0);
+    font-weight: 600;
     color: var(--tx2);
-    border: 1px solid var(--bd);
+    border: 1px solid var(--bd-controle);
     border-radius: var(--raio-pilula);
     padding: 8px 16px;
     white-space: nowrap;
@@ -262,72 +363,26 @@ img { display: block; max-width: 100%; }
 
 /* -- a abertura ------------------------------------------------------------ */
 
+/* Fundo da página, chapado. Até 17/11/2026 havia aqui um degradê diagonal,
+ * um campo de luz e o L do logotipo em tamanho gigante, desenhado em
+ * degradê e apagado por máscara antes da coluna de texto. Saíram os três
+ * com a inversão: a abertura agora se sustenta pelo tamanho do título e
+ * pelo branco em volta dele, e o L da marca já está no cabeçalho, logo
+ * acima. */
 .abertura {
-    position: relative;
-    overflow: hidden;
-    background: var(--hero);
+    background: var(--bg);
     border-bottom: 1px solid var(--bd);
     padding: 104px 0 92px;
 }
 
-/* O elemento gráfico da abertura: o L do próprio logotipo.
- *
- * Substituiu, em 16/11/2026, um "L" tipográfico desenhado em Caladea. A
- * razão está na seção 6.8: é a única forma da página que só pode ser desta
- * banca. O traço está embutido na marcação, não carregado como arquivo.
- *
- * Três camadas, nesta ordem de pilha: o campo de luz, a arte, e o texto.
- * Todas as três com z-index declarado, para a ordem não depender da ordem
- * dos elementos na marcação. */
-
-/* O campo de luz, em camada própria e não como fundo da seção: assim ele
- * não entra na máscara da arte, que o cortaria junto com a letra. */
-.luz {
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-    pointer-events: none;
-    background: radial-gradient(820px 480px at 82% 14%, rgba(255, 255, 255, .08), transparent 62%);
-}
-
-/* O contêiner da arte, e a máscara.
- *
- * A máscara é o que resolve o defeito que derrubou as versões anteriores da
- * abertura: a arte atrapalhava a leitura. Baixar opacidade não resolveria,
- * porque o traço continuaria por baixo das letras. Isto apaga o desenho
- * antes da coluna de texto — "to left" faz o gradiente correr da direita
- * para a esquerda, então os 42% da direita ficam opacos, a transição vai
- * até 64%, e o terço esquerdo, onde o texto vive, fica limpo.
- *
- * O prefixo -webkit- vem junto e primeiro: sem ele a máscara não pinta em
- * parte dos navegadores baseados em WebKit, e a letra apareceria inteira. */
-.arte {
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-    overflow: hidden;
-    pointer-events: none;
-    -webkit-mask-image: linear-gradient(to left, #000 0%, #000 42%, transparent 64%);
-    mask-image: linear-gradient(to left, #000 0%, #000 42%, transparent 64%);
-}
-
-.ele {
-    position: absolute;
-    right: -300px;
-    top: 40px;
-    height: 520px;
-    width: auto;
-}
-
-.abertura .dentro { position: relative; z-index: 1; }
-
-/* A etiqueta da abertura: a sobrelinha vira pílula, com borda e fundo em
- * degradê. É o único lugar em que a sobrelinha tem caixa; nas outras seções
- * ela continua solta sobre o fundo. */
+/* A etiqueta da abertura: a sobrelinha vira pílula, com borda decorativa e
+ * fundo de papel. É o único lugar em que a sobrelinha tem caixa; nas outras
+ * seções ela continua solta sobre o fundo. Não é clicável, por isso a borda
+ * é --bd, e não --bd-controle. */
 .abertura .sobrelinha {
     display: inline-block;
-    background: var(--card);
-    border: 1px solid #333;
+    background: var(--papel-2);
+    border: 1px solid var(--bd);
     border-radius: var(--raio-pilula);
     padding: 8px 18px;
     margin-right: 0;
@@ -336,15 +391,14 @@ img { display: block; max-width: 100%; }
 }
 
 .abertura h1 {
-    font-size: 3.1rem;
+    font-size: var(--t6);
+    line-height: 1.12;
     max-width: 19ch;
     margin-bottom: 24px;
 }
 
 .abertura .apoio {
-    font-size: 1.12rem;
     color: var(--tx2);
-    max-width: 58ch;
     margin-bottom: 34px;
 }
 
@@ -358,8 +412,8 @@ img { display: block; max-width: 100%; }
 .botao-borda,
 .botao-zap {
     display: inline-block;
-    font-size: 14.5px;
-    font-weight: 700;
+    font-size: var(--t1);
+    font-weight: 600;
     padding: 14px 28px;
     border-radius: var(--raio-pilula);
     transition: transform var(--transicao) var(--curva-botao),
@@ -373,25 +427,29 @@ img { display: block; max-width: 100%; }
 .botao-borda:hover,
 .botao-zap:hover { transform: translateY(-3px); }
 
+/* O botão principal: preto, texto branco. É o preto como destaque. */
 .botao,
 .botao-claro,
 .botao-zap {
     background: var(--btn);
     color: var(--on-ink);
-    border: 1px solid var(--btn);
+    border: 1.5px solid var(--btn);
 }
 
 /* O botão de preferência da faixa de contato. Fica maior que o vizinho e
  * leva o ícone: é por tamanho e por desenho que ele se destaca, e não por
  * uma frase dizendo que é o canal preferido. Frase dessas seria texto novo,
  * e num site de advogado texto novo passa por conferência de publicidade
- * antes de existir. */
+ * antes de existir.
+ *
+ * Desde 17/11/2026 o tamanho vem da caixa, e não da letra: a escala não tem
+ * degrau entre 16 e 20px, e 20px num botão grita. A letra é a mesma do
+ * vizinho, e o que cresce é a pílula e o ícone. */
 .botao-zap {
     display: inline-flex;
     align-items: center;
     gap: 10px;
-    font-size: 16px;
-    padding: 17px 32px;
+    padding: 17px 34px;
 }
 
 /* O e-mail acompanha com o envelope, no mesmo desenho preenchido do balão:
@@ -416,15 +474,17 @@ img { display: block; max-width: 100%; }
     flex: none;
 }
 
+/* O botão secundário: borda --tx de 1,5px, que é o único indicador visual
+ * do controle e passa os 3:1 com folga (18,42:1). */
 .botao-vazado,
 .botao-borda {
     background: transparent;
     color: var(--tx);
-    border: 1px solid var(--bd2);
+    border: 1.5px solid var(--tx);
 }
 
 .botao-vazado:hover,
-.botao-borda:hover { border-color: var(--bd-hover); }
+.botao-borda:hover { border-color: var(--bd-hover); background-color: var(--papel-2); }
 
 /* -- seções em geral ------------------------------------------------------- */
 
@@ -432,25 +492,24 @@ img { display: block; max-width: 100%; }
 .secao { padding: 84px 0; }
 
 .secao-cabeca { max-width: 62ch; margin-bottom: 56px; }
-.secao-cabeca h2 { font-size: 2rem; }
+.secao-cabeca h2 { font-size: var(--t5); }
 .secao-cabeca .apoio { color: var(--tx2); margin: 0; }
 
 /* -- áreas de atuação ------------------------------------------------------ */
 
 .areas { border-bottom: 1px solid var(--bd); }
 
+/* O título de cada grupo de áreas. Era um rótulo em caixa alta até
+ * 17/11/2026; é um h3, e com a regra de que todo título é em caixa mista
+ * passou a subtítulo, na serifada. */
 .grupo-areas {
-    font-family: var(--titulo);
-    font-size: 13px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.18em;
+    font-size: var(--t3);
     color: var(--tx);
     margin: 0 0 20px;
 }
 
-/* A linha que abre o terceiro bloco. Só ele tem uma: é onde o site explica
- * por que empresa e sócio estão na mesma página. */
+/* A linha que abre o segundo e o terceiro blocos. É onde o site explica por
+ * que empresa e sócio estão na mesma página. */
 .abre-bloco {
     color: var(--tx2);
     max-width: 62ch;
@@ -470,8 +529,9 @@ img { display: block; max-width: 100%; }
 
 .grade:last-child { margin-bottom: 0; }
 
+/* O cartão. Separa-se do fundo pelo --papel-2; a borda é decorativa. */
 .area {
-    background: var(--card);
+    background: var(--papel-2);
     border: 1px solid var(--bd);
     border-radius: var(--raio-cartao);
     padding: 32px 28px;
@@ -495,27 +555,28 @@ img { display: block; max-width: 100%; }
  * para a linha errada e relê. Era a maior perda de leitura da página. */
 .area-larga p { max-width: 62ch; }
 
-/* A numeração em pílula, conforme a seção 6.2.1. */
+/* A numeração em pílula, conforme a seção 6.2.1. É rótulo. */
 .area-num {
     display: inline-block;
-    font-family: var(--texto);
-    font-size: 12px;
-    font-weight: 700;
-    letter-spacing: 0.14em;
+    font-family: var(--rotulo);
+    font-size: var(--t0);
+    font-weight: 400;
+    letter-spacing: 0.2em;
     color: var(--mut);
     border: 1px solid var(--bd);
     border-radius: var(--raio-pilula);
-    padding: 4px 12px;
+    padding: 4px 10px 4px 12px;
     margin-bottom: 16px;
 }
 
-.area h4 { font-size: 1.18rem; margin-bottom: 10px; }
-.area p { font-size: .95rem; color: var(--tx2); margin: 0; }
+.area h4 { font-size: var(--t2); margin-bottom: 10px; }
+.area p { color: var(--tx2); margin: 0; }
 
 /* -- trajetória ------------------------------------------------------------ */
 
 /* Os três blocos largos — trajetória, recorte e contato — compartilham a
- * mesma caixa: degradê, borda inteira e raio de 24px.
+ * mesma caixa: borda inteira e raio de 24px. A trajetória e o contato são de
+ * papel; o recorte é o bloco invertido.
  *
  * A largura é `calc(100% - 2 * gutter)` com teto em `--larg` e margens
  * automáticas, e não `margin: 0 var(--gutter)`. Com a margem fixa, numa tela
@@ -537,7 +598,7 @@ img { display: block; max-width: 100%; }
 }
 
 .trajetoria {
-    background: var(--bloco);
+    background: var(--papel-2);
     margin-top: 0;
     margin-bottom: 0;
 }
@@ -566,14 +627,12 @@ img { display: block; max-width: 100%; }
 
 .trajetoria-texto { margin-top: 40px; }
 
-.trajetoria h2 { font-size: 2rem; }
+.trajetoria h2 { font-size: var(--t5); }
 
-/* O risco registrado na seção 6.7: texto claro sobre fundo escuro cansa mais
- * em parágrafo corrido, e esta seção é corrida. A mitigação combinada é o
- * tamanho e a entrelinha, nunca clarear o texto. */
+/* Texto corrido: a entrelinha maior é o que sustenta a leitura de parágrafo
+ * longo, e fica a mesma no recorte. */
 .trajetoria p {
     color: var(--tx2);
-    font-size: 1.02rem;
     line-height: 1.75;
 }
 
@@ -581,9 +640,10 @@ img { display: block; max-width: 100%; }
 
 /* O retrato, acima do quadro de dados.
  *
- * O fundo branco já vem recortado dentro do próprio arquivo, e sobre a página
- * escura o disco funciona como destaque. Por isso aqui não há cor de fundo
- * nem borda: o círculo é só o recorte.
+ * O fundo branco já vem recortado dentro do próprio arquivo. Sobre o
+ * --papel-2 do bloco o disco aparece por um tom só, sem moldura: é a mesma
+ * relação de papel sobre papel do resto da página. Por isso aqui não há cor
+ * de fundo nem borda: o círculo é só o recorte.
  *
  * width e height estão declarados também no HTML, para o navegador reservar
  * o espaço antes de a imagem chegar e a página não dar um salto. */
@@ -612,56 +672,67 @@ img { display: block; max-width: 100%; }
 .quadro > div:last-child { border-bottom: none; }
 
 .quadro dt {
-    font-family: var(--texto);
-    font-size: 11.5px;
-    font-weight: 700;
+    font-family: var(--rotulo);
+    font-size: var(--t0);
+    font-weight: 400;
     text-transform: uppercase;
-    letter-spacing: 0.16em;
+    letter-spacing: 0.2em;
     color: var(--mut);
     white-space: nowrap;
 }
 
+/* Algarismos tabulares onde há número de registro: o nº da OAB fica com
+ * cada dígito na mesma largura, como num documento. */
 .quadro dd {
     margin: 0;
-    font-size: .95rem;
     text-align: right;
     color: var(--tx);
+    font-variant-numeric: lining-nums tabular-nums;
 }
 
-/* -- por que esse recorte -------------------------------------------------- */
+/* -- por que esse recorte: o bloco invertido ------------------------------- */
 
-/* Coluna única e estreita, de propósito: é a única seção da página que se lê
- * como texto corrido, e não como lista ou quadro. O limite de 66 caracteres
- * é a medida em que a linha ainda se lê sem o olho perder a volta. */
+/* A ÚNICA faixa escura da página, desde 17/11/2026: fundo #141414, texto
+ * branco, filete branco. No máximo uma por página. É onde o preto, que
+ * deixou de ser o fundo, aparece como destaque inteiro, e por isso fica na
+ * seção que diz por que o escritório trabalha como trabalha.
+ *
+ * Coluna única e estreita, de propósito: é a seção da página que se lê como
+ * texto corrido, e não como lista ou quadro. O limite de 66 caracteres é a
+ * medida em que a linha ainda se lê sem o olho perder a volta.
+ *
+ * Tudo aqui é branco, inclusive o rótulo e a nota: sobre #141414 o branco dá
+ * 18,42:1, e um cinza para hierarquizar abriria a porta para um segundo
+ * sistema de cor dentro da faixa. A hierarquia vem do tamanho. */
 .recorte {
-    background: var(--card);
+    background: var(--inv-fundo);
+    border-color: var(--inv-fundo);
+    color: var(--inv-tx);
     margin-top: 56px;
     margin-bottom: 56px;
 }
 
 .recorte .dentro > * { max-width: 66ch; }
-.recorte h2 { font-size: 2rem; }
+.recorte h2 { font-size: var(--t5); color: var(--inv-tx); }
+.recorte .sobrelinha { color: var(--inv-tx); }
 
-/* Mesma mitigação da trajetória, e pelo mesmo motivo. */
 .recorte p {
-    color: var(--tx2);
-    font-size: 1.02rem;
+    color: var(--inv-tx);
     line-height: 1.75;
 }
 
 /* A nota de fonte. O dado do Sebrae não sai sem ela, nunca: número de
  * terceiro sem procedência à vista é número que o leitor não pode conferir.
  *
- * Em --tx2, e não no --mut que a seção 5.5 pedia. O --mut sobre a ponta
- * clara do cartão dá 4,01:1, abaixo do mínimo AA de 4,5 para texto deste
- * tamanho, e a seção 6.2 restringe o --mut a rótulo curto. Esta nota é
- * prosa de duas linhas, não rótulo. Em --tx2 dá 7,86:1, e ela continua
- * discreta pelo tamanho, que é de onde a discrição deve vir. */
+ * O filete branco do bloco invertido é este: uma linha de 1px que separa a
+ * prosa da procedência. A discrição da nota vem do tamanho, que é de onde a
+ * discrição deve vir, e não de um cinza. */
 .nota-fonte {
-    font-size: .82rem;
-    color: var(--tx2);
+    font-size: var(--t0);
     line-height: 1.5;
     margin: 28px 0 0;
+    padding-top: 18px;
+    border-top: 1px solid var(--inv-tx);
 }
 
 /* -- como conduzo cada caso ------------------------------------------------ */
@@ -673,7 +744,7 @@ img { display: block; max-width: 100%; }
     grid-template-columns: 110px 1fr;
     gap: 28px;
     padding: 26px 28px;
-    background: var(--card);
+    background: var(--papel-2);
     border: 1px solid var(--bd);
     border-radius: var(--raio-cartao);
     transition: transform var(--transicao) ease,
@@ -685,18 +756,19 @@ img { display: block; max-width: 100%; }
     border-color: var(--bd-hover);
 }
 
+/* Rótulo. */
 .etapa-num {
-    font-family: var(--texto);
-    font-size: 12px;
-    font-weight: 700;
+    font-family: var(--rotulo);
+    font-size: var(--t0);
+    font-weight: 400;
     text-transform: uppercase;
-    letter-spacing: 0.14em;
+    letter-spacing: 0.2em;
     color: var(--mut);
     padding-top: 6px;
 }
 
-.etapa h3 { font-size: 1.15rem; margin-bottom: 8px; }
-.etapa p { font-size: .95rem; color: var(--tx2); max-width: 62ch; margin: 0; }
+.etapa h3 { font-size: var(--t2); margin-bottom: 8px; }
+.etapa p { color: var(--tx2); max-width: 62ch; margin: 0; }
 
 /* -- publicações ----------------------------------------------------------- */
 
@@ -707,18 +779,16 @@ img { display: block; max-width: 100%; }
     border-radius: var(--raio-cartao);
     padding: 36px 28px;
     color: var(--mut);
-    font-size: .95rem;
     margin: 0;
 }
 
 /* -- a faixa de contato ---------------------------------------------------- */
 
-/* Bloco largo, com o degradê e o raio que a seção 6.2.1 dá aos blocos
- * largos. A seção 5.8 pedia #141414 chapado, que era a cor da faixa quando
- * ainda havia modo claro; com o escuro fixo, chapado nessa altura o bloco
- * quase não se distingue do fundo. */
+/* Bloco largo de papel, com o raio que a seção 6.2.1 dá aos blocos largos.
+ * Não é invertido: o bloco invertido é um por página, e é o recorte. O
+ * destaque aqui é o botão preto. */
 .contato {
-    background: var(--bloco);
+    background: var(--papel-2);
     margin-top: 56px;
     margin-bottom: 56px;
     padding: 72px 0;
@@ -733,7 +803,7 @@ img { display: block; max-width: 100%; }
 }
 
 .contato h2 {
-    font-size: 1.75rem;
+    font-size: var(--t4);
     max-width: 30ch;
     margin: 0;
 }
@@ -760,7 +830,7 @@ img { display: block; max-width: 100%; }
     border-radius: 50%;
     background: var(--btn);
     color: var(--on-ink);
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 6px 20px rgba(20, 20, 20, 0.18);
     transition: transform var(--transicao) var(--curva-botao);
 }
 
@@ -768,14 +838,12 @@ img { display: block; max-width: 100%; }
 
 .contato-fixo svg { width: 24px; height: 24px; display: block; }
 
-/* O anel de foco é branco, como o dos demais links.
+/* O anel de foco é preto, como o dos demais links.
  *
- * Correção de 16/11/2026: estava em --on-ink, na ideia de que o anel cairia
- * sobre o disco branco. Não cai. O outline é desenhado FORA da caixa, e o
- * outline-offset o afasta ainda mais, então ele aparece sobre o fundo
- * escuro da página, onde um anel #111 some. Branco sobre #0f0f0f dá 16,67:1,
- * e a folga de 3px deixa uma faixa escura entre o disco e o anel, de modo
- * que o branco do anel não se funde com o branco do disco. */
+ * O outline é desenhado FORA da caixa, e o outline-offset o afasta ainda
+ * mais, então ele aparece sobre o fundo branco da página, onde o preto dá
+ * 18,42:1. A folga de 3px deixa uma faixa branca entre o disco e o anel, de
+ * modo que o preto do anel não se funde com o preto do disco. */
 .contato-fixo:focus-visible {
     outline: 3px solid var(--tx);
     outline-offset: 3px;
@@ -834,11 +902,15 @@ img { display: block; max-width: 100%; }
 
 .rodape-logo { height: 26px; width: auto; margin-bottom: 14px; }
 
+/* O cabeçalho de cada coluna é rótulo, e não título: marca o grupo de
+ * links, como a sobrelinha marca a seção. Por isso fica em caixa alta, em
+ * --rotulo, mesmo sendo um h2. */
 .rodape-col h2 {
-    font-family: var(--texto);
-    font-size: 11.5px;
+    font-family: var(--rotulo);
+    font-size: var(--t0);
+    font-weight: 400;
     text-transform: uppercase;
-    letter-spacing: 0.18em;
+    letter-spacing: 0.2em;
     color: var(--mut);
     margin-bottom: 14px;
 }
@@ -846,32 +918,34 @@ img { display: block; max-width: 100%; }
 .rodape-col p,
 .rodape-col a {
     display: block;
-    font-size: .93rem;
     margin: 0 0 8px;
     color: var(--tx2);
 }
 
+/* O nº da OAB, na coluna de registro. */
+.rodape-col p { font-variant-numeric: lining-nums tabular-nums; }
+
 .rodape-col a { transition: color var(--transicao) ease; }
 .rodape-col a:hover { color: var(--tx); }
 
-.rodape-marca p { color: var(--tx2); max-width: 28ch; font-size: .93rem; }
+.rodape-marca p { color: var(--tx2); max-width: 28ch; }
 
 .rodape-fim {
     border-top: 1px solid var(--bd);
     padding-top: 24px;
-    font-size: .85rem;
+    font-size: var(--t0);
     color: var(--mut);
 }
 
-/* -- as páginas de texto corrido (aviso e privacidade) --------------------- */
+/* -- as páginas de texto corrido (aviso, privacidade e artigos) ------------ */
 
+/* O corpo de leitura para em 66 caracteres, a mesma medida do recorte. */
 .texto { padding: 72px 0 84px; }
-.texto .dentro { max-width: 68ch; }
-.texto h1 { font-size: 2.3rem; margin-bottom: 28px; }
+.texto .dentro { max-width: 66ch; }
+.texto h1 { font-size: var(--t4); margin-bottom: 28px; }
 
 .texto p {
     color: var(--tx2);
-    font-size: 1.05rem;
     line-height: 1.75;
 }
 
@@ -880,7 +954,6 @@ img { display: block; max-width: 100%; }
 .voltar {
     display: inline-block;
     margin-top: 36px;
-    font-size: .93rem;
     color: var(--tx2);
     border-bottom: 1px solid var(--bd2);
     padding-bottom: 2px;
@@ -888,27 +961,6 @@ img { display: block; max-width: 100%; }
 }
 
 .voltar:hover { color: var(--tx); border-color: var(--bd-hover); }
-
-/* -- o limite da arte da abertura ------------------------------------------ */
-
-/* A marca sai de cena abaixo de 1020px, e não de 860px como as demais
- * regras de tela pequena. O número não é escolhido, é medido.
- *
- * A marca passa por trás do texto de propósito, e a máscara a apaga o
- * bastante para a leitura continuar. Até cerca de 1144px isso se sustenta
- * sozinho, porque a coluna de texto encolhe junto com a tela e acompanha a
- * rampa da máscara. Abaixo disso a coluna para de encolher: ela passa a
- * ocupar a tela inteira menos as margens, a borda direita do texto fica
- * parada, e a rampa continua andando para a esquerda. A opacidade da marca
- * atrás do texto sobe até 1, e o contraste do parágrafo cai de 5,2:1 para
- * 4,0:1, abaixo do mínimo AA de 4,5.
- *
- * Medido em 16/11/2026, no pior ponto de cada largura, que é a borda
- * direita do parágrafo: 1100px dá 5,16:1, 1020px dá 4,56:1, e 980px já dá
- * 4,17:1. Daí o corte em 1020px. */
-@media (max-width: 1020px) {
-    .ele { display: none; }
-}
 
 /* -- tela pequena ---------------------------------------------------------- */
 
@@ -919,18 +971,19 @@ img { display: block; max-width: 100%; }
 
     .topo .dentro { flex-wrap: wrap; padding-top: 14px; padding-bottom: 14px; }
 
-    /* O botão aparece e o menu passa a depender da caixa de marcar. */
+    /* O botão aparece e o menu passa a depender da caixa de marcar. É
+     * rótulo, e é controle delimitado só pela borda. */
     .menu-botao {
         display: inline-block;
-        font-family: var(--texto);
-        font-size: 12px;
-        font-weight: 700;
+        font-family: var(--rotulo);
+        font-size: var(--t0);
+        font-weight: 400;
         text-transform: uppercase;
-        letter-spacing: 0.16em;
+        letter-spacing: 0.2em;
         color: var(--tx);
-        border: 1px solid var(--bd);
+        border: 1px solid var(--bd-controle);
         border-radius: var(--raio-pilula);
-        padding: 9px 16px;
+        padding: 9px 14px 9px 16px;
         cursor: pointer;
     }
 
@@ -971,7 +1024,8 @@ img { display: block; max-width: 100%; }
         border-top: 1px solid var(--bd);
         border-radius: 0;
         padding: 13px 0;
-        font-size: 14.5px;
+        font-size: var(--t1);
+        font-weight: 400;
         color: var(--tx);
     }
 
@@ -980,18 +1034,20 @@ img { display: block; max-width: 100%; }
     .restrita:hover { border-color: var(--bd); }
 
     .abertura { padding: 72px 0 64px; }
-    .abertura h1 { font-size: 2.1rem; }
-    .abertura .apoio { font-size: 1.02rem; }
+    .abertura h1 { font-size: var(--t5); }
+    .apoio { font-size: var(--t1); }
     /* Respiro de 40px abaixo de 860px, conforme a seção 6.2.1. */
     .secao { padding: 60px 0; }
     .secao-cabeca { margin-bottom: 34px; }
-    .secao-cabeca h2 { font-size: 1.6rem; }
+    .secao-cabeca h2 { font-size: var(--t4); }
+
+    .grupo-areas { font-size: var(--t2); }
 
     .grade { grid-template-columns: 1fr; margin-bottom: 40px; }
 
     /* A seção já é de coluna única em qualquer largura desde 16/11/2026, então
        aqui só sobram o tamanho do título, o do retrato e o respiro. */
-    .trajetoria h2 { font-size: 1.6rem; }
+    .trajetoria h2 { font-size: var(--t4); }
     .trajetoria-cabeca { margin-bottom: 28px; }
     .trajetoria-texto { margin-top: 32px; }
 
@@ -1001,14 +1057,14 @@ img { display: block; max-width: 100%; }
     .quadro dd { text-align: left; }
 
     .recorte { margin-top: 40px; margin-bottom: 40px; }
-    .recorte h2 { font-size: 1.6rem; }
+    .recorte h2 { font-size: var(--t4); }
 
     .etapa { grid-template-columns: 1fr; gap: 10px; }
     .etapa-num { padding-top: 0; }
 
     .contato { margin-top: 40px; margin-bottom: 40px; padding: 56px 0; }
     .contato .dentro { flex-direction: column; align-items: flex-start; gap: 28px; }
-    .contato h2 { font-size: 1.45rem; }
+    .contato h2 { font-size: var(--t3); }
 
     .rodape-colunas { grid-template-columns: 1fr 1fr; gap: 32px; }
 
@@ -1019,11 +1075,10 @@ img { display: block; max-width: 100%; }
     .contato-fixo { right: 16px; bottom: 16px; }
 
     .texto { padding: 52px 0 64px; }
-    .texto h1 { font-size: 1.8rem; }
+    .texto h1 { font-size: var(--t3); }
 }
 
-/* Abaixo de 400px a letra de fundo começa a disputar com o título, e o botão
- * em linha fica estreito demais para o dedo. */
+/* Abaixo de 400px o botão em linha fica estreito demais para o dedo. */
 @media (max-width: 400px) {
 
     /* O .botao-zap entra junto, senão o botão de preferência fica mais

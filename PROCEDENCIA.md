@@ -9,94 +9,98 @@ Nada aqui é buscado em tempo de execução. Nem fonte, nem folha de estilo, nem
 script. Uma página que busca fonte fora conta a esse terceiro cada vez que
 alguém a abre, e deixa de desenhar no dia em que o terceiro é o problema.
 
-## As fontes em uso: Caladea e Carlito
+## As fontes em uso: Literata, Source Sans 3 e Jost
 
-Instaladas em **15/11/2026**, no lugar da Archivo e da Montserrat.
+Instaladas em **17/11/2026**, no lugar das duas fontes metricamente compatíveis com a
+Cambria e a Calibri, junto com a inversão do site para o claro.
 
-**Por que estas duas.** A Caladea é metricamente compatível com a Cambria, e
-a Carlito é metricamente compatível com a Calibri. Os documentos do escritório
-já são escritos em Cambria e Calibri, que são proprietárias da Microsoft e não
-podem ser hospedadas num site público. Estas duas ocupam as mesmas medidas sem
-esse impedimento. O desenho não é idêntico ao da Microsoft; as métricas são.
+**Por que estas três.** As peças do escritório passaram a ser escritas em
+Constantia e Corbel, que são proprietárias da Microsoft e não podem ser
+hospedadas num site público. A Literata e a Source Sans 3 são as equivalentes
+de tela, de licença livre: uma serifada de leitura longa no papel da
+Constantia, uma sem serifa humanista no papel da Corbel. A Jost, geométrica,
+faz só o rótulo pequeno em caixa alta, no papel da Century Gothic. Não há
+compatibilidade métrica entre elas e as da Microsoft, nem se promete: a
+continuidade é de desenho e de função.
+
+| Família | Uso no site | Arquivos |
+|---|---|---|
+| Literata | títulos (`--titulo`) | regular 400, itálico 400, negrito 700 |
+| Source Sans 3 | corpo (`--texto`) | regular 400, seminegrito 600 |
+| Jost | rótulo em caixa alta (`--rotulo`) | regular 400 |
 
 ### Origem
 
-| Família | Repositório de origem | Arquivos baixados |
-|---|---|---|
-| Caladea | `github.com/huertatipografica/Caladea`, `fonts/ttf/` | `Caladea-Regular.ttf`, `Caladea-Bold.ttf`, `OFL.txt` |
-| Carlito | `github.com/googlefonts/carlito` (licença) e `github.com/google/fonts`, `ofl/carlito/` (binários) | `Carlito-Regular.ttf`, `Carlito-Bold.ttf`, `OFL.txt` |
+Os seis `.woff2` e as três licenças foram **trazidos prontos** pelo titular
+em 17/11/2026, já recortados e convertidos fora do repositório, como o
+retrato. Nada aqui foi gerado, recortado ou convertido por quem escreveu
+estas linhas: os arquivos foram conferidos contra as somas que acompanhavam o
+pacote e registrados como chegaram.
 
-O repositório da Carlito versiona apenas as fontes em formato `.glyphs` e não
-publica binário nem lançamento; os `.ttf` vieram do `google/fonts`, o mesmo
-repositório canônico já usado antes neste arquivo.
+O que os próprios arquivos dizem da origem, lido em 17/11/2026:
 
-A Caladea foi baixada da Huerta Tipográfica e **conferida contra a cópia do
-`google/fonts`**: os dois `.ttf` são byte a byte idênticos, nos dois estilos.
+- `literata-LICENCA.txt`, primeira linha: "Copyright 2017 The Literata
+  Project Authors (https://github.com/googlefonts/literata)".
+- `jost-LICENCA.txt`, primeira linha: "Copyright 2020 The Jost Project
+  Authors (https://github.com/indestructible-type/Jost)".
+- `source-sans-3-LICENCA.txt`: texto da SIL Open Font License 1.1.
+- Os seis `.woff2` declaram, no cabeçalho, formato WOFF2 com contorno
+  TrueType.
 
-| Arquivo de origem | SHA-256 do que foi baixado |
-|---|---|
-| `Caladea-Regular.ttf` (81.600 B, versão 1.001) | `f1e899278b7b4491aba5b6a8253c4b04c050cc59b21865be5c37559a775153cd` |
-| `Caladea-Bold.ttf` (84.492 B, versão 1.001) | `ae3cb2dcbc925809dd29d2a44e9802211cab66be541bacbfc9c08c74b27c3742` |
-| `Carlito-Regular.ttf` (628.032 B, versão 1.104) | `f6418f708baede9789daef5d458c0f53d2a888af9820e8062934e504fedc6595` |
-| `Carlito-Bold.ttf` (682.468 B, versão 1.104) | `bb5d20f79b82599ec72983597437373a80f2d2085fa91fc144fd74e876a594db` |
+O pacote não trazia os `.ttf` de origem nem os resumos deles, e por isso a
+tabela de "SHA-256 do que foi baixado", que existe para as fontes anteriores,
+não existe para estas. Quem precisar refazer os arquivos parte dos
+repositórios citados nas licenças.
 
-### A licença das duas é a SIL OFL 1.1
-
-Vale registrar, porque contraria o que se lê por aí: **as duas famílias estão
-sob a SIL Open Font License 1.1**, e não a Caladea sob Apache 2.0, como consta
-de material mais antigo.
-
-A Caladea de fato saiu sob Apache 2.0 na primeira distribuição, de 2013, no
-pacote `crosextrafonts`. A versão 1.001, que é a que está aqui, é OFL. Três
-conferências independentes, todas feitas em 15/11/2026:
-
-1. O `OFL.txt` do repositório da Huerta Tipográfica diz, na primeira linha:
-   "Copyright 2012 The Caladea Project Authors", e em seguida "This Font
-   Software is licensed under the SIL Open Font License, Version 1.1".
-2. No `google/fonts`, a Caladea mora em `ofl/caladea/`, e não em `apache/`.
-3. O próprio binário declara a licença no registro 13 da tabela `name`:
-   "This Font Software is licensed under the SIL Open Font License,
-   Version 1.1", com o registro 14 apontando para `scripts.sil.org/OFL`.
+### A licença das três é a SIL OFL 1.1
 
 A OFL permite usar, embutir, modificar e redistribuir, inclusive o arquivo
 recortado que está aqui, desde que a licença acompanhe. Ela acompanha, em
-`fontes/caladea-LICENCA.txt` e `fontes/carlito-LICENCA.txt`.
+`fontes/literata-LICENCA.txt`, `fontes/source-sans-3-LICENCA.txt` e
+`fontes/jost-LICENCA.txt`.
 
-### O recorte e a conversão
+### Os arquivos guardados
 
-Cada `.ttf` foi recortado para os caracteres do português e convertido para
-`woff2` com o `fontTools`, num ambiente descartável **fora** do repositório.
-Ele não é dependência do site, que não tem dependência nenhuma. Mesmo comando
-usado nas fontes anteriores:
-
-```
-python -m fontTools.subset <origem>.ttf \
-    --unicodes=U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0300-0304,U+0308,U+0329,U+2000-206F,U+2074,U+20AC,U+2122,U+2212,U+2215,U+FEFF,U+FFFD \
-    --layout-features='*' --flavor=woff2 --output-file=<destino>.woff2
-```
+As somas dos seis `.woff2` vieram com o pacote e foram conferidas com
+`sha256sum` depois de copiados, uma a uma: as seis bateram. As das três
+licenças não vinham no pacote e foram calculadas na instalação; passam a ser
+a referência deste repositório.
 
 | Arquivo guardado | Tamanho | SHA-256 |
 |---|---|---|
-| `estatico/fontes/caladea-regular.woff2` | 21.160 B | `e0435f85e40438319b4e480a57a68b0c01e0278f2c567b4ae6b65dbc4605f7dc` |
-| `estatico/fontes/caladea-bold.woff2` | 21.168 B | `504d934b406affbb05be8ecbd56764b190087122003cd45122d984336746fbb2` |
-| `estatico/fontes/caladea-LICENCA.txt` | 4.393 B | `ccdab61d371d8c8683a128a92cd7d498dbdb1d37689f7cb21f1bf6b16658d213` |
-| `estatico/fontes/carlito-regular.woff2` | 40.372 B | `b53c5732be6e529727a16436bf3b3fe8a7c4c70dbb8cd2fd25113c5761fad9d6` |
-| `estatico/fontes/carlito-bold.woff2` | 42.756 B | `e0e7ec8efab22c1af00105bd3304f0458b58e5f78a46c13d9580eb7db6a5c66e` |
-| `estatico/fontes/carlito-LICENCA.txt` | 4.424 B | `58402f82a7c332a700294988fe7554fbb0a63a8d27ccc1ee3bbc640311990a00` |
+| `estatico/fontes/literata-regular.woff2` | 20.420 B | `a60c193b55766b68b922e2327e15c2d8c145532f283a27c3411b9c47a8583d18` |
+| `estatico/fontes/literata-italic.woff2` | 21.148 B | `1e98bfbbb4eb8177b9c21b3fd526e1118c4835d21ff870c0d1c25b1ef4409fba` |
+| `estatico/fontes/literata-bold.woff2` | 22.004 B | `1f2985e0fc368aac76f95b847cd05ef6ec4bac2733a648098c62edf990756cf5` |
+| `estatico/fontes/literata-LICENCA.txt` | 4.506 B | `9895ebc015226accf416b758ac1ca02a2fb4f83a89d316791ef697c3dc0852aa` |
+| `estatico/fontes/source-sans-3-regular.woff2` | 15.696 B | `0f73f35e08cde0a2f10c109c6e01d71459d97e4099ecd9a50f1b6c0209e4de2b` |
+| `estatico/fontes/source-sans-3-semibold.woff2` | 15.668 B | `14527d193b0e30bc32ef931549a246cdfd286573bb12869b7e052b8101a39d38` |
+| `estatico/fontes/source-sans-3-LICENCA.txt` | 4.314 B | `18aabf190848725e2576eefb5c29ba06aac1029d02132252a7f312eac2e50cf3` |
+| `estatico/fontes/jost-regular.woff2` | 9.404 B | `f94cffda16515fbb1667a2662d6b46f5610a942fd02fe88d67ff98f776288962` |
+| `estatico/fontes/jost-LICENCA.txt` | 4.497 B | `536533cad95838e13777663c4109b802aa662ef1ef285337f0c7f51d35682fdc` |
 
-Os dois arquivos de licença são cópia exata do `OFL.txt` de cada repositório
-de origem, só renomeados.
+**São arquivos estáticos, e não variáveis.** Um arquivo por peso e estilo,
+declarados separadamente no `@font-face`. Não há eixo de largura nem de peso
+para pedir, e nenhum `font-stretch` deve ser aplicado a elas. Peso que não
+está na tabela acima não existe: o navegador sintetizaria o negrito, e por
+isso o corpo destaca em 600 e o rótulo fica sempre em 400.
 
-Depois do recorte, a cobertura foi conferida caractere a caractere contra uma
-amostra do português, com acentuação, cedilha, aspas tipográficas, travessão,
-ordinais e símbolos de moeda: nada faltando. A Caladea ficou com 232 glifos
-por estilo e a Carlito com 253.
+## As fontes retiradas em 17/11/2026
 
-**São arquivos estáticos, e não variáveis.** São quatro arquivos porque são
-dois pesos de cada família, declarados separadamente no `@font-face` com
-`font-weight: 400` e `font-weight: 700`. É diferente do que havia antes aqui,
-e a diferença importa: não há eixo de largura para pedir, e nenhum
-`font-stretch` deve ser aplicado a elas.
+**Retiradas em 17/11/2026**, com a inversão do site para o claro. Eram as
+duas fontes de tela metricamente compatíveis com a Cambria e a Calibri, uma
+serifada nos títulos e uma sem serifa no corpo, instaladas em 15/11/2026 no
+lugar da Archivo e da Montserrat.
+
+**Motivo da retirada.** As peças do escritório deixaram de ser escritas em
+Cambria e Calibri e passaram a Constantia e Corbel. A compatibilidade métrica
+que justificava as duas deixou de servir a qualquer coisa.
+
+O nome das duas não aparece mais em arquivo nenhum do repositório, de
+propósito: uma busca por ele deve voltar vazia, e é assim que se percebe,
+numa revisão futura, se alguém trouxe uma delas de volta sem querer. O
+registro completo, com origem, licença, comando de recorte e os resumos
+SHA-256 dos quatro `.woff2` e das duas licenças, continua no histórico do
+git: é este mesmo arquivo, `PROCEDENCIA.md`, no commit `1c4c529`.
 
 ## As fontes retiradas: Archivo e Montserrat
 
@@ -151,8 +155,12 @@ desenha fundo nem borda atrás do círculo: o fundo já está dentro da imagem.
 ### O arquivo em uso desde 15/11/2026
 
 Com a decisão do escuro fixo, o fundo do retrato passou a ser **branco puro**,
-recortado: sobre a página escura o disco branco funciona como destaque. É este
-o par que a página carrega, e dele o navegador baixa **um** arquivo só.
+recortado: sobre a página escura o disco branco funcionava como destaque. É
+este o par que a página carrega, e dele o navegador baixa **um** arquivo só.
+
+Com a inversão para o claro, em 17/11/2026, o arquivo continuou o mesmo. O
+retrato fica sobre o `--papel-2` do bloco da trajetória, e o disco branco
+aparece por um tom só, sem moldura.
 
 | Arquivo guardado | Formato | Dimensões | Tamanho | SHA-256 |
 |---|---|---|---|---|
@@ -193,7 +201,7 @@ Tratada **fora do repositório** e trazida pronta em 15/11/2026, como o
 retrato: nada aqui foi gerado, convertido ou alterado por quem escreveu estas
 linhas. Os dois arquivos foram conferidos, medidos e registrados como
 chegaram. É o retrato sobre o fundo da página, com o nome e a inscrição na
-OAB em Caladea, conforme a seção 6.4 do PRD.
+OAB na serifada que o site usava em 15/11/2026, conforme a seção 6.4 do PRD.
 
 | Arquivo guardado | Formato | Dimensões | Tamanho | SHA-256 |
 |---|---|---|---|---|
@@ -273,14 +281,23 @@ Registro, porque confunde: o arquivo chamado `logo-lee-advogado-branco.svg`
 desenha apenas a palavra "Lee". O "advogado" que aparece ao lado, no site, é
 texto, não faz parte do SVG.
 
-O traço do `logo-lee-preto.svg` também está **embutido na marcação** do
-`index.html`, como elemento gráfico da abertura. É cópia do mesmo `d`, não
-uma requisição: a página não baixa esse arquivo.
+Desde 17/11/2026, com a inversão para o claro, o cabeçalho e o rodapé usam
+o `logo-lee-preto.svg`. O branco continua guardado para uso dentro do bloco
+invertido, e segue como favicon até existir o monograma.
 
-No modo escuro, o site não troca de arquivo: inverte o preto por CSS. Os dois
-logotipos são composições diferentes, com proporções diferentes, e trocar um
-pelo outro faria a marca mudar de forma conforme o modo do sistema
-operacional de quem abre a página.
+Até essa data, o traço do `logo-lee-preto.svg` também estava embutido na
+marcação do `index.html`, como o L gigante da abertura. O ornamento saiu com
+a inversão, e o `index.html` não carrega mais cópia nenhuma do traço.
+
+Os dois logotipos são composições diferentes, com proporções diferentes: o
+preto mede 7933x3428 e o branco 19206x4040. Por isso a troca mudou também a
+largura declarada no HTML, de 143x30 para 69x30 no cabeçalho e de 124x26 para
+60x26 no rodapé.
+
+As páginas da pasta `/artigos/` ainda pedem o branco no cabeçalho e no rodapé,
+e ficaram fora da entrega de 17/11/2026. Até trocarem, uma regra provisória da
+folha de estilo inverte o branco para preto só nessas posições. Ela sai no dia
+em que a última página trocar o arquivo.
 
 ## Como conferir
 
