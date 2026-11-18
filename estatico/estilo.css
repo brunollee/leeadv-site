@@ -306,22 +306,14 @@ img { display: block; max-width: 100%; }
     padding-bottom: 18px;
 }
 
-/* O logotipo é o preto, desde 17/11/2026. O branco continua no repositório
- * para o bloco invertido. */
+/* O logotipo é a assinatura completa em preto, "Lee" e "advogado", desde
+ * 17/11/2026: logo-lee-advogado-preto.svg, o mesmo desenho do branco com as
+ * cores trocadas (o nome em #141414, o descritor no cinza da marca,
+ * #6B6B6B). Nenhum filtro de cor: trocar o arquivo preserva a hierarquia
+ * entre nome e descritor, que um invert() achataria. O branco continua no
+ * repositório para o bloco invertido, e o símbolo isolado, sem descritor,
+ * é ativo da marca guardado à parte. */
 .topo-logo { height: 30px; width: auto; }
-
-/* PONTE PROVISÓRIA, para sair na segunda entrega da identidade.
- *
- * As páginas da pasta /artigos/ ficaram fora desta entrega e ainda pedem o
- * logotipo branco no cabeçalho e no rodapé. Sobre o fundo claro ele sumiria.
- * Até essas páginas trocarem o arquivo, o filtro inverte o branco para
- * preto, e só onde o arquivo pedido é o branco: nas páginas já trocadas a
- * regra não alcança nada. No dia em que nenhuma página pedir o branco no
- * cabeçalho ou no rodapé, apague esta regra. */
-.topo-logo[src$="logo-lee-advogado-branco.svg"],
-.rodape-logo[src$="logo-lee-advogado-branco.svg"] {
-    filter: invert(1);
-}
 
 .menu {
     display: flex;

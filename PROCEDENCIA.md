@@ -31,26 +31,39 @@ continuidade é de desenho e de função.
 
 ### Origem
 
-Os seis `.woff2` e as três licenças foram **trazidos prontos** pelo titular
-em 17/11/2026, já recortados e convertidos fora do repositório, como o
-retrato. Nada aqui foi gerado, recortado ou convertido por quem escreveu
-estas linhas: os arquivos foram conferidos contra as somas que acompanhavam o
-pacote e registrados como chegaram.
+Os três pacotes do Fontsource, no registro npm, nas versões abaixo. Os
+`.woff2` são os subconjuntos latinos que esses pacotes distribuem, copiados
+**sem reprocessamento**: nenhum foi regerado, reconvertido, recortado ou
+tratado de outro modo. As licenças vieram dos mesmos pacotes.
 
-O que os próprios arquivos dizem da origem, lido em 17/11/2026:
+| Família | Pacote | Versão | Licença |
+|---|---|---|---|
+| Literata | `@fontsource/literata` | 5.3.0 | OFL-1.1 |
+| Source Sans 3 | `@fontsource/source-sans-3` | 5.3.1 | OFL-1.1 |
+| Jost | `@fontsource/jost` | 5.3.0 | OFL-1.1 |
 
-- `literata-LICENCA.txt`, primeira linha: "Copyright 2017 The Literata
-  Project Authors (https://github.com/googlefonts/literata)".
-- `jost-LICENCA.txt`, primeira linha: "Copyright 2020 The Jost Project
-  Authors (https://github.com/indestructible-type/Jost)".
-- `source-sans-3-LICENCA.txt`: texto da SIL Open Font License 1.1.
-- Os seis `.woff2` declaram, no cabeçalho, formato WOFF2 com contorno
-  TrueType.
+Na cópia, só o nome do arquivo mudou, para o padrão curto da pasta: por
+exemplo, `literata-latin-400-normal.woff2` virou `literata-regular.woff2`. O
+conteúdo é byte a byte o do pacote.
 
-O pacote não trazia os `.ttf` de origem nem os resumos deles, e por isso a
-tabela de "SHA-256 do que foi baixado", que existe para as fontes anteriores,
-não existe para estas. Quem precisar refazer os arquivos parte dos
-repositórios citados nas licenças.
+| Arquivo guardado | Arquivo de origem no pacote |
+|---|---|
+| `literata-regular.woff2` | `@fontsource/literata`, `literata-latin-400-normal.woff2` |
+| `literata-italic.woff2` | `@fontsource/literata`, `literata-latin-400-italic.woff2` |
+| `literata-bold.woff2` | `@fontsource/literata`, `literata-latin-700-normal.woff2` |
+| `source-sans-3-regular.woff2` | `@fontsource/source-sans-3`, `source-sans-3-latin-400-normal.woff2` |
+| `source-sans-3-semibold.woff2` | `@fontsource/source-sans-3`, `source-sans-3-latin-600-normal.woff2` |
+| `jost-regular.woff2` | `@fontsource/jost`, `jost-latin-400-normal.woff2` |
+| `literata-LICENCA.txt`, `source-sans-3-LICENCA.txt`, `jost-LICENCA.txt` | o arquivo de licença de cada pacote |
+
+Os nomes de origem da tabela seguem o padrão de nomenclatura do Fontsource
+(família, subconjunto, peso, estilo). Quem precisar conferir instala o pacote
+na versão indicada e compara o resumo do arquivo correspondente com a tabela
+de somas abaixo.
+
+Como os arquivos são o subconjunto latino do próprio pacote, e não um recorte
+feito aqui, o comando de recorte que aparece no registro das fontes
+anteriores não se aplica a estas.
 
 ### A licença das três é a SIL OFL 1.1
 
@@ -61,10 +74,10 @@ recortado que está aqui, desde que a licença acompanhe. Ela acompanha, em
 
 ### Os arquivos guardados
 
-As somas dos seis `.woff2` vieram com o pacote e foram conferidas com
-`sha256sum` depois de copiados, uma a uma: as seis bateram. As das três
-licenças não vinham no pacote e foram calculadas na instalação; passam a ser
-a referência deste repositório.
+As somas dos seis `.woff2` foram informadas junto com os arquivos e
+conferidas com `sha256sum` depois de copiados, uma a uma, em 17/11/2026: as
+seis bateram. As das três licenças foram calculadas na instalação e passam a
+ser a referência deste repositório.
 
 | Arquivo guardado | Tamanho | SHA-256 |
 |---|---|---|
@@ -255,6 +268,24 @@ foram calculados em 15/11/2026 e são a referência deste repositório.
 | `estatico/logo-lee-preto.svg` | 3.360 B | `b630b6e451f3bd60cb23f8d609dfb65f503e8a99c352c95c5aa22ece9136a9b3` |
 | `estatico/logo-lee-advogado-branco.svg` | 7.655 B | `5bf25c05c14c056af34a58747c26352a0e0c9958e3360ba3d7d1174bde21c9ac` |
 
+### A assinatura em preto, desde 17/11/2026
+
+`logo-lee-advogado-preto.svg` foi gerado pelo titular **a partir do próprio
+`logo-lee-advogado-branco.svg`**, trocando só as cores, e trazido pronto em
+17/11/2026. O nome passou a `#141414` e o descritor "advogado" a `#6B6B6B`,
+o cinza oficial da marca.
+
+Conferido antes de gravar, contra o branco: mesmo `viewBox` (19206x4040),
+mesmos nove `path`, a mesma estrutura com os atributos `fill` removidos, e o
+mesmo resumo SHA-256 do conteúdo concatenado dos atributos `d`,
+`6f777df9c27c395fa662e84cc33520db382ca19d63d69933…`, que é o que define o traço e o que a tabela do C2PA
+abaixo registra para o branco. Nenhum `script`, nenhum `href`, nenhum
+endereço externo.
+
+| Arquivo guardado | Tamanho | SHA-256 |
+|---|---|---|
+| `estatico/logo-lee-advogado-preto.svg` | 7.657 B | `5b4ea7fadebdf8619229949da7dc2397f1ef1f709c038e820609419540c0ebee` |
+
 ### O manifesto C2PA foi retirado em 16/11/2026
 
 Os dois arquivos carregavam um bloco `<metadata>` de 7.736 B cada, com um
@@ -277,27 +308,23 @@ referência. Os anteriores, para quem precisar rastrear o histórico, eram
 `3fd42a96db0c8715828c3b66b0c10bc132974b4efbfbc116234484a18f093269` e
 `1d3cdc7e193b4e9d25575ed4a79e05a9d7a9cf66ef74f5a08a5aefd3f02dfc52`.
 
-Registro, porque confunde: o arquivo chamado `logo-lee-advogado-branco.svg`
-desenha apenas a palavra "Lee". O "advogado" que aparece ao lado, no site, é
-texto, não faz parte do SVG.
+Registro, porque confundiu: até 17/11/2026 esta página dizia que o
+`logo-lee-advogado-branco.svg` desenhava apenas a palavra "Lee". Não é
+assim. Ele é a assinatura completa, "Lee" e "advogado", em nove `path`: o
+nome em branco e o descritor em `#CBCBCB`. Quem desenha só o símbolo "Lee",
+num `path` só, é o `logo-lee-preto.svg`.
 
-Desde 17/11/2026, com a inversão para o claro, o cabeçalho e o rodapé usam
-o `logo-lee-preto.svg`. O branco continua guardado para uso dentro do bloco
-invertido, e segue como favicon até existir o monograma.
+Desde 17/11/2026, com a inversão para o claro, o cabeçalho e o rodapé de
+todas as páginas usam o `logo-lee-advogado-preto.svg`, nas mesmas medidas do
+branco (143x30 no cabeçalho, 124x26 no rodapé), porque o desenho e a
+proporção são os mesmos. O branco continua guardado para uso dentro do bloco
+invertido, e segue como favicon até existir o monograma. O
+`logo-lee-preto.svg`, o símbolo isolado, é ativo da marca e fica no
+repositório sem uso na página.
 
 Até essa data, o traço do `logo-lee-preto.svg` também estava embutido na
 marcação do `index.html`, como o L gigante da abertura. O ornamento saiu com
 a inversão, e o `index.html` não carrega mais cópia nenhuma do traço.
-
-Os dois logotipos são composições diferentes, com proporções diferentes: o
-preto mede 7933x3428 e o branco 19206x4040. Por isso a troca mudou também a
-largura declarada no HTML, de 143x30 para 69x30 no cabeçalho e de 124x26 para
-60x26 no rodapé.
-
-As páginas da pasta `/artigos/` ainda pedem o branco no cabeçalho e no rodapé,
-e ficaram fora da entrega de 17/11/2026. Até trocarem, uma regra provisória da
-folha de estilo inverte o branco para preto só nessas posições. Ela sai no dia
-em que a última página trocar o arquivo.
 
 ## Como conferir
 
