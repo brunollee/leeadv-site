@@ -18,9 +18,11 @@
  * sistemas de cor convivendo divergem com o tempo. Quem quiser um modo claro
  * traz uma decisão de identidade nova, não uma regra de CSS.
  *
- * Uma cor de acento só, o cobre (--acento e --acento-filete), em três
+ * Uma cor de acento só, o cobre (--acento e --acento-filete), nestes
  * lugares e em nenhum outro: a borda do botão "Área restrita", a pílula da
- * numeração de área e o filete à esquerda da sobrelinha. Nunca em texto
+ * numeração de área, o filete da sobrelinha (dos dois lados no rótulo
+ * centralizado da trajetória, nenhum na pílula da abertura) e a borda do
+ * botão flutuante de WhatsApp. Nunca em texto
  * corrido, link, título ou ícone de estado, e nunca carregando informação
  * sozinho. Fora isso, o contraste vem do branco sobre o preto e de dois tons
  * de papel (--papel-2 e --papel-3).
@@ -423,6 +425,13 @@ img { display: block; max-width: 100%; }
     color: var(--tx2);
 }
 
+/* Sem filete dentro da pílula. A abertura é o único lugar em que a
+ * sobrelinha tem caixa, e a pílula já é o marcador do rótulo: o filete
+ * dentro dela seria um segundo marcador, e é o que desalinhava a segunda
+ * linha em tela estreita. Sem ele, a 390px, as duas linhas do rótulo
+ * começam no mesmo x. */
+.abertura .sobrelinha::before { display: none; }
+
 .abertura h1 {
     font-size: var(--t6);
     line-height: 1.12;
@@ -658,6 +667,20 @@ img { display: block; max-width: 100%; }
     margin-bottom: 36px;
 }
 
+/* O filete espelhado. No rótulo centralizado, um filete só à esquerda
+ * entra na centralização e desloca o texto do eixo do título (26px, medido
+ * a 1440px). Com o mesmo filete também à direita, o texto volta ao eixo.
+ * Mesmas medidas e mesma cor do ::before da .sobrelinha. */
+.trajetoria-cabeca .sobrelinha::after {
+    content: "";
+    display: inline-block;
+    width: 36px;
+    height: 2px;
+    background: var(--acento-filete);
+    vertical-align: middle;
+    margin-left: 13px;
+}
+
 .trajetoria .quadro,
 .trajetoria-texto {
     max-width: 640px;
@@ -864,8 +887,10 @@ img { display: block; max-width: 100%; }
  * disso. Nenhum texto de oferta de serviço entra neste botão.
  *
  * Sem sombra desde 18/11/2026: sombra escura sobre fundo escuro não aparece.
- * O contorno do disco passou a ser uma borda em --bd-hover, a mesma cor de
- * destaque das bordas sob o ponteiro. */
+ * O contorno do disco é uma borda em cobre, --acento-filete: 4,57:1 sobre o
+ * fundo escuro e 4,20:1 sobre a faixa clara do recorte, sem cor nova no
+ * sistema. Sobre a faixa clara é essa borda que delimita o botão: o disco
+ * é branco como ela, e sem a borda só o ícone ficaria visível. */
 .contato-fixo {
     position: fixed;
     right: 24px;
@@ -879,7 +904,7 @@ img { display: block; max-width: 100%; }
     border-radius: 50%;
     background: var(--btn);
     color: var(--on-ink);
-    border: 1px solid var(--bd-hover);
+    border: 1px solid var(--acento-filete);
     transition: transform var(--transicao) var(--curva-botao);
 }
 
