@@ -23,6 +23,11 @@
 <link rel="icon" href="/estatico/logo-lee-advogado-branco.svg" type="image/svg+xml">
 <link rel="stylesheet" href="/estatico/estilo.css">
 
+<!-- O publisher.logo abaixo aponta para o logotipo PRETO, e este é o único
+     lugar do site que usa a versão preta. O site é escuro e mostra o
+     branco, mas este dado estruturado não é desenhado pela página: sai para
+     buscadores e agregadores, que desenham o logotipo sobre fundo claro, onde
+     o branco seria invisível. -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -51,7 +56,7 @@
     "url": "https://leeadv.com.br/",
     "logo": {
       "@type": "ImageObject",
-      "url": "https://leeadv.com.br/estatico/logo-lee-advogado-branco.svg"
+      "url": "https://leeadv.com.br/estatico/logo-lee-advogado-preto.svg"
     }
   }
 }
@@ -179,8 +184,8 @@
 
     <div class="area autor">
       <picture>
-        <source srcset="/estatico/retrato/retrato-branco.avif" type="image/avif">
-        <img src="/estatico/retrato/retrato-branco.webp" alt="Bruno Lee, advogado" class="autor-retrato" width="600" height="600">
+        <source srcset="/estatico/retrato/retrato-escuro.avif" type="image/avif">
+        <img src="/estatico/retrato/retrato-escuro.webp" alt="Bruno Lee, advogado" class="autor-retrato" width="600" height="600">
       </picture>
       <div>
         <h2>Bruno Lee</h2>
