@@ -97,6 +97,12 @@
 <main>
 
 <section class="abertura">
+  <!-- O selo da marca d'água, desde 18/11/2026: o símbolo "Lee", sem o
+       descritor, copiado de /estatico/logo-lee-preto.svg (mesmo traçado,
+       sem o fill="black"). Fica embutido, e não em img, para o traçado
+       herdar a cor pelo CSS. É desenho, não conteúdo: aria-hidden e
+       focusable="false". Medidas e opacidade no .selo da folha de estilo. -->
+  <svg class="selo" viewBox="0 0 7933 3428" aria-hidden="true" focusable="false"><path d="M4033.93 2.20029C4231.6 -4.32259 4364.98 0.352318 4556.99 62.6004C5003.89 207.525 5239.96 562.871 5327.64 1007.77C5417.16 773.799 5502.94 601.001 5680.26 416.943C6264.13 -189.115 7445.02 -162.415 7803.44 690.055C7901.11 921.699 7930.22 1200.33 7933 1450.09C7754.66 1458.33 7547.65 1457 7367.07 1458.74C7087.18 1460.98 6807.35 1465.15 6527.56 1471.24C6441.27 1473.15 6354.98 1474.24 6268.64 1474.52C6106.84 1475.45 5920.75 1462.8 5817.22 1614.26C5708.32 1773.53 5784.48 1909.51 5848.91 2065.2C5953.63 2318.22 6100.28 2541.23 6336.55 2689.02C6575.2 2838.96 6864.08 2886.6 7138.2 2821.22C7478.84 2740.29 7645.07 2481.37 7817.95 2200.03C7852.07 2209.52 7869.31 2217.12 7901.75 2231.08C7888.54 2328.06 7842.93 2456.77 7803.94 2549.28C7655.3 2905.48 7422.45 3202.53 7052.5 3347.34C6450.5 3577.84 5765.84 3294.58 5456.15 2733.21C5397.53 2626.89 5358.19 2528.31 5314.38 2417.23C5064 3144.88 4498.12 3568.79 3712.32 3384.14C3329.99 3292.78 3056.81 3023.17 2859.31 2697.97C2752.63 2923.81 2589.04 3177.07 2489.02 3401.18C2357.24 3404.51 2217.13 3401.67 2084.37 3401.38L1400.53 3400.83L472.437 3400.63C321.456 3402.07 170.465 3402.37 19.4837 3401.52L19.6128 3259.09C137.792 3250.25 239.12 3226.9 333.86 3150.4C428.333 3073.49 487.713 2961.71 498.503 2840.4C507.445 2743.97 501.479 2539.59 501.354 2435.66L500.937 1664.14L501.335 992.303C501.747 573.423 537.346 275.74 17.9785 230.184C10.3579 167.21 6.88536 92.264 0 26.2452L1614.9 26.0514C1615.78 94.0624 1616.17 162.083 1616.08 230.099C1365.97 233.905 1154.13 308.95 1135.22 598.456C1129.36 688.211 1134.45 778.663 1134.75 868.721L1135.3 1373.62L1134.46 2181.75C1134.52 2505.36 1071.24 2932.2 1498.16 3001.76C1718.43 3037.67 1974.01 3015.12 2191.47 2967.92C2472.44 2907.02 2628.37 2747.45 2772.35 2512.02C2691.64 2316.28 2652.29 2127.75 2636.16 1917.26C2565.41 994.107 3009.98 79.6006 4033.93 2.20029ZM3576.67 2535.42C3813.31 2753.86 4059.76 2858.23 4387.34 2848.99C4652.92 2841.54 4847.6 2747.45 5025.15 2552.31C5133.75 2432.93 5174.34 2345.59 5259.14 2219.11C5216.26 1996.1 5199.87 1757.94 5227.24 1530.65C5229.48 1512.06 5237.68 1470.5 5228.34 1454.74L5216.66 1453.41C4795.69 1457.26 4374.77 1463.96 3953.85 1473.5C3859.21 1475.13 3764.57 1475.86 3669.92 1475.68C3526.77 1476.21 3372.78 1466.95 3267.24 1575.92C3211.03 1633.94 3180.17 1723.36 3184.53 1806.42C3203.53 1948.11 3341.12 2227.85 3419.27 2344.5C3465.44 2413.11 3518.15 2477.04 3576.67 2535.42ZM3136.62 1679.04C3210.93 1527.1 3312.7 1331.25 3446.52 1223.6C3616 1087.26 3732.5 1113.09 3952.56 1113.09C4201 1113.09 4430.56 1120.54 4665.73 1111.61C4664.49 955.446 4654.56 825.599 4591.42 680.566C4473.38 409.391 4233.93 237.854 3932.79 244.69C3922.65 244.933 3912.47 245.281 3902.28 245.738C3608.01 266.599 3324.2 480.05 3226.93 752.859C3136.23 1007.25 3118.86 1412.95 3136.62 1679.04ZM5720.69 1679.94C5792.98 1507.92 5892.08 1338.72 6035.01 1216.14C6128 1142.23 6195.66 1115.32 6316.08 1113.64C6617 1113.64 6934.5 1112.92 7243.07 1112.92C7266.17 692.216 7010.78 269.256 6561.24 245.485C6535.36 244.119 6509.03 243.478 6483.2 245.922C6292.29 256.524 6103.36 350.954 5975.89 492.505C5778.27 711.933 5740.27 965.72 5719.7 1247.81C5711.65 1358.32 5704.15 1464.75 5710.51 1575.79C5712.7 1610.59 5716.07 1645.36 5720.69 1679.94Z"/></svg>
   <div class="dentro">
     <p class="sobrelinha">Advocacia empresarial, cível e trabalhista</p>
     <h1>Da empresa ao patrimônio pessoal</h1>
@@ -322,8 +328,10 @@
          de /artigos/. Não é a seção de publicações comentada abaixo, que é
          de artigo em veículo externo.
 
-         O resumo de cada cartão é a primeira frase do resumo da lista em
-         /artigos/, já publicado. Texto público: muda só depois da
+         O resumo de cada cartão é texto já publicado, aprovado pelo titular
+         em 18/11/2026: nos cartões da marca e de 2027, a primeira frase do
+         resumo da lista em /artigos/; nos de juros e de PJ, a primeira frase
+         do próprio artigo. Texto público: muda só depois da
          conferência de publicidade. Artigo novo entra aqui e lá no mesmo
          dia. -->
     <ul class="artigos-grade">
@@ -336,13 +344,13 @@
       <li class="artigo-cartao">
         <p class="artigo-data"><time datetime="2026-11-17">17 de novembro de 2026</time></p>
         <h3><a href="/artigos/juros-multa-atraso-pagamento.html">Cliente atrasou: quanto você pode cobrar de juros e multa</a></h3>
-        <p class="artigo-resumo">A lei mudou a conta dos juros de atraso em 2024.</p>
+        <p class="artigo-resumo">A conta dos juros de atraso mudou em 2024, e boa parte do que se lê por aí ainda usa a conta antiga.</p>
         <a href="/artigos/juros-multa-atraso-pagamento.html" class="artigo-ler" aria-label="Ler o artigo: Cliente atrasou: quanto você pode cobrar de juros e multa">Ler o artigo</a>
       </li>
       <li class="artigo-cartao">
         <p class="artigo-data"><time datetime="2026-11-16">16 de novembro de 2026</time></p>
         <h3><a href="/artigos/contratar-funcionario-como-pj.html">Contratar como PJ em vez de carteira: onde está o risco</a></h3>
-        <p class="artigo-resumo">O Supremo ainda não decidiu, e a CLT continua valendo como está.</p>
+        <p class="artigo-resumo">A manchete diz que o Supremo Tribunal Federal vai decidir se contratar trabalhador como PJ é válido.</p>
         <a href="/artigos/contratar-funcionario-como-pj.html" class="artigo-ler" aria-label="Ler o artigo: Contratar como PJ em vez de carteira: onde está o risco">Ler o artigo</a>
       </li>
       <li class="artigo-cartao">

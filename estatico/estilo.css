@@ -410,13 +410,42 @@ img { display: block; max-width: 100%; }
 /* Fundo da página, chapado. Até 17/11/2026 havia aqui um degradê diagonal,
  * um campo de luz e o L do logotipo em tamanho gigante, desenhado em
  * degradê e apagado por máscara antes da coluna de texto. Saíram os três
- * com a inversão para o claro e não voltaram com o escuro: a abertura se
- * sustenta pelo tamanho do título e pelo vazio em volta dele, e o L da
- * marca já está no cabeçalho, logo acima. */
+ * com a inversão para o claro, e o degradê não volta.
+ *
+ * Em 18/11/2026 voltou a marca ao fundo, de outro jeito: o símbolo "Lee"
+ * inteiro, chapado, na cor do texto a 8% de opacidade, ancorado à direita
+ * e sangrando para fora da tela. Os 8% foram escolhidos pelo titular olhando
+ * a prévia: não mudar sem nova decisão dele. O overflow hidden é o que
+ * impede o sangramento de criar rolagem horizontal. */
 .abertura {
+    position: relative;
+    overflow: hidden;
     background: var(--bg);
     border-bottom: 1px solid var(--bd);
     padding: 104px 0 92px;
+}
+
+/* O selo. Proporção do viewBox do símbolo, 7933 por 3428. Abaixo do
+ * conteúdo, que sobe com position relative e z-index 1, e sem capturar
+ * ponteiro, para não roubar o clique dos botões que passam por cima dele.
+ * Os tamanhos menores estão no bloco de mídia do fim da folha. */
+.selo {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    width: 1500px;
+    height: auto;
+    aspect-ratio: 7933 / 3428;
+    transform: translate(22%, -50%);
+    fill: var(--tx);
+    opacity: 0.08;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.abertura .dentro {
+    position: relative;
+    z-index: 1;
 }
 
 /* A etiqueta da abertura: a sobrelinha vira pílula, com borda decorativa e
@@ -1270,6 +1299,16 @@ img { display: block; max-width: 100%; }
 }
 
 /* Abaixo de 400px o botão em linha fica estreito demais para o dedo. */
+/* O selo em tela média e pequena: menor, e sangrando mais, para não
+ * passar por baixo do título inteiro. */
+@media (max-width: 900px) {
+    .selo { width: 72%; transform: translate(32%, -50%); }
+}
+
+@media (max-width: 700px) {
+    .selo { width: 55%; transform: translate(38%, -50%); }
+}
+
 @media (max-width: 400px) {
 
     /* O .botao-zap entra junto, senão o botão de preferência fica mais
