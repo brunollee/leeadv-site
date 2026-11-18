@@ -9,9 +9,11 @@
  * a ausência de degradê. Voltou só a paleta, e entrou o cobre.
  *
  * No escuro, o branco é a ferramenta de destaque: o texto, o botão
- * principal, a borda sob o ponteiro e uma única faixa invertida por página,
- * agora CLARA (a seção "recorte"). Uma faixa, no máximo: o destaque que se
- * repete deixa de destacar.
+ * principal, a borda sob o ponteiro e as faixas invertidas, CLARAS: o
+ * recorte e, desde 18/11/2026, o contato. Duas na home, e nunca vizinhas:
+ * entre elas há pelo menos duas seções escuras. O ritmo da home alterna
+ * --bg e --papel-2 entre as faixas escuras, e nenhuma seção tem o fundo da
+ * seguinte.
  *
  * O site tem UM sistema de cor, escuro, e não acompanha o modo de cor do
  * sistema operacional. Não há paleta clara alternativa nesta folha: dois
@@ -125,10 +127,10 @@
     /* Os contrastes abaixo foram medidos em 18/11/2026 pela fórmula da
      * WCAG 2.x. Quem mudar um valor mede de novo e corrige o número aqui. */
     --bg: #0f0f0f;
-    --tx: #f2f2f2;      /* 17,12:1 sobre --bg, 15,86:1 sobre --papel-2 */
-    --tx2: #b4b4b4;     /* 9,24:1 sobre --bg, 8,56:1 sobre --papel-2 */
+    --tx: #f2f2f2;      /* 17,12:1 sobre --bg, 14,89:1 sobre --papel-2 */
+    --tx2: #b4b4b4;     /* 9,24:1 sobre --bg, 8,04:1 sobre --papel-2 */
 
-    /* Rótulo curto e texto de apoio pequeno. 6,84:1 sobre --bg e 6,34:1
+    /* Rótulo curto e texto de apoio pequeno. 6,84:1 sobre --bg e 5,95:1
      * sobre --papel-2: acima do mínimo AA de 4,5 para texto pequeno nos dois
      * fundos, que é onde o rótulo aparece. Mantém o tom levemente frio. */
     --mut: #9a9a9f;
@@ -143,7 +145,7 @@
 
     /* A borda de CONTROLE: campo de formulário e qualquer elemento clicável
      * delimitado só pela borda. Esta sim precisa de 3:1, e dá 3,87:1 sobre
-     * --bg e 3,59:1 sobre --papel-2. Não usar --bd ou --bd2 no lugar dela. */
+     * --bg, 3,37:1 sobre --papel-2 e 3,06:1 sobre --papel-3. Não usar --bd ou --bd2 no lugar dela. */
     --bd-controle: #707070;
 
     /* Borda do cartão sob o ponteiro: o branco, que no tema escuro é a
@@ -160,10 +162,17 @@
      * ser opaco e chapado. */
     --topo-fundo: #0f0f0f;
 
-    /* Os dois tons de papel. --papel-2 é o fundo do cartão e dos blocos
-     * largos; --papel-3 fica para trilho e campo desabilitado. */
-    --papel-2: #181818;
-    --papel-3: #202020;
+    /* Os dois tons de papel, revistos em 18/11/2026: o --papel-2 anterior,
+     * #181818, dava 1,08:1 sobre o --bg e não se distinguia dele. --papel-2
+     * é a faixa alternada e o cartão sobre o --bg; --papel-3 é o cartão
+     * sobre o --papel-2. Cartão nunca tem o tom do que está atrás dele.
+     *
+     * Sobre #1e1e1e: --tx 14,89:1, --tx2 8,04:1, --mut 5,95:1,
+     * --acento-filete 3,97:1, --bd-controle 3,37:1.
+     * Sobre #262626: --tx 13,52:1, --tx2 7,30:1, --mut 5,40:1,
+     * --acento-filete 3,61:1, --bd-controle 3,06:1. */
+    --papel-2: #1e1e1e; /* 1,15:1 sobre --bg */
+    --papel-3: #262626; /* 1,27:1 sobre --bg, 1,10:1 sobre --papel-2 */
 
     /* O bloco invertido: a única faixa clara da página. 18,42:1. */
     --inv-fundo: #ffffff;
@@ -401,13 +410,42 @@ img { display: block; max-width: 100%; }
 /* Fundo da página, chapado. Até 17/11/2026 havia aqui um degradê diagonal,
  * um campo de luz e o L do logotipo em tamanho gigante, desenhado em
  * degradê e apagado por máscara antes da coluna de texto. Saíram os três
- * com a inversão para o claro e não voltaram com o escuro: a abertura se
- * sustenta pelo tamanho do título e pelo vazio em volta dele, e o L da
- * marca já está no cabeçalho, logo acima. */
+ * com a inversão para o claro, e o degradê não volta.
+ *
+ * Em 18/11/2026 voltou a marca ao fundo, de outro jeito: o símbolo "Lee"
+ * inteiro, chapado, na cor do texto a 8% de opacidade, ancorado à direita
+ * e sangrando para fora da tela. Os 8% foram escolhidos pelo titular olhando
+ * a prévia: não mudar sem nova decisão dele. O overflow hidden é o que
+ * impede o sangramento de criar rolagem horizontal. */
 .abertura {
+    position: relative;
+    overflow: hidden;
     background: var(--bg);
     border-bottom: 1px solid var(--bd);
     padding: 104px 0 92px;
+}
+
+/* O selo. Proporção do viewBox do símbolo, 7933 por 3428. Abaixo do
+ * conteúdo, que sobe com position relative e z-index 1, e sem capturar
+ * ponteiro, para não roubar o clique dos botões que passam por cima dele.
+ * Os tamanhos menores estão no bloco de mídia do fim da folha. */
+.selo {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    width: 1500px;
+    height: auto;
+    aspect-ratio: 7933 / 3428;
+    transform: translate(22%, -50%);
+    fill: var(--tx);
+    opacity: 0.08;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.abertura .dentro {
+    position: relative;
+    z-index: 1;
 }
 
 /* A etiqueta da abertura: a sobrelinha vira pílula, com borda decorativa e
@@ -539,7 +577,10 @@ img { display: block; max-width: 100%; }
 
 /* -- áreas de atuação ------------------------------------------------------ */
 
-.areas { border-bottom: 1px solid var(--bd); }
+.areas {
+    background: var(--papel-2);
+    border-bottom: 1px solid var(--bd);
+}
 
 /* O título de cada grupo de áreas. Era um rótulo em caixa alta até
  * 17/11/2026; é um h3, e com a regra de que todo título é em caixa mista
@@ -571,9 +612,10 @@ img { display: block; max-width: 100%; }
 
 .grade:last-child { margin-bottom: 0; }
 
-/* O cartão. Separa-se do fundo pelo --papel-2; a borda é decorativa. */
+/* O cartão. A seção é de --papel-2, então o cartão é de --papel-3, um tom
+ * acima; a borda é decorativa. */
 .area {
-    background: var(--papel-2);
+    background: var(--papel-3);
     border: 1px solid var(--bd);
     border-radius: var(--raio-cartao);
     padding: 32px 28px;
@@ -624,8 +666,10 @@ img { display: block; max-width: 100%; }
 /* -- trajetória ------------------------------------------------------------ */
 
 /* Os três blocos largos — trajetória, recorte e contato — compartilham a
- * mesma caixa: borda inteira e raio de 24px. A trajetória e o contato são de
- * papel; o recorte é o bloco invertido.
+ * mesma caixa: borda inteira e raio de 24px. O recorte e o contato são as
+ * faixas claras. A trajetória, desde 18/11/2026, fica no --bg, entre o
+ * --papel-2 das áreas e a faixa clara do recorte, e por isso perde a borda:
+ * uma caixa do tom do fundo, só com o contorno, seria um fio solto.
  *
  * A largura é `calc(100% - 2 * gutter)` com teto em `--larg` e margens
  * automáticas, e não `margin: 0 var(--gutter)`. Com a margem fixa, numa tela
@@ -647,7 +691,8 @@ img { display: block; max-width: 100%; }
 }
 
 .trajetoria {
-    background: var(--papel-2);
+    background: var(--bg);
+    border-color: transparent;
     margin-top: 0;
     margin-bottom: 0;
 }
@@ -704,9 +749,9 @@ img { display: block; max-width: 100%; }
 /* O retrato, acima do quadro de dados.
  *
  * Desde 18/11/2026 a página usa o retrato-escuro, com fundo #1e1e20 já
- * recortado dentro do próprio arquivo. Sobre o --papel-2 do bloco o disco
- * aparece por um tom só, sem moldura: é a mesma relação de papel sobre
- * papel do resto da página. O retrato-branco, de fundo branco, ficaria ali
+ * recortado dentro do próprio arquivo. A seção passou ao --bg no mesmo dia,
+ * e o disco aparece sobre ele por um tom, 1,15:1, sem moldura: é a mesma
+ * relação do --papel-2 sobre o --bg no resto da página. O retrato-branco, de fundo branco, ficaria ali
  * como um disco aceso. Por isso aqui não há cor de fundo nem borda: o
  * círculo é só o recorte.
  *
@@ -757,8 +802,9 @@ img { display: block; max-width: 100%; }
 
 /* -- por que esse recorte: o bloco invertido ------------------------------- */
 
-/* A ÚNICA faixa CLARA da página, desde 18/11/2026: fundo #ffffff, texto
- * #141414, filete escuro. No máximo uma por página. Entre 17/11/2026 e
+/* A primeira faixa CLARA da página, desde 18/11/2026: fundo #ffffff, texto
+ * #141414, filete escuro. A segunda é o contato, e as duas nunca se
+ * encostam. Entre 17/11/2026 e
  * 18/11/2026, com o site claro, era a única faixa escura; com a volta ao
  * escuro a inversão inverteu junto. É onde o branco, a cor de destaque,
  * aparece inteiro, e por isso fica na seção que diz por que o escritório
@@ -807,6 +853,9 @@ img { display: block; max-width: 100%; }
 
 .etapas { display: flex; flex-direction: column; gap: 14px; }
 
+/* A seção de método fica no --bg, e o cartão é de --papel-2. */
+.metodo { background: var(--bg); }
+
 .etapa {
     display: grid;
     grid-template-columns: 110px 1fr;
@@ -850,13 +899,88 @@ img { display: block; max-width: 100%; }
     margin: 0;
 }
 
+/* -- artigos em destaque na home ------------------------------------------ */
+
+/* Faixa de --papel-2 entre o método e o contato, desde 18/11/2026. É ela,
+ * com o método, que separa as duas faixas claras. Cartão de --papel-3, um
+ * tom acima da faixa. Duas colunas acima de 860px e uma abaixo, no bloco
+ * de mídia do fim da folha.
+ *
+ * Não confundir com a seção de publicações, comentada no HTML: aquela é de
+ * artigo em veículo externo; esta lista os artigos deste site. */
+.artigos-home {
+    background: var(--papel-2);
+    border-top: 1px solid var(--bd);
+    border-bottom: 1px solid var(--bd);
+}
+
+.artigos-grade {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+    list-style: none;
+    margin: 0 0 36px;
+    padding: 0;
+}
+
+.artigo-cartao {
+    display: flex;
+    flex-direction: column;
+    background: var(--papel-3);
+    border: 1px solid var(--bd);
+    border-radius: var(--raio-cartao);
+    padding: 28px;
+    transition: transform var(--transicao) ease,
+                border-color var(--transicao) ease;
+}
+
+.artigo-cartao:hover {
+    transform: translateY(-5px);
+    border-color: var(--bd-hover);
+}
+
+.artigo-data {
+    color: var(--mut);
+    margin: 0 0 10px;
+    font-variant-numeric: lining-nums tabular-nums;
+}
+
+.artigo-cartao h3 { font-size: var(--t2); margin-bottom: 10px; }
+.artigo-cartao h3 a:hover { text-decoration: underline; text-underline-offset: 3px; }
+.artigo-resumo { color: var(--tx2); margin: 0 0 18px; }
+
+/* "Ler o artigo" desce para o pé do cartão, para alinhar entre vizinhos de
+ * resumo de comprimento diferente. */
+.artigo-ler {
+    margin-top: auto;
+    font-weight: 600;
+    color: var(--tx);
+    border-bottom: 1px solid var(--bd-controle);
+    align-self: flex-start;
+}
+
+.artigo-ler:hover { border-color: var(--tx); }
+
+.artigos-todos {
+    display: inline-block;
+    font-weight: 600;
+    color: var(--tx);
+    border-bottom: 1px solid var(--bd-controle);
+}
+
+.artigos-todos:hover { border-color: var(--tx); }
+
 /* -- a faixa de contato ---------------------------------------------------- */
 
-/* Bloco largo de papel, com o raio que a seção 6.2.1 dá aos blocos largos.
- * Não é invertido: o bloco invertido é um por página, e é o recorte. O
- * destaque aqui é o botão branco. */
+/* A segunda faixa clara, desde 18/11/2026, com o raio que a seção 6.2.1 dá
+ * aos blocos largos. Os botões invertem junto, sem cor nova: o principal
+ * passa a ser de --inv-tx com texto --inv-fundo (18,42:1), e o de borda
+ * leva a borda e o texto em --inv-tx, também 18,42:1, acima dos 3:1 que a
+ * borda de controle exige. */
 .contato {
-    background: var(--papel-2);
+    background: var(--inv-fundo);
+    border-color: var(--inv-fundo);
+    color: var(--inv-tx);
     margin-top: 56px;
     margin-bottom: 56px;
     padding: 72px 0;
@@ -874,7 +998,28 @@ img { display: block; max-width: 100%; }
     font-size: var(--t4);
     max-width: 30ch;
     margin: 0;
+    color: var(--inv-tx);
 }
+
+.contato .botao-zap {
+    background: var(--inv-tx);
+    border-color: var(--inv-tx);
+    color: var(--inv-fundo);
+}
+
+.contato .botao-borda {
+    color: var(--inv-tx);
+    border-color: var(--inv-tx);
+}
+
+.contato .botao-borda:hover {
+    background-color: transparent;
+    border-color: var(--inv-tx);
+}
+
+.contato .contato-nota { color: var(--inv-tx); }
+
+.contato a:focus-visible { outline-color: var(--inv-tx); }
 
 .contato-acoes { display: flex; flex-wrap: wrap; gap: 12px; }
 
@@ -1118,6 +1263,7 @@ img { display: block; max-width: 100%; }
     .grupo-areas { font-size: var(--t2); }
 
     .grade { grid-template-columns: 1fr; margin-bottom: 40px; }
+    .artigos-grade { grid-template-columns: 1fr; }
 
     /* A seção já é de coluna única em qualquer largura desde 16/11/2026, então
        aqui só sobram o tamanho do título, o do retrato e o respiro. */
@@ -1153,6 +1299,16 @@ img { display: block; max-width: 100%; }
 }
 
 /* Abaixo de 400px o botão em linha fica estreito demais para o dedo. */
+/* O selo em tela média e pequena: menor, e sangrando mais, para não
+ * passar por baixo do título inteiro. */
+@media (max-width: 900px) {
+    .selo { width: 72%; transform: translate(32%, -50%); }
+}
+
+@media (max-width: 700px) {
+    .selo { width: 55%; transform: translate(38%, -50%); }
+}
+
 @media (max-width: 400px) {
 
     /* O .botao-zap entra junto, senão o botão de preferência fica mais
