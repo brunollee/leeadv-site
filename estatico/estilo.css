@@ -418,9 +418,49 @@ img { display: block; max-width: 100%; }
  * sustenta pelo tamanho do título e pelo vazio em volta dele, e o L da
  * marca já está no cabeçalho, logo acima. */
 .abertura {
+    position: relative;
+    overflow: hidden;
     background: var(--bg);
     border-bottom: 1px solid var(--bd);
     padding: 104px 0 92px;
+}
+
+/* O selo da marca d'água, desde 18/11/2026: o símbolo "Lee" ampliado,
+ * ancorado à direita e sangrando para fora da seção, que o corta pelo
+ * overflow. É o único ornamento da abertura, e não volta a ser o L em
+ * degradê que saiu em 17/11/2026: é chapado, na cor do texto, a 8%.
+ *
+ * A opacidade de 0.08 foi escolhida pelo titular olhando a prévia. Não
+ * mexer sem nova decisão dele.
+ *
+ * A largura é fixa em 1500px na tela larga, e o translate(22%, -50%) leva
+ * o desenho para a direita e o centra na vertical. A altura sai do
+ * viewBox, na proporção 7933/3428. Fica abaixo do texto (z-index 0 contra
+ * 1 do .dentro) e não recebe clique nem foco. */
+.selo {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    z-index: 0;
+    width: 1500px;
+    height: auto;
+    aspect-ratio: 7933 / 3428;
+    transform: translate(22%, -50%);
+    opacity: 0.08;
+    fill: var(--tx);
+    pointer-events: none;
+}
+
+.abertura .dentro { position: relative; z-index: 1; }
+
+/* Em tela média e estreita o selo encolhe junto com a tela e sangra mais,
+ * para não disputar o título. */
+@media (max-width: 900px) {
+    .selo { width: 72%; transform: translate(32%, -50%); }
+}
+
+@media (max-width: 700px) {
+    .selo { width: 55%; transform: translate(38%, -50%); }
 }
 
 /* A etiqueta da abertura: a sobrelinha vira pílula, com borda decorativa e
