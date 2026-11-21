@@ -1614,6 +1614,130 @@ time,
     .autor { grid-template-columns: 1fr; gap: 16px; }
 }
 
+/* -- a entrada do conteudo ------------------------------------------------- */
+
+/* Movimento acrescentado em 21/11/2026. A regra que governa tudo o que vem
+ * abaixo: em TODA animacao daqui o estado final e identico ao estado natural
+ * do elemento, e nenhum elemento tem opacidade ou deslocamento proprio fora
+ * da animacao.
+ *
+ * Isso nao e preciosismo. O bloco de movimento zerado, logo abaixo, aplica
+ * `animation: none !important`. Se o estado de repouso fosse `opacity: 0`,
+ * com a animacao trazendo o elemento a vista, quem pede menos movimento no
+ * sistema operacional veria a pagina em branco. Pela mesma razao o
+ * `fill-mode` da abertura e `backwards`, e nao `both`: ele cobre o atraso
+ * sem fixar o estado inicial depois.
+ *
+ * Nenhum script, nenhuma requisicao nova e nenhuma excecao na
+ * Content-Security-Policy. O recurso e o mesmo que ja recolhe o botao fixo
+ * de WhatsApp: linha do tempo de rolagem em CSS.
+ */
+
+/* A abertura, no carregamento. Quatro elementos subindo 12px em escada de
+ * 80ms, com o ultimo terminando em 640ms.
+ *
+ * O selo NAO entra aqui. A opacidade de 0.08 dele foi escolhida pelo titular
+ * olhando a previa, com nota de nao mexer sem nova decisao, e animar a
+ * opacidade seria mexer nela.
+ *
+ * CUSTO CONHECIDO: o h1 e provavelmente o elemento de maior pintura da tela
+ * (LCP), e um elemento com opacidade zero nao conta como pintado. Com 80ms
+ * de atraso e 400ms de duracao, o LCP medido atrasa cerca de meio segundo.
+ * Decidido assim em 21/11/2026. Para desfazer so este ponto, tire o
+ * `.abertura h1` da lista: o resto da escada continua valendo.
+ *
+ * A curva e `ease-out`, e nao a --curva-botao: aquela tem ultrapassagem
+ * (1.2), que serve a um botao sob o ponteiro e nao a um texto que o leitor
+ * esta comecando a ler. */
+@keyframes entrar-abertura {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: none; }
+}
+
+.abertura .sobrelinha,
+.abertura h1,
+.abertura .apoio,
+.abertura .botoes {
+    animation: entrar-abertura 400ms ease-out backwards;
+}
+
+.abertura .sobrelinha { animation-delay: 0ms; }
+.abertura h1          { animation-delay: 80ms; }
+.abertura .apoio      { animation-delay: 160ms; }
+.abertura .botoes     { animation-delay: 240ms; }
+
+/* A passagem de tema: cada secao entra quando cruza a borda de baixo da
+ * tela, o cabecalho um instante antes do corpo.
+ *
+ * NAO e rolagem sequestrada. A pagina continua rolando livremente; o que a
+ * rolagem comanda e so o progresso da animacao de cada bloco.
+ *
+ * O @supports e indispensavel, pelo mesmo motivo documentado no botao fixo:
+ * sem ele, navegador que ignora `animation-timeline` aplicaria a animacao na
+ * linha do tempo de tempo, com duracao zero. Como o estado final aqui e o
+ * estado natural, o salto seria invisivel, mas a regra fica dentro do
+ * @supports de todo modo, para que quem nao suporta nao receba regra
+ * nenhuma. Hoje isso inclui o Firefox, que mantem o recurso desligado.
+ *
+ * O intervalo e medido em `cover`, e nao em `entry`. Com `entry`, bloco mais
+ * alto do que a tela nunca chega a estar inteiramente visivel, a fase nunca
+ * completa e o bloco ficaria parado no meio da animacao, meio transparente
+ * para sempre. A grade de areas e a faixa do recorte sao exatamente esse
+ * caso. Com `cover`, o percurso existe qualquer que seja a altura. */
+@supports (animation-timeline: view()) {
+    @keyframes entrar-no-campo {
+        from { opacity: 0; transform: translateY(16px); }
+        to   { opacity: 1; transform: none; }
+    }
+
+    .secao-cabeca,
+    .trajetoria-cabeca,
+    .recorte .dentro {
+        animation: entrar-no-campo linear both;
+        animation-timeline: view();
+        animation-range: cover 0% cover 12%;
+    }
+
+    .grupo-areas,
+    .abre-bloco,
+    .grade,
+    .etapas,
+    .grade-artigos,
+    .trajetoria .retrato,
+    .trajetoria .quadro,
+    .trajetoria-texto {
+        animation: entrar-no-campo linear both;
+        animation-timeline: view();
+        animation-range: cover 2% cover 16%;
+    }
+
+    /* O filete de cobre da sobrelinha, desenhado da esquerda para a direita.
+     *
+     * E `scaleX`, e nao `width`: animar a largura empurraria o texto do
+     * rotulo ao lado dele durante a animacao, e texto que se mexe enquanto
+     * se le e pior do que nenhum movimento. Com a escala, o filete continua
+     * ocupando os seus 36px no fluxo.
+     *
+     * A abertura nao aparece aqui porque o seu filete esta em display:none,
+     * por decisao de 18/11/2026: dentro da pilula ele seria um segundo
+     * marcador. O ::after espelhado da trajetoria cresce a partir da
+     * direita, para que os dois filetes se abram do titulo para fora. */
+    @keyframes crescer-filete {
+        from { transform: scaleX(0); }
+        to   { transform: scaleX(1); }
+    }
+
+    .secao .sobrelinha::before,
+    .trajetoria-cabeca .sobrelinha::after {
+        animation: crescer-filete linear both;
+        animation-timeline: view();
+        animation-range: cover 0% cover 14%;
+        transform-origin: left center;
+    }
+
+    .trajetoria-cabeca .sobrelinha::after { transform-origin: right center; }
+}
+
 /* -- movimento zerado ------------------------------------------------------ */
 
 /* Obrigatório, e não opcional: quem pede menos movimento no sistema
