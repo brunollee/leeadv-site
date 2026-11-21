@@ -164,13 +164,14 @@
      * usar --bd ou --bd2 no lugar dela. */
     --bd-controle: #76767C;
 
-    /* Borda DECORATIVA sob o ponteiro: o branco do texto a 30%, desde
-     * 20/11/2026. Um destaque sutil, que dá 2,49:1 sobre --bg e 2,57:1
-     * sobre --papel-2, e por isso só serve a borda decorativa: o cartão de
+    /* Borda DECORATIVA sob o ponteiro: o branco do texto a 28%, desde
+     * 20/11/2026. Um destaque sutil, que dá 2,34:1 sobre --bg, 2,38:1 sobre
+     * --papel-2 e 2,39:1 sobre --papel-3, e por isso só serve a borda
+     * decorativa: o cartão de
      * área, a etapa, o sublinhado do link. NUNCA no hover de um controle
      * delimitado só pela borda (botão secundário, "Área restrita"): ali a
      * borda precisa de 3:1 também sob o ponteiro, e o hover usa --tx. */
-    --bd-hover: rgba(242, 242, 242, 0.30);
+    --bd-hover: rgba(242, 242, 242, 0.28);
 
     /* O botão principal é branco com texto escuro. --on-ink é o texto sobre
      * a tinta do botão: 18,42:1 sobre o branco. */
@@ -583,7 +584,8 @@ time,
     border-radius: var(--raio-pilula);
     transition: transform var(--transicao) var(--curva-botao),
                 border-color var(--transicao) ease,
-                background-color var(--transicao) ease;
+                background-color var(--transicao) ease,
+                color var(--transicao) ease;
 }
 
 .botao:hover,
@@ -591,6 +593,17 @@ time,
 .botao-claro:hover,
 .botao-borda:hover,
 .botao-zap:hover { transform: translateY(-3px); }
+
+/* O botão continua pílula sob o foco do teclado. A regra geral de foco põe
+ * border-radius: 4px no link focado, e ela vence a do botão por
+ * especificidade: até 20/11/2026 a pílula virava retângulo ao receber foco,
+ * e o anel, que segue o contorno, também. */
+.botao:focus-visible,
+.botao-vazado:focus-visible,
+.botao-claro:focus-visible,
+.botao-borda:focus-visible,
+.botao-zap:focus-visible,
+.restrita:focus-visible { border-radius: var(--raio-pilula); }
 
 /* O botão principal: branco, texto escuro. É o branco como destaque. */
 .botao,
@@ -601,15 +614,16 @@ time,
     border: 1.5px solid var(--btn);
 }
 
-/* O botão de preferência da faixa de contato. Fica maior que o vizinho e
- * leva o ícone: é por tamanho e por desenho que ele se destaca, e não por
- * uma frase dizendo que é o canal preferido. Frase dessas seria texto novo,
- * e num site de advogado texto novo passa por conferência de publicidade
+/* O botão de preferência da faixa de contato. Leva o ícone e o
+ * preenchimento cheio: é por desenho que ele se destaca, e não por uma
+ * frase dizendo que é o canal preferido. Frase dessas seria texto novo, e
+ * num site de advogado texto novo passa por conferência de publicidade
  * antes de existir.
  *
- * Desde 17/11/2026 o tamanho vem da caixa, e não da letra: a escala não tem
- * degrau entre 16 e 20px, e 20px num botão grita. A letra é a mesma do
- * vizinho, e o que cresce é a pílula e o ícone. */
+ * Até 20/11/2026 ele também era mais alto que o vizinho. Desde então os
+ * dois botões da faixa têm a mesma altura, 44px (ver .contato-acoes, logo
+ * abaixo), e a diferença fica no preenchimento, no ícone maior e na
+ * pílula um pouco mais larga. */
 .botao-zap {
     display: inline-flex;
     align-items: center;
@@ -709,12 +723,30 @@ time,
     border: 1px solid var(--bd);
     border-radius: var(--raio-cartao);
     padding: 32px 28px;
-    transition: transform var(--transicao) ease,
-                border-color var(--transicao) ease;
 }
 
-.area:hover {
-    transform: translateY(-5px);
+/* O mesmo comportamento nos três cartões da página, desde 20/11/2026: o
+ * cartão de área, a etapa do método e o cartão de artigo. Sob o ponteiro,
+ * ou quando o foco do teclado entra no cartão (o link "Ler o artigo"), ele
+ * sobe 2px e a borda clareia para --bd-hover. Era 5px até essa data: 2px
+ * basta para o olho perceber, e não faz a grade parecer pular.
+ *
+ * A elevação é só reforço. O que mostra o foco é o anel do link, e o que
+ * mostra o que se clica é o próprio link. */
+.area,
+.etapa,
+.cartao-artigo {
+    transition: transform 200ms ease,
+                border-color 200ms ease;
+}
+
+.area:hover,
+.area:focus-within,
+.etapa:hover,
+.etapa:focus-within,
+.cartao-artigo:hover,
+.cartao-artigo:focus-within {
+    transform: translateY(-2px);
     border-color: var(--bd-hover);
 }
 
@@ -960,13 +992,6 @@ time,
     background: var(--papel-2);
     border: 1px solid var(--bd);
     border-radius: var(--raio-cartao);
-    transition: transform var(--transicao) ease,
-                border-color var(--transicao) ease;
-}
-
-.etapa:hover {
-    transform: translateY(-5px);
-    border-color: var(--bd-hover);
 }
 
 /* Rótulo. */
@@ -1075,7 +1100,42 @@ time,
     margin: 0;
 }
 
-.contato-acoes { display: flex; flex-wrap: wrap; gap: 12px; }
+.contato-acoes { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; }
+
+/* Os botões da faixa de contato, desde 20/11/2026: a mesma altura, 44px,
+ * que é também o alvo mínimo para o dedo, e o ícone centrado na vertical
+ * com o texto. A largura continua vindo do texto e do recuo lateral de
+ * cada um.
+ *
+ * Sob o ponteiro, o preenchimento se inverte: o botão cheio fica vazado e
+ * o vazado fica cheio. É um retorno que se vê de longe, e se faz só com as
+ * cores que o botão já tem, sem cor nova. */
+.contato-acoes .botao-zap,
+.contato-acoes .botao-claro,
+.contato-acoes .botao-borda {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 44px;
+    padding-top: 0;
+    padding-bottom: 0;
+    line-height: 1;
+}
+
+.contato-acoes svg { display: block; }
+
+.contato-acoes .botao-zap:hover,
+.contato-acoes .botao-claro:hover {
+    background-color: transparent;
+    color: var(--tx);
+    border-color: var(--tx);
+}
+
+.contato-acoes .botao-borda:hover {
+    background-color: var(--tx);
+    color: var(--bg);
+    border-color: var(--tx);
+}
 
 /* O contato invertido, só na página inicial: a classe .inicio está no body
  * do index.html, e as páginas de artigo, que têm a mesma faixa, ficam como
@@ -1103,7 +1163,17 @@ time,
     border-color: var(--inv-tx);
 }
 
-.inicio .contato .botao-borda:hover { background-color: var(--inv-fundo); }
+.inicio .contato .botao-zap:hover {
+    background-color: transparent;
+    color: var(--inv-tx);
+    border-color: var(--inv-tx);
+}
+
+.inicio .contato .botao-borda:hover {
+    background-color: var(--inv-tx);
+    color: var(--inv-fundo);
+    border-color: var(--inv-tx);
+}
 
 .inicio .contato a:focus-visible { outline-color: var(--inv-tx); }
 
@@ -1148,6 +1218,7 @@ time,
  * 17,12:1. A folga de 2px deixa uma faixa escura entre o disco e o anel, de
  * modo que o claro do anel não se funde com o branco do disco. */
 .contato-fixo:focus-visible {
+    border-radius: 50%;
     outline: 2px solid var(--tx);
     outline-offset: 2px;
 }
@@ -1512,7 +1583,11 @@ time,
     }
 
     .area:hover,
+    .area:focus-within,
     .etapa:hover,
+    .etapa:focus-within,
+    .cartao-artigo:hover,
+    .cartao-artigo:focus-within,
     .botao:hover,
     .botao-vazado:hover,
     .botao-claro:hover,
