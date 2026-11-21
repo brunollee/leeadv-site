@@ -1,1 +1,8 @@
 .claude/
+__pycache__/
+
+# Material de auditoria visual: capturas de tela e o pacote enviado ao
+# auditor. São gerados a partir do site, não fazem parte dele, e pesam
+# dezenas de megabytes. Quem precisar deles roda a captura de novo.
+audit-screenshots/
+auditoria-identidade-visual-leeadv-*.zip
