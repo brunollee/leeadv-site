@@ -300,7 +300,14 @@ body {
  *
  * Em caixa mista a folga positiva abre buracos entre as letras; o
  * letter-spacing passa a levemente negativo, que é o que uma serifada pede
- * em tamanho de título. */
+ * em tamanho de título.
+ *
+ * Desde 20/11/2026 o aperto acompanha a escala, porque quanto maior a
+ * letra, maior o vão que o olho percebe entre elas: -0.005em até --t3
+ * (h3 e h4, título de cartão e subtítulo), -0.01em em --t4, -0.012em em
+ * --t5 e -0.015em em --t6. E os títulos principais, h1 e h2, ficam com
+ * entrelinha 1,14: em tamanho grande, 1,22 deixa as linhas de um título de
+ * duas linhas soltas uma da outra. h3 e h4, menores, ficam em 1,22. */
 h1, h2, h3, h4 {
     font-family: var(--titulo);
     font-weight: 700;
@@ -308,6 +315,11 @@ h1, h2, h3, h4 {
     color: var(--tx);
     margin: 0 0 14px;
     line-height: 1.22;
+}
+
+h1, h2 {
+    letter-spacing: -0.01em;
+    line-height: 1.14;
 }
 
 p { margin: 0 0 16px; }
@@ -380,6 +392,19 @@ img { display: block; max-width: 100%; }
     font-size: var(--t2);
     line-height: 1.5;
     max-width: 54ch;
+}
+
+/* Algarismos tabulares, desde 20/11/2026, em tudo o que é número para
+ * comparar ou alinhar: datas, numeração de área, etapa do método, nº de
+ * registro. Cada dígito na mesma largura, então datas e números empilhados
+ * ficam alinhados coluna a coluna. Fica fora do texto corrido, onde o
+ * algarismo proporcional se lê melhor no meio da frase. O nº da OAB já tem
+ * a sua regra no quadro e no rodapé. */
+time,
+.datas,
+.area-num,
+.etapa-num {
+    font-variant-numeric: lining-nums tabular-nums;
 }
 
 /* -- o cabeçalho ----------------------------------------------------------- */
@@ -531,6 +556,7 @@ img { display: block; max-width: 100%; }
 
 .abertura h1 {
     font-size: var(--t6);
+    letter-spacing: -0.015em;
     line-height: 1.12;
     max-width: 19ch;
     margin-bottom: 24px;
@@ -631,6 +657,10 @@ img { display: block; max-width: 100%; }
 .secao { padding: 84px 0; }
 
 .secao-cabeca { max-width: 62ch; margin-bottom: 56px; }
+.secao-cabeca h2,
+.trajetoria h2,
+.recorte h2 { letter-spacing: -0.012em; }
+
 .secao-cabeca h2 { font-size: var(--t5); }
 .secao-cabeca .apoio { color: var(--tx2); margin: 0; }
 
@@ -796,12 +826,19 @@ img { display: block; max-width: 100%; }
 
 .trajetoria h2 { font-size: var(--t5); }
 
-/* Texto corrido: a entrelinha maior é o que sustenta a leitura de parágrafo
- * longo, e fica a mesma no recorte. */
+/* Texto corrido: entrelinha 1,65 e no máximo 65 caracteres por linha, a
+ * mesma medida do recorte e do corpo dos artigos. Era 1,75 até 20/11/2026:
+ * com a medida limitada a 65 caracteres, a linha é curta o bastante para o
+ * olho achar a seguinte com menos folga, e o parágrafo fica mais coeso. */
 .trajetoria p {
     color: var(--tx2);
-    line-height: 1.75;
+    line-height: 1.65;
 }
+
+/* A medida vai só nos parágrafos do texto, e não em todo p da seção: a
+ * sobrelinha também é um p, e com largura limitada ela deixaria de ocupar
+ * a linha inteira e sairia do eixo do título centralizado. */
+.trajetoria-texto p { max-width: 65ch; }
 
 .trajetoria p:last-child { margin-bottom: 0; }
 
@@ -870,7 +907,7 @@ img { display: block; max-width: 100%; }
  * trabalha como trabalha.
  *
  * Coluna única e estreita, de propósito: é a seção da página que se lê como
- * texto corrido, e não como lista ou quadro. O limite de 66 caracteres é a
+ * texto corrido, e não como lista ou quadro. O limite de 65 caracteres é a
  * medida em que a linha ainda se lê sem o olho perder a volta.
  *
  * Todo o texto aqui é --inv-tx, inclusive o rótulo e a nota: #141414 sobre
@@ -885,13 +922,13 @@ img { display: block; max-width: 100%; }
     margin-bottom: 56px;
 }
 
-.recorte .dentro > * { max-width: 66ch; }
+.recorte .dentro > * { max-width: 65ch; }
 .recorte h2 { font-size: var(--t5); color: var(--inv-tx); }
 .recorte .sobrelinha { color: var(--inv-tx); }
 
 .recorte p {
     color: var(--inv-tx);
-    line-height: 1.75;
+    line-height: 1.65;
 }
 
 /* A nota de fonte. O dado do Sebrae não sai sem ela, nunca: número de
@@ -1205,15 +1242,29 @@ img { display: block; max-width: 100%; }
 
 /* -- as páginas de texto corrido (aviso, privacidade e artigos) ------------ */
 
-/* O corpo de leitura para em 66 caracteres, a mesma medida do recorte. */
+/* O corpo de leitura: entrelinha 1,65 e no máximo 65 caracteres por linha,
+ * a mesma medida do recorte. A medida vai no parágrafo e no item de lista,
+ * e não só no contêiner, para valer em qualquer bloco de leitura longa que
+ * entre nestas páginas. */
 .texto { padding: 72px 0 84px; }
-.texto .dentro { max-width: 66ch; }
+/* O contêiner cabe os 65ch do parágrafo mais o recuo lateral do .dentro:
+ * o max-width conta o padding, e com 66ch o parágrafo ficava em cerca de 58
+ * caracteres. */
+.texto .dentro { max-width: calc(65ch + 2 * var(--gutter)); }
 .texto h1 { font-size: var(--t4); margin-bottom: 28px; }
 
-.texto p {
-    color: var(--tx2);
-    line-height: 1.75;
+/* Os intertítulos do artigo ficam no tamanho de subtítulo (24px, perto do
+ * --t3), e por isso com o aperto de -0.005em da escala, e não o dos títulos
+ * grandes. */
+.texto h2 { letter-spacing: -0.005em; }
+
+.texto p,
+.texto li {
+    line-height: 1.65;
+    max-width: 65ch;
 }
+
+.texto p { color: var(--tx2); }
 
 .texto p:last-child { margin-bottom: 0; }
 
@@ -1300,11 +1351,14 @@ img { display: block; max-width: 100%; }
     .restrita:hover { border-color: var(--bd); }
 
     .abertura { padding: 72px 0 64px; }
-    .abertura h1 { font-size: var(--t5); }
+    .abertura h1 { font-size: var(--t5); letter-spacing: -0.012em; }
     .apoio { font-size: var(--t1); }
     /* Respiro de 40px abaixo de 860px, conforme a seção 6.2.1. */
     .secao { padding: 60px 0; }
     .secao-cabeca { margin-bottom: 34px; }
+    .secao-cabeca h2,
+    .trajetoria h2,
+    .recorte h2 { letter-spacing: -0.01em; }
     .secao-cabeca h2 { font-size: var(--t4); }
 
     .grupo-areas { font-size: var(--t2); }
@@ -1342,7 +1396,7 @@ img { display: block; max-width: 100%; }
     .contato-fixo { right: 16px; bottom: 16px; }
 
     .texto { padding: 52px 0 64px; }
-    .texto h1 { font-size: var(--t3); }
+    .texto h1 { font-size: var(--t3); letter-spacing: -0.005em; }
 }
 
 /* Abaixo de 400px o botão em linha fica estreito demais para o dedo. */
