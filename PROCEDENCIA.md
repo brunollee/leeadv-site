@@ -154,55 +154,78 @@ Licença: SIL Open Font License 1.1, nos dois casos.
 ## O retrato
 
 Foto do titular, tratada **fora do repositório** e trazida pronta em
-15/11/2026. Nada aqui foi gerado, convertido ou alterado por quem escreveu
-estas linhas: os quatro arquivos foram conferidos, medidos e registrados como
-chegaram.
-
-A foto original, o script de tratamento e os arquivos em tamanho cheio ficam
-na pasta de trabalho do titular, fora deste repositório. O que entra aqui são
-só os quatro derivados de 600x600 que a página usa.
+15/11/2026. A foto original, o script de tratamento e os arquivos em tamanho
+cheio ficam na pasta de trabalho do titular, fora deste repositório. O que
+entra aqui são só os seis derivados de 600x600, três pares de AVIF e WebP.
 
 O recorte separou fundo e pele pela diferença entre o vermelho e o verde, e o
-fundo foi substituído: `--bd2` #ececea na versão clara e #1f1f1f na escura. É
-por isso que são quatro arquivos e não dois, e é por isso que o CSS não
-desenha fundo nem borda atrás do círculo: o fundo já está dentro da imagem.
+fundo foi substituído: #ececea na versão clara, branco puro na versão branca
+e #1f1f1f na escura. É por isso que são três pares e não um, e é por isso que
+o CSS não desenha fundo nem borda atrás do círculo: o fundo já está dentro da
+imagem.
 
-### O arquivo em uso desde 15/11/2026
+### O que foi refeito em 21/11/2026
 
-Com a decisão do escuro fixo, o fundo do retrato passou a ser **branco puro**,
-recortado: sobre a página escura o disco branco funcionava como destaque. É
-este o par que a página carrega, e dele o navegador baixa **um** arquivo só.
+Até esta data valia, para o retrato, a frase que esta seção ainda usa para a
+imagem de compartilhamento: nada havia sido gerado, convertido ou alterado por
+quem escreveu estas linhas. **Deixou de valer.** Os seis arquivos foram
+reescritos aqui dentro, e os resumos abaixo são os dos arquivos novos.
 
-Com a inversão para o claro, em 17/11/2026, o arquivo continuou o mesmo. O
-retrato fica sobre o `--papel-2` do bloco da trajetória, e o disco branco
-aparece por um tom só, sem moldura.
+**O aro claro, nos seis arquivos.** O recorte original guardava de 2 a 3
+pixels do fundo claro do estúdio na borda do círculo, e sobre a página escura
+isso aparecia como um aro claro em volta da cabeça. O conserto mexeu **só na
+máscara de transparência**: o círculo passou de 300 para 296,5 pixels de raio,
+com meio pixel de suavização, e os pixels que a máscara nova descarta
+receberam a cor do anel imediatamente interno, para o navegador não ter cor
+clara nenhuma para interpolar ao reduzir a imagem. Nenhum pixel da fotografia
+foi reamostrado, recolorido ou movido.
+
+**O tom do fundo, só no `retrato-escuro`.** Por decisão do titular, o disco
+deixou de aparecer por um tom e passou a sumir na página: o fundo chapado
+desceu de #1f1f1f para #0f0f0f, o `--bg`. A região foi identificada por
+preenchimento a partir da borda do círculo, com tolerância de 7 níveis, que
+não vaza pelo cabelo e para no terno; a borda da máscara entra suavizada, para
+não deixar degrau. O desconto é medido pela mediana do próprio fundo de cada
+arquivo, e não fixado, porque o WebP e o AVIF guardam valores um pouco
+diferentes e precisam chegar no mesmo tom. Atinge 42,2% do disco, e nenhum
+pixel da pessoa.
+
+O efeito colateral foi apresentado e aceito: sem o disco, o corte circular nos
+ombros vira uma borda dura. Quem quiser o disco de volta, o arquivo anterior
+está no histórico do Git.
+
+Quem for conferir: comparar com a versão anterior no histórico. Os resumos
+antigos, que valiam até 20/11/2026, estão no commit anterior a este.
+
+### Onde cada par é usado
+
+| Par | Fundo dentro da imagem | Onde |
+|---|---|---|
+| `retrato-escuro` | #0f0f0f, o `--bg` | `index.html`, seção da trajetória |
+| `retrato-branco` | branco puro | bloco do autor dos artigos, sobre o `--inv-papel` do cartão, desde 21/11/2026 |
+| `retrato-claro` | #ececea | sem uso em página |
+
+Os dois pares em uso seguem a mesma regra: o fundo dentro da imagem é o mesmo
+tom da superfície atrás dela, e por isso o disco não aparece. O
+`retrato-claro` foi feito para o `--papel-2` da versão clara do site, que não
+existe mais; não foi apagado, porque é registro do que esteve publicado.
 
 | Arquivo guardado | Formato | Dimensões | Tamanho | SHA-256 |
 |---|---|---|---|---|
-| `estatico/retrato/retrato-branco.avif` | AVIF | 600x600 | 29.388 B | `e7c021b1852628403aeaa9a2057aca20940ab620edb20225dd810302a875068e` |
-| `estatico/retrato/retrato-branco.webp` | WebP | 600x600 | 29.140 B | `1fc8a89935827890577b66d76c8a9751786e424c1d335caf4dbaf4d6666d6dd9` |
-
-### Os quatro arquivos fora de uso
-
-As versões `retrato-claro` e `retrato-escuro` **deixaram de ser usadas na
-página em 15/11/2026**, com a decisão do escuro fixo. Não foram apagadas:
-ficam como registro do que esteve publicado entre os commits 564e9ab e o do
-passo 4, e para o `og:image` da seção 6.4, que ainda não existe. Nenhuma das
-duas é referenciada por qualquer HTML.
-
-| Arquivo guardado | Formato | Dimensões | Tamanho | SHA-256 |
-|---|---|---|---|---|
-| `estatico/retrato/retrato-claro.avif` | AVIF | 600x600 | 29.393 B | `545887fffb56ad75c16afad9f9b5ba5455b737d6d8cd6998156611160cef2d18` |
-| `estatico/retrato/retrato-claro.webp` | WebP | 600x600 | 28.986 B | `95e5a7888b25a6577a5b7b43f1508965c0d21bf308cd4c20a4e8d58fca3ac4a8` |
-| `estatico/retrato/retrato-escuro.avif` | AVIF | 600x600 | 29.374 B | `ba467c1034f1eddcab7597fc949c2bcb319b761c896eec70c70ee15d3e2b1848` |
-| `estatico/retrato/retrato-escuro.webp` | WebP | 600x600 | 28.536 B | `40ddb9a5d7c14e6bccf57e61fd5d6d86374cb4f3503879f97098e3f4e85f2091` |
+| `estatico/retrato/retrato-escuro.avif` | AVIF | 600x600 | 28.982 B | `d5dd44f71d5dcaf1c0af3f8e4e1d8578e429cd682d37b0d4304e46fcc5ddc62d` |
+| `estatico/retrato/retrato-escuro.webp` | WebP | 600x600 | 29.168 B | `5a20475ee1a6df7a0661cfb7636b20fadffeaecf348fe43ece3b9cd9afa54b08` |
+| `estatico/retrato/retrato-claro.avif` | AVIF | 600x600 | 29.895 B | `fc55ca84d3fe3a00229a194bc1690dd5b120ce9c7116447c46ec10bfc42f7bc5` |
+| `estatico/retrato/retrato-claro.webp` | WebP | 600x600 | 27.830 B | `945341a4ac33ef7c10b8f3550868379cb9d97b771ccc5fbc1b06c47d7a54481b` |
+| `estatico/retrato/retrato-branco.avif` | AVIF | 600x600 | 29.809 B | `93e4fc0e18a2d262c7f3c1608bb6d52de44d30aab61306016ea85a3bbe385b9f` |
+| `estatico/retrato/retrato-branco.webp` | WebP | 600x600 | 28.054 B | `5b2fc247614aeaec98bd257b6b0f17ab837b6911177b23a76bf575d5af76dfad` |
 
 Os formatos e as dimensões foram lidos dos próprios bytes, e não do nome do
 arquivo: as caixas `ftypavif` e `ispe` nos AVIF, o cabeçalho `RIFF`/`WEBP` nos
 WebP. Nenhum PNG e nenhum JPEG entram no site.
 
-O navegador baixa **um** desses quatro, não os quatro: o `<picture>` escolhe
-pelo modo de cor e pelo formato que o navegador aceita.
+O navegador baixa **um** arquivo por página, e não os seis: o `<picture>`
+escolhe pelo formato que o navegador aceita, e cada página referencia um par
+só.
 
 **Publicar a foto é permitido.** O art. 5º, § 2º, do Provimento 205/2021 do
 CFOAB admite imagens, inclusive fotografias dos advogados. O que o art. 6º
