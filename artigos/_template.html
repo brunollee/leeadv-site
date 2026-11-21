@@ -170,7 +170,7 @@
   </div>
 </header>
 
-<main class="texto">
+<main class="texto artigo">
   <div class="dentro">
 
     <nav class="trilha" aria-label="Trilha de navegação">
@@ -181,29 +181,34 @@
       <span aria-current="page">{{H1}}</span>
     </nav>
 
-    <h1>{{H1}}</h1>
+    <!-- A folha do artigo. O fundo claro e o texto escuro vivem na classe
+         .folha, em estilo.css. A trilha fica de fora, acima dela: a trilha
+         é navegação do site, e a folha começa onde começa o artigo. -->
+    <article class="folha">
+      <h1>{{H1}}</h1>
 
-    <p class="datas">
-      Publicado em <time datetime="{{DATA_PUBLICACAO_ISO}}">{{DATA_PUBLICACAO}}</time>
-      · Atualizado em <time datetime="{{DATA_ATUALIZACAO_ISO}}">{{DATA_ATUALIZACAO}}</time>
-    </p>
+      <p class="datas">
+        Publicado em <time datetime="{{DATA_PUBLICACAO_ISO}}">{{DATA_PUBLICACAO}}</time>
+        · Atualizado em <time datetime="{{DATA_ATUALIZACAO_ISO}}">{{DATA_ATUALIZACAO}}</time>
+      </p>
 
-    <!-- O corpo do artigo. Uma <h2> por seção, parágrafos em <p>. Não pular
-         nível de título: depois de <h2> vem <h3>, nunca <h4> direto. -->
-    {{CORPO}}
+      <!-- O corpo do artigo. Uma <h2> por seção, parágrafos em <p>. Não pular
+           nível de título: depois de <h2> vem <h3>, nunca <h4> direto. -->
+      {{CORPO}}
 
-    <!-- O bloco do autor. O texto aqui é o mesmo que já consta do rodapé e
-         da seção de trajetória: nada de credencial nova sem conferência. -->
-    <div class="area autor">
-      <picture>
-        <source srcset="/estatico/retrato/retrato-escuro.avif" type="image/avif">
-        <img src="/estatico/retrato/retrato-escuro.webp" alt="Bruno Lee, advogado" class="autor-retrato" width="600" height="600">
-      </picture>
-      <div>
-        <h2>Bruno Lee</h2>
-        <p>Bruno Lee, advogado. OAB/SP nº 425.768.</p>
+      <!-- O bloco do autor. O texto aqui é o mesmo que já consta do rodapé e
+           da seção de trajetória: nada de credencial nova sem conferência. -->
+      <div class="area autor">
+        <picture>
+          <source srcset="/estatico/retrato/retrato-branco.avif" type="image/avif">
+          <img src="/estatico/retrato/retrato-branco.webp" alt="Bruno Lee, advogado" class="autor-retrato" width="600" height="600">
+        </picture>
+        <div>
+          <h2>Bruno Lee</h2>
+          <p>Advogado. OAB/SP nº 425.768.</p>
+        </div>
       </div>
-    </div>
+    </article>
 
   </div>
 </main>

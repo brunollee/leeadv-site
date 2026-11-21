@@ -205,6 +205,27 @@
     --inv-fundo: #f7f6f3;
     --inv-tx: #141414;
 
+    /* Os dois tons de apoio sobre o claro, desde 21/11/2026, com a folha do
+     * artigo. São o espelho do --tx2 e do --mut do lado escuro, e existem
+     * pelo mesmo motivo: o corpo do texto recua um passo do título, e a
+     * informação de apoio (data, trilha) recua mais um. Sem eles, a folha
+     * clara teria de repetir o --inv-tx em tudo, e a hierarquia que a
+     * página escura tem se perderia justamente onde se lê mais.
+     *
+     * Contraste sobre o --inv-fundo: --inv-tx2 a 10,37:1, --inv-mut a
+     * 6,29:1. Os dois passam de 4,5, e por isso o --inv-mut pode carregar
+     * texto pequeno, ao contrário do --mut do lado escuro. */
+    --inv-tx2: #3f3f3f;
+    --inv-mut: #5c5c5c;
+
+    /* As superfícies dentro da folha clara. O cartão do autor é o branco
+     * puro sobre o branco quebrado: o mesmo salto de um tom que o
+     * --papel-2 dá sobre o --bg, na outra ponta da escala. A borda é o
+     * preto a 12%, e não a 10% do lado escuro, porque sobre fundo claro a
+     * linha precisa de um pouco mais de peso para aparecer. */
+    --inv-papel: #ffffff;
+    --inv-bd: rgba(20, 20, 20, 0.12);
+
     /* O acento em cobre, adotado em 18/11/2026 para a tela. Nunca carrega
      * informação sozinho: em todo ponto onde aparece há texto ou forma ao
      * lado. --acento-filete é só traço, nunca recebe texto. --acento recebe
@@ -876,12 +897,16 @@ time,
 
 /* O retrato, acima do quadro de dados.
  *
- * Desde 18/11/2026 a página usa o retrato-escuro, com fundo #1e1e20 já
- * recortado dentro do próprio arquivo. Sobre o --bg do bloco o disco
- * aparece por um tom só, sem moldura: é a mesma relação de papel sobre
- * papel do resto da página. O retrato-branco, de fundo branco, ficaria ali
- * como um disco aceso. Por isso aqui não há cor de fundo nem borda: o
- * círculo é só o recorte.
+ * Desde 18/11/2026 a página usa o retrato-escuro, já recortado em círculo
+ * dentro do próprio arquivo. Desde 21/11/2026 o fundo dentro da imagem é o
+ * #0f0f0f desta seção, e não mais o #1f1f1f que aparecia por um tom: o
+ * disco some na página e fica só a pessoa. O retrato-branco, de fundo
+ * branco, ficaria ali como um disco aceso. Por isso aqui não há cor de
+ * fundo nem borda: o círculo é só o recorte.
+ *
+ * O fundo da imagem e o fundo desta seção andam juntos. Trocar o --bg do
+ * bloco sem refazer a imagem faz o disco reaparecer, e é assim que se
+ * percebe, numa revisão futura, se alguém mexeu só num dos dois.
  *
  * width e height estão declarados também no HTML, para o navegador reservar
  * o espaço antes de a imagem chegar e a página não dar um salto. */
@@ -1610,8 +1635,98 @@ time,
 
 .leia-tambem { border-top: 1px solid var(--bd); }
 
+/* -- a folha do artigo ----------------------------------------------------- */
+
+/* Acrescentada em 21/11/2026, por decisão do titular: o corpo do artigo
+ * passa a ser lido em preto sobre branco, dentro de uma folha com contorno,
+ * e não mais em branco sobre o fundo escuro da página.
+ *
+ * É BLOCO, e não faixa. A regra do cabeçalho desta folha continua de pé:
+ * faixa clara nunca encosta em faixa clara. A folha tem recuo lateral dos
+ * dois lados e o fundo escuro aparece em volta dela, inclusive entre ela e
+ * a faixa clara do contato, logo abaixo. O que se lê é uma página de papel
+ * pousada sobre a página escura, que é exatamente o que ela deve parecer.
+ *
+ * A TRILHA FICA DE FORA, acima da folha, no escuro. Ela é navegação do
+ * site, não texto do artigo: a folha começa onde o artigo começa, no h1.
+ *
+ * O branco é o --inv-fundo, #f7f6f3, e não o branco absoluto, pelo mesmo
+ * motivo das faixas claras: numa página escura, um bloco de branco puro
+ * ofusca e faz o texto escuro parecer vibrar nas bordas.
+ *
+ * Só vale com a classe .artigo no <main>. As outras páginas de texto
+ * corrido (aviso e privacidade) continuam escuras. */
+.artigo .folha {
+    background: var(--inv-fundo);
+    color: var(--inv-tx);
+    border-radius: var(--raio-bloco);
+    padding: 52px 44px;
+}
+
+/* O contêiner cresce o tanto do recuo interno da folha. Sem isso, os 65ch
+ * do parágrafo passariam a caber em cerca de 55 caracteres, e a medida de
+ * leitura do site mudaria só nesta página. O 44px repetido é o mesmo do
+ * padding acima; mudar um pede mudar o outro. */
+.texto.artigo .dentro { max-width: calc(65ch + 2 * var(--gutter) + 2 * 44px); }
+
+/* Dentro da folha, a escala de cor inverte inteira. O título no tom cheio,
+ * o corpo um passo atrás, a data e a nota mais um passo. */
+.artigo .folha h1,
+.artigo .folha h2,
+.artigo .folha h3,
+.artigo .folha h4 { color: var(--inv-tx); }
+
+.artigo .folha p,
+.artigo .folha li { color: var(--inv-tx2); }
+
+.artigo .folha .datas { color: var(--inv-mut); }
+
+.artigo .folha strong { color: var(--inv-tx); }
+
+/* O anel de foco do teclado. O branco do --tx sobre a folha clara seria
+ * invisível, e quem navega por teclado perderia a posição no meio do
+ * artigo. Troca para o --inv-tx, 17,05:1 sobre o --inv-fundo, que é o
+ * mesmo que a faixa clara do contato já faz. */
+.artigo .folha a:focus-visible { outline-color: var(--inv-tx); }
+
+/* O cartão do autor, dentro da folha: branco puro sobre o branco quebrado,
+ * com a borda escura. Sem isto ele entraria como o cartão escuro de .area
+ * e abriria um buraco preto no fim do artigo. A elevação ao passar o
+ * ponteiro sai junto: o cartão do autor não é clicável, e o .area empresta
+ * a ele uma transição que aqui não tem para onde levar. */
+.artigo .folha .area {
+    background: var(--inv-papel);
+    border-color: var(--inv-bd);
+}
+
+.artigo .folha .area:hover,
+.artigo .folha .area:focus-within {
+    transform: none;
+    border-color: var(--inv-bd);
+}
+
+/* O link de volta, no fim do texto. Mesma construção do original, com a
+ * escala de cor invertida. */
+.artigo .folha .voltar {
+    color: var(--inv-tx2);
+    border-bottom-color: var(--inv-bd);
+}
+
+.artigo .folha .voltar:hover {
+    color: var(--inv-tx);
+    border-bottom-color: var(--inv-tx);
+}
+
 @media (max-width: 860px) {
     .autor { grid-template-columns: 1fr; gap: 16px; }
+
+    /* O recuo interno da folha encolhe para 20px, o mesmo --gutter da tela
+     * pequena: com 44px de cada lado, a linha de texto ficaria estreita
+     * demais no celular. O contêiner acompanha, e o raio desce para o de
+     * cartão, porque num bloco que ocupa quase a tela inteira o raio de
+     * bloco arredonda demais. */
+    .artigo .folha { padding: 32px 20px; border-radius: var(--raio-cartao); }
+    .texto.artigo .dentro { max-width: calc(65ch + 4 * var(--gutter)); }
 }
 
 /* -- a entrada do conteudo ------------------------------------------------- */

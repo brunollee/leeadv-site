@@ -42,6 +42,10 @@ jobs:
       #   .gitignore              configuração, sem uso para quem visita
       #   .gitattributes          idem
       #   .claude                 pasta de trabalho local
+      #   ferramentas             programas de apoio, em Python. Nenhum deles
+      #                           roda no servidor: o site é estático. Servido,
+      #                           um .py é entregue como texto, de graça, a
+      #                           quem quiser ler como a publicação funciona.
       #
       # A pasta .github fica FORA da lista, de propósito. Medido em
       # 16/11/2026: /.github/workflows/publicar.yml já responde 404, ou seja,
@@ -56,7 +60,7 @@ jobs:
           rm -f  artigos/_template.html
           rm -f  ./*.md
           rm -f  .gitignore .gitattributes
-          rm -rf .claude
+          rm -rf .claude ferramentas
           echo "Sobrou para publicar:"
           ls -A
 
