@@ -1355,7 +1355,11 @@ time,
 @media (max-width: 860px) {
     :root { --gutter: 20px; }
 
-    html { scroll-padding-top: 76px; }
+    /* Embaixo, a folga do botão flutuante: 52px do disco, mais os 16px de
+     * distância da borda, mais 16px de respiro. Assim a âncora e o foco do
+     * teclado, quando a página rola até eles, não param escondidos atrás do
+     * botão. */
+    html { scroll-padding-top: 76px; scroll-padding-bottom: 84px; }
 
     .topo .dentro { flex-wrap: wrap; padding-top: 14px; padding-bottom: 14px; }
 
@@ -1422,7 +1426,25 @@ time,
     .restrita:hover { border-color: var(--bd); }
 
     .abertura { padding: 72px 0 64px; }
-    .abertura h1 { font-size: var(--t5); letter-spacing: -0.012em; }
+    /* 36px, e não um degrau da escala: é a única exceção à regra de que todo
+     * tamanho de letra desta folha é um dos sete degraus, aberta em
+     * 20/11/2026. O --t5 (39px) dava três linhas a 390px e o --t4 (31,25px)
+     * perdia a hierarquia sobre os títulos de seção, que têm esse tamanho no
+     * celular. Se a escala ganhar um degrau entre os dois, o título passa a
+     * usá-lo. */
+    .abertura h1 { font-size: 36px; line-height: 1.12; letter-spacing: -0.012em; }
+
+    /* A pílula do rótulo da abertura: um pouco mais justa, e com as duas
+     * linhas equilibradas. Em 390px o rótulo não cabe numa linha sem
+     * encolher a letra abaixo do --t0 ou apertar a folga de 0.2em, e as duas
+     * coisas são regra do rótulo. O text-wrap: balance divide em duas linhas
+     * de tamanho parecido, em vez de uma linha cheia e uma palavra sozinha
+     * embaixo. */
+    .abertura .sobrelinha {
+        padding: 7px 14px;
+        line-height: 1.5;
+        text-wrap: balance;
+    }
     .apoio { font-size: var(--t1); }
     /* Respiro de 40px abaixo de 860px, conforme a seção 6.2.1. */
     .secao { padding: 60px 0; }
@@ -1464,7 +1486,13 @@ time,
      * A folga extra embaixo é o que impede isso. */
     .rodape { padding-bottom: 104px; }
 
-    .contato-fixo { right: 16px; bottom: 16px; }
+    /* 16px da borda, mais a área de segurança da tela quando o navegador a
+     * informa (a barra de gestos de alguns celulares). Sem essa informação,
+     * o env() vale zero e ficam os 16px. */
+    .contato-fixo {
+        right: 16px;
+        bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+    }
 
     .texto { padding: 52px 0 64px; }
     .texto h1 { font-size: var(--t3); letter-spacing: -0.005em; }
@@ -1505,6 +1533,27 @@ time,
 .trilha a { color: var(--tx2); }
 .trilha a:hover { color: var(--tx); }
 .trilha span { margin: 0 6px; }
+
+/* A trilha cabe sempre numa linha, desde 20/11/2026. Em tela estreita, o
+ * título do artigo, que é o último item, quebrava em duas linhas e empurrava
+ * o h1 para baixo. Agora o item atual encolhe e termina em reticências.
+ * Nada se perde: o título inteiro está no h1 logo abaixo, e o leitor de tela
+ * lê o texto completo do item, porque o corte é só visual. Os links
+ * "Início" e "Artigos" nunca encolhem. */
+.trilha {
+    display: flex;
+    align-items: baseline;
+    white-space: nowrap;
+}
+
+.trilha a,
+.trilha span[aria-hidden] { flex: none; }
+
+.trilha [aria-current] {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
 
 /* A linha de datas, abaixo do título do artigo. Mesmo tamanho e mesma cor
  * da nota de fonte: é informação de apoio, e a discrição vem do tamanho. */
