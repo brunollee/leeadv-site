@@ -557,6 +557,46 @@ def leia_tambem_de_cada_artigo(itens):
 
 
 # --------------------------------------------------------------------------
+# O lastmod do sitemap.
+#
+# REGRA, decidida em 22/11/2026: publicar um artigo muda tres paginas, e as
+# tres precisam de lastmod novo: o artigo, o indice e a HOME, que ganha
+# cartao novo. A home foi esquecida na primeira vez, porque o olho vai para
+# o artigo. Alterar o texto de um artigo ja publicado muda duas: a pagina
+# dele, cujo lastmod acompanha a data de atualizacao impressa nela, e nada
+# mais.
+# --------------------------------------------------------------------------
+
+def atualizar_lastmod(sitemap_xml, loc, data):
+    """O sitemap com o lastmod de `loc` trocado por `data`. Reprova se o
+    endereco nao estiver no sitemap, em vez de nao fazer nada em silencio."""
+    padrao = re.compile(
+        r"(<loc>" + re.escape(loc) + r"</loc>\s*<lastmod>)[0-9-]+(</lastmod>)")
+    novo, quantos = padrao.subn(r"\g<1>" + data + r"\g<2>", sitemap_xml)
+    if quantos != 1:
+        raise ErroDeEntrada(
+            "Esperava um <loc>%s</loc> no sitemap, e achei %d." % (loc, quantos))
+    return novo
+
+
+def lastmod_da_publicacao(cabecalho):
+    """Os enderecos cujo lastmod muda quando um artigo novo entra, e a data
+    de cada um. Os tres, sempre: o artigo, o indice e a home."""
+    return {
+        PREFIXO + cabecalho["endereco"] + ".html": cabecalho["data_atualizacao"],
+        PREFIXO: cabecalho["data_atualizacao"],
+        BASE + "/": cabecalho["data_atualizacao"],
+    }
+
+
+def sincronizar_lastmod(sitemap_xml, pares):
+    """O sitemap com todos os lastmod de `pares` trocados, de uma vez."""
+    for loc, data in sorted(pares.items()):
+        sitemap_xml = atualizar_lastmod(sitemap_xml, loc, data)
+    return sitemap_xml
+
+
+# --------------------------------------------------------------------------
 # As tres etapas
 # --------------------------------------------------------------------------
 
