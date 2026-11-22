@@ -211,8 +211,9 @@ antigos, que valiam até 20/11/2026, estão no commit anterior ao de
 
 O mesmo par serve aos dois lugares porque os dois têm fundo escuro, e sobre
 escuro o disco branco é destaque. No bloco do autor isso vale desde
-22/11/2026, quando o cartão passou de branco a `--bg`; entre 21/11 e
-22/11/2026 o cartão era branco e o disco não aparecia.
+22/11/2026: entre 21/11 e 22/11 ele era um cartão branco dentro da folha do
+artigo, e ali o disco não aparecia. Em 22/11 o autor saiu da folha e virou
+faixa própria, de `--papel-2`, com a mesma caixa da faixa de contato.
 
 Nenhum dos dois pares fora de uso foi apagado: são registro do que esteve
 publicado. O `retrato-claro` foi feito para o `--papel-2` da versão clara do
