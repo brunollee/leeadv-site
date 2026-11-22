@@ -18,12 +18,29 @@ concurrency:
   group: pages
   cancel-in-progress: false
 
+# DOIS JOBS, e não um, desde 22/11/2026. Empacotar e publicar estavam no
+# mesmo job, um passo colado no outro, e a publicação falhava de vez em
+# quando com "No artifacts named github-pages were found for this workflow
+# run" — logo depois de o passo anterior dizer que o artefato subiu.
+#
+# A causa é uma corrida: a lista de artefatos do GitHub leva um instante
+# para ficar consistente, e o deploy-pages consultava antes da hora. Dava
+# para ver nos tempos. Em 21/11/2026 as execuções levaram 17, 18 e 18
+# segundos e passaram; em 22/11/2026, às 04:10 e às 04:14, levaram 13
+# segundos e falharam. Quanto mais rápida a execução, maior a chance.
+#
+# A fronteira entre dois jobs resolve, e é o desenho do modelo oficial do
+# GitHub Pages, que sempre separou build de deploy. O segundo job espera o
+# primeiro terminar por inteiro, e o artefato já está registrado quando ele
+# começa.
+#
+# Efeito colateral bom: re-executar passou a ser seguro. Com um job só,
+# `gh run rerun --failed` refazia o upload e a execução ficava com DOIS
+# artefatos de mesmo nome, o que quebrava de outro jeito. Agora o job que
+# falha é o de publicar, que não empacota nada.
 jobs:
-  publicar:
+  empacotar:
     runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.publicacao.outputs.page_url }}
     steps:
       - name: Obter o repositório
         uses: actions/checkout@v4
@@ -69,6 +86,13 @@ jobs:
         with:
           path: .
 
+  publicar:
+    needs: empacotar
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.publicacao.outputs.page_url }}
+    steps:
       - name: Publicar
         id: publicacao
         uses: actions/deploy-pages@v4
