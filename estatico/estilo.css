@@ -897,16 +897,18 @@ time,
 
 /* O retrato, acima do quadro de dados.
  *
- * Desde 18/11/2026 a página usa o retrato-escuro, já recortado em círculo
- * dentro do próprio arquivo. Desde 21/11/2026 o fundo dentro da imagem é o
- * #0f0f0f desta seção, e não mais o #1f1f1f que aparecia por um tom: o
- * disco some na página e fica só a pessoa. O retrato-branco, de fundo
- * branco, ficaria ali como um disco aceso. Por isso aqui não há cor de
- * fundo nem borda: o círculo é só o recorte.
+ * Desde 22/11/2026 a página usa o retrato-branco, já recortado em círculo
+ * dentro do próprio arquivo: sobre a página escura o disco branco é
+ * destaque, por decisão do titular. Por isso aqui não há cor de fundo nem
+ * borda — o círculo é só o recorte, e o branco vem de dentro da imagem.
  *
- * O fundo da imagem e o fundo desta seção andam juntos. Trocar o --bg do
- * bloco sem refazer a imagem faz o disco reaparecer, e é assim que se
- * percebe, numa revisão futura, se alguém mexeu só num dos dois.
+ * O caminho até aqui, porque ele já foi percorrido duas vezes: disco
+ * branco de 15/11 a 18/11, disco #1f1f1f de 18/11 a 21/11 (um tom acima
+ * do fundo), fundo igual ao da seção em 21/11, e branco de novo em
+ * 22/11. O que o terceiro ensinou: com o disco do tom exato da página
+ * ele some, e some junto a moldura que disfarça o corte circular nos
+ * ombros. Quem for tentar de novo, olhe a foto inteira, e não só a
+ * borda.
  *
  * width e height estão declarados também no HTML, para o navegador reservar
  * o espaço antes de a imagem chegar e a página não dar um salto. */
@@ -1605,23 +1607,95 @@ time,
 .item-artigo h2 { font-size: 1.3rem; margin-bottom: 10px; }
 .item-artigo p { color: var(--tx2); margin: 0 0 6px; }
 
-/* O bloco do autor, ao fim do artigo. Reaproveita o cartão .area e só
- * acrescenta a disposição em duas colunas e o tamanho do retrato. */
-.autor {
-    display: grid;
-    grid-template-columns: 96px 1fr;
-    gap: 24px;
-    align-items: start;
-    margin-top: 56px;
+/* A FAIXA DO AUTOR, ao fim do artigo. Desde 22/11/2026 é bloco próprio,
+ * FORA da folha, com a mesma caixa da faixa de contato logo abaixo: mesma
+ * largura, mesmo papel, mesma borda e mesmo raio. Foi cartão dentro da
+ * folha entre 21/11 e 22/11/2026, primeiro branco e depois escuro; o
+ * pedido do titular foi separar o artigo do autor em dois espaços.
+ *
+ * As duas faixas escuras, esta e a do contato, podem ser vizinhas: a regra
+ * do cabeçalho desta folha fala de faixa CLARA, que é a que ofusca quando
+ * se repete. */
+.autor-faixa {
+    position: relative;
+    background: var(--papel-2);
+    width: calc(100% - 2 * var(--gutter));
+    max-width: var(--larg);
+    margin: 56px auto;
+    padding: 56px 0;
+    border: 1px solid var(--bd);
+    border-radius: var(--raio-bloco);
+    transition: border-color 200ms ease;
 }
 
-.autor h2 { font-size: 1.15rem; }
-.autor p { font-size: .95rem; }
+/* A faixa inteira responde, porque a faixa inteira é clicável: o ::after do
+ * "Ver trajetória" cobre este bloco, então o ponteiro em qualquer ponto
+ * dela já está sobre o link. */
+.autor-faixa:hover,
+.autor-faixa:focus-within { border-color: var(--bd-hover); }
+
+/* Alinhado ao TOPO, e não ao centro. Com duas linhas de qualificação o
+ * texto fica alto, e o retrato centrado na vertical descia para o meio do
+ * parágrafo, longe do nome a que pertence. No topo ele encosta no rótulo e
+ * no nome, que é o que ele ilustra. O botão volta ao centro por conta
+ * própria: é o único item da faixa que não pertence à coluna do texto. */
+.autor-faixa .dentro {
+    display: flex;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 32px;
+}
+
 
 .autor-retrato {
     width: 96px;
     height: 96px;
     border-radius: 50%;
+    flex: none;
+}
+
+/* 320px de base: abaixo disso o texto desce para a linha seguinte em vez
+ * de espremer a qualificação em coluna estreita ao lado do retrato. */
+.autor-texto { flex: 1 1 320px; }
+
+.autor-texto h2 { font-size: var(--t3); margin-bottom: 12px; }
+
+.autor-texto p {
+    color: var(--tx2);
+    font-size: .95rem;
+    margin: 0 0 8px;
+    max-width: 62ch;
+}
+
+.autor-texto p:last-child { margin-bottom: 0; }
+
+/* O LINK QUE COBRE A FAIXA. O ::after se estica sobre o .autor-faixa, que é
+ * o ancestral posicionado, e recebe o clique em qualquer ponto do bloco.
+ *
+ * É um link SÓ. Envolver a faixa inteira numa âncora também funcionaria, e
+ * daria ao leitor de tela um link cujo nome é o retrato, o nome, a
+ * inscrição e a qualificação inteira, lidos de uma vez. Assim o nome do
+ * link é "Ver trajetória", e o foco do teclado para no botão, que é onde se
+ * vê o anel. É a mesma escolha do cartão de artigo: um destino, um link. */
+.autor-ver {
+    flex: none;
+    align-self: center;
+}
+
+.autor-ver::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+}
+
+/* Sobre o --papel-2 da faixa, o hover padrão do botão secundário pinta o
+ * fundo de --papel-2, que é a cor que já está atrás dele: sobraria só o
+ * deslocamento. Aqui o preenchimento se inverte, como na faixa de contato,
+ * e sem cor nova. */
+.autor-ver:hover {
+    background-color: var(--tx);
+    color: var(--bg);
+    border-color: var(--tx);
 }
 
 /* A nota da faixa de contato. Em --tx2 e não em --mut: é prosa, não rótulo,
@@ -1689,23 +1763,13 @@ time,
  * mesmo que a faixa clara do contato já faz. */
 .artigo .folha a:focus-visible { outline-color: var(--inv-tx); }
 
-/* O cartão do autor, dentro da folha: branco puro sobre o branco quebrado,
- * com a borda escura. Sem isto ele entraria como o cartão escuro de .area
- * e abriria um buraco preto no fim do artigo. A elevação ao passar o
- * ponteiro sai junto: o cartão do autor não é clicável, e o .area empresta
- * a ele uma transição que aqui não tem para onde levar. */
-.artigo .folha .area {
-    background: var(--inv-papel);
-    border-color: var(--inv-bd);
-}
-
-.artigo .folha .area:hover,
-.artigo .folha .area:focus-within {
-    transform: none;
-    border-color: var(--inv-bd);
-}
-
-/* O link de volta, no fim do texto. Mesma construção do original, com a
+/* Não há mais regra de .area dentro da folha. O cartão do autor morou aqui
+ * entre 21/11 e 22/11/2026, branco e depois escuro, e saiu da folha em
+ * 22/11: virou a .autor-faixa, bloco próprio, acima nesta folha. A folha
+ * agora guarda só o artigo. Se algum dia entrar um .area aqui dentro, ele
+ * chegará escuro, pela regra geral, e vai precisar de tratamento.
+ *
+ * O link de volta, no fim do texto. Mesma construção do original, com a
  * escala de cor invertida. */
 .artigo .folha .voltar {
     color: var(--inv-tx2);
@@ -1718,7 +1782,13 @@ time,
 }
 
 @media (max-width: 860px) {
-    .autor { grid-template-columns: 1fr; gap: 16px; }
+    /* A faixa do autor encolhe junto com as outras: mesmo respiro de 40px
+     * da seção 6.2.1, e o retrato menor, porque ao lado de duas linhas de
+     * qualificação em coluna única ele dominava a faixa. */
+    .autor-faixa { padding: 40px 0; margin: 40px auto; }
+    .autor-faixa .dentro { gap: 24px; }
+    .autor-faixa .autor-retrato { width: 80px; height: 80px; }
+    .autor-texto h2 { font-size: var(--t2); }
 
     /* O recuo interno da folha encolhe para 20px, o mesmo --gutter da tela
      * pequena: com 44px de cada lado, a linha de texto ficaria estreita

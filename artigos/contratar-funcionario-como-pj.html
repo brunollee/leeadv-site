@@ -180,21 +180,37 @@
       <p>Em seguida, a decisão caso a caso: registrar, ou ajustar a rotina para que a autonomia exista de fato, com prova guardada.</p>
 
       <p>Por último, o que não fazer: migrar para PJ quem hoje está registrado. Esse movimento deixa rastro em folha, em sistema e na memória de todo mundo.</p>
-
-          <div class="area autor">
-        <picture>
-          <source srcset="/estatico/retrato/retrato-branco.avif" type="image/avif">
-          <img src="/estatico/retrato/retrato-branco.webp" alt="Bruno Lee, advogado" class="autor-retrato" width="600" height="600">
-        </picture>
-        <div>
-          <h2>Bruno Lee</h2>
-          <p>Advogado. OAB/SP nº 425.768.</p>
-        </div>
-      </div>
     </article>
 
   </div>
 </main>
+
+<!-- O AUTOR. Faixa própria, fora da folha do artigo, com a mesma caixa da
+     faixa de contato logo abaixo: bloco largo de papel, borda inteira e raio
+     de 24px. Esteve dentro da folha, como cartão, de 21/11 a 22/11/2026.
+
+     A faixa inteira leva à trajetória, mas o link é UM só, o "Ver
+     trajetória": o ::after dele cobre a faixa e recebe o clique. Envolver o
+     bloco todo numa âncora daria ao leitor de tela um link com o retrato, o
+     nome e a qualificação inteira dentro do nome dele.
+
+     A qualificação é a mesma do quadro da trajetória, recombinada em frase.
+     Nada de credencial nova sem conferência. -->
+<section class="autor-faixa">
+  <div class="dentro">
+    <picture>
+      <source srcset="/estatico/retrato/retrato-branco.avif" type="image/avif">
+      <img src="/estatico/retrato/retrato-branco.webp" alt="Bruno Lee, advogado" class="autor-retrato" width="600" height="600">
+    </picture>
+    <div class="autor-texto">
+      <p class="sobrelinha">Quem escreveu</p>
+      <h2>Bruno Lee</h2>
+      <p>Advogado. OAB/SP nº 425.768. Direito pela Universidade Presbiteriana Mackenzie, com pós-graduação em Direito Processual pela Pontifícia Universidade Católica.</p>
+      <p>Atuação em crédito e recebíveis, societário, tributário, trabalhista pelo empregador, contratos, imobiliário, sucessões e marcas.</p>
+    </div>
+    <a href="/#trajetoria" class="botao-borda autor-ver">Ver trajetória</a>
+  </div>
+</section>
 
 <section class="contato" id="contato">
   <div class="dentro">

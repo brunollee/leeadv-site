@@ -190,25 +190,34 @@ arquivo, e não fixado, porque o WebP e o AVIF guardam valores um pouco
 diferentes e precisam chegar no mesmo tom. Atinge 42,2% do disco, e nenhum
 pixel da pessoa.
 
-O efeito colateral foi apresentado e aceito: sem o disco, o corte circular nos
-ombros vira uma borda dura. Quem quiser o disco de volta, o arquivo anterior
-está no histórico do Git.
+O efeito colateral foi apresentado e aceito na hora: sem o disco, o corte
+circular nos ombros vira uma borda dura. **Em 22/11/2026 a decisão foi
+revista**, depois de ver no ar, e a página inicial voltou ao disco branco. O
+`retrato-escuro` ficou com o fundo #0f0f0f e sem uso; não foi revertido para
+o #1f1f1f, porque reverter bytes de imagem sem necessidade só gera ruído no
+histórico. Quem precisar da versão de #1f1f1f, ela está no commit anterior.
 
 Quem for conferir: comparar com a versão anterior no histórico. Os resumos
-antigos, que valiam até 20/11/2026, estão no commit anterior a este.
+antigos, que valiam até 20/11/2026, estão no commit anterior ao de
+21/11/2026.
 
 ### Onde cada par é usado
 
 | Par | Fundo dentro da imagem | Onde |
 |---|---|---|
-| `retrato-escuro` | #0f0f0f, o `--bg` | `index.html`, seção da trajetória |
-| `retrato-branco` | branco puro | bloco do autor dos artigos, sobre o `--inv-papel` do cartão, desde 21/11/2026 |
+| `retrato-branco` | branco puro | `index.html`, seção da trajetória; e o bloco do autor dos artigos. Nos dois, sobre fundo escuro |
+| `retrato-escuro` | #0f0f0f | sem uso em página desde 22/11/2026 |
 | `retrato-claro` | #ececea | sem uso em página |
 
-Os dois pares em uso seguem a mesma regra: o fundo dentro da imagem é o mesmo
-tom da superfície atrás dela, e por isso o disco não aparece. O
-`retrato-claro` foi feito para o `--papel-2` da versão clara do site, que não
-existe mais; não foi apagado, porque é registro do que esteve publicado.
+O mesmo par serve aos dois lugares porque os dois têm fundo escuro, e sobre
+escuro o disco branco é destaque. No bloco do autor isso vale desde
+22/11/2026: entre 21/11 e 22/11 ele era um cartão branco dentro da folha do
+artigo, e ali o disco não aparecia. Em 22/11 o autor saiu da folha e virou
+faixa própria, de `--papel-2`, com a mesma caixa da faixa de contato.
+
+Nenhum dos dois pares fora de uso foi apagado: são registro do que esteve
+publicado. O `retrato-claro` foi feito para o `--papel-2` da versão clara do
+site, que não existe mais.
 
 | Arquivo guardado | Formato | Dimensões | Tamanho | SHA-256 |
 |---|---|---|---|---|
