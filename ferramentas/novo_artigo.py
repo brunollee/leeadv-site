@@ -39,6 +39,7 @@ RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 MODELO = os.path.join(RAIZ, "artigos", "_template.html")
 INDICE = os.path.join(RAIZ, "artigos", "index.html")
 SITEMAP = os.path.join(RAIZ, "sitemap.xml")
+HOME = os.path.join(RAIZ, "index.html")
 PASTA_ARTIGOS = os.path.join(RAIZ, "artigos")
 
 BASE = "https://leeadv.com.br"
@@ -53,7 +54,7 @@ CAMPOS_OBRIGATORIOS = (
     "endereco", "titulo_aba", "descricao", "h1",
     "resumo_indice", "data_publicacao", "data_atualizacao", "fecho",
 )
-CAMPOS_OPCIONAIS = ("leia_tambem",)
+CAMPOS_OPCIONAIS = ("leia_tambem", "ancora_cartao", "resumo_cartao")
 
 ENDERECO_MIN_PALAVRAS = 3
 ENDERECO_MAX_PALAVRAS = 6
@@ -63,6 +64,7 @@ DESCRICAO_MAX = 160
 CORPO_MIN_PALAVRAS = 700
 CORPO_MAX_PALAVRAS = 1200
 QUANTOS_LEIA_TAMBEM = 2
+CARTOES_DA_HOME = 3
 
 # Deteccao de bloco de perguntas e respostas. Heuristica: nomes usados para
 # a secao, e a marcacao de dados estruturados aposentada.
@@ -95,6 +97,8 @@ MARCADORES = (
 
 LIMITE_INICIO = "<!-- #LEIA-TAMBEM:INICIO -->"
 LIMITE_FIM = "<!-- #LEIA-TAMBEM:FIM -->"
+LIMITE_CARTOES_INICIO = "<!-- #CARTOES-HOME:INICIO -->"
+LIMITE_CARTOES_FIM = "<!-- #CARTOES-HOME:FIM -->"
 
 
 class ErroDeEntrada(Exception):
@@ -437,6 +441,119 @@ def entrada_do_sitemap(cabecalho):
         '    <priority>0.8</priority>\n'
         '  </url>' % (PREFIXO, cabecalho["endereco"],
                       cabecalho["data_atualizacao"]))
+
+
+# --------------------------------------------------------------------------
+# Os tres cartoes da home e o bloco "Leia tambem" dos artigos ja publicados.
+#
+# REGRA, decidida em 22/11/2026: a home mostra sempre os CARTOES_DA_HOME mais
+# recentes do indice, e cada artigo mostra no "Leia tambem" os
+# QUANTOS_LEIA_TAMBEM mais recentes do indice, fora ele proprio. Antes disso a
+# home era editada a mao e ficou com os quatro MAIS ANTIGOS, o que ninguem
+# percebeu por quatro publicacoes.
+#
+# As duas funcoes de atualizacao PRESERVAM o que ja existe: um artigo que ja
+# tem cartao mantem a ancora e a frase escritas a mao para ele. So o cartao
+# novo e gerado, e so ele precisa de texto novo. Isso evita que cada
+# publicacao reescreva o texto dos cartoes vizinhos.
+# --------------------------------------------------------------------------
+
+def _primeira_frase(texto):
+    """A primeira frase de um resumo. Ponto seguido de espaco e maiuscula
+    separa frase; ponto de abreviacao (art., nº) nao."""
+    partes = re.split(r"(?<=[.!?])\s+(?=[A-ZÀ-Ý])", texto.strip())
+    return partes[0].strip() if partes else texto.strip()
+
+
+def ancora_padrao(endereco):
+    """A ancora do cartao, quando o cabecalho nao trouxer uma. Primeiro
+    pedaco do endereco, ou os dois primeiros se o primeiro for curto demais
+    para identificar o artigo."""
+    pedacos = endereco.split("-")
+    nome = pedacos[0]
+    if len(nome) < 5 and len(pedacos) > 1:
+        nome = "-".join(pedacos[:2])
+    return "destaque-" + nome
+
+
+def _bloco(html, inicio, fim, oque):
+    if inicio not in html or fim not in html:
+        raise ErroDeEntrada(
+            "Nao achei os marcadores de %s. Esperava %s e %s." % (oque, inicio, fim))
+    i = html.index(inicio) + len(inicio)
+    j = html.index(fim, i)
+    return i, j
+
+
+def cartoes_atuais(html_home):
+    """O que a home ja mostra, por endereco: a ancora e a frase de cada
+    cartao. Serve para preservar o texto escrito a mao."""
+    i, j = _bloco(html_home, LIMITE_CARTOES_INICIO, LIMITE_CARTOES_FIM,
+                  "cartoes da home")
+    achados = re.findall(
+        r'<h3 id="([^"]+)">.*?</h3>\s*<p>(.*?)</p>\s*'
+        r'<a href="(/artigos/[^"]+)"', html_home[i:j], re.S)
+    return {href: {"ancora": anc, "resumo": res}
+            for anc, res, href in achados}
+
+
+def cartao_em_html(item, ancora, resumo):
+    return (
+        '      <li class="cartao-artigo">\n'
+        '        <p class="cartao-artigo-data"><time datetime="%s">%s</time></p>\n'
+        '        <h3 id="%s">%s</h3>\n'
+        '        <p>%s</p>\n'
+        '        <a href="%s" class="voltar" aria-describedby="%s">Ler o artigo</a>\n'
+        '      </li>' % (item["iso"], item["data"], ancora, item["titulo"],
+                         resumo, item["href"], ancora))
+
+
+def atualizar_home(html_home, itens, cabecalho=None):
+    """A home com os cartoes dos `itens` (os mais recentes primeiro).
+
+    Cartao que ja existe conserva ancora e frase. Cartao novo tira a ancora
+    de cabecalho['ancora_cartao'], ou da regra de ancora_padrao, e a frase de
+    cabecalho['resumo_cartao'], ou da primeira frase do resumo do indice.
+    """
+    atuais = cartoes_atuais(html_home)
+    cartoes = []
+    for item in itens[:CARTOES_DA_HOME]:
+        ja = atuais.get(item["href"])
+        if ja:
+            ancora, resumo = ja["ancora"], ja["resumo"]
+        else:
+            endereco = item["href"].split("/")[-1][:-len(".html")]
+            cab = cabecalho or {}
+            ancora = (cab.get("ancora_cartao") or "").strip() or ancora_padrao(endereco)
+            resumo = (cab.get("resumo_cartao") or "").strip() or _primeira_frase(item["resumo"])
+        cartoes.append(cartao_em_html(item, ancora, resumo))
+
+    i, j = _bloco(html_home, LIMITE_CARTOES_INICIO, LIMITE_CARTOES_FIM,
+                  "cartoes da home")
+    dentro = html_home[i:j]
+    k = dentro.index('<ul class="grade-artigos">')
+    m = dentro.rindex("</ul>")
+    novo = (dentro[:k] + '<ul class="grade-artigos">\n'
+            + "\n".join(cartoes) + "\n    " + dentro[m:])
+    return html_home[:i] + novo + html_home[j:]
+
+
+def atualizar_leia_tambem(html_artigo, itens):
+    """O artigo com o bloco "Leia tambem" refeito a partir de `itens`."""
+    i, j = _bloco(html_artigo, LIMITE_INICIO, LIMITE_FIM, "Leia tambem")
+    dentro = html_artigo[i:j]
+    k = dentro.index('<ul class="lista-artigos">')
+    m = dentro.index("</ul>", k)
+    novo = (dentro[:k] + '<ul class="lista-artigos">\n'
+            + itens_em_html(itens) + "\n    " + dentro[m:])
+    return html_artigo[:i] + novo + html_artigo[j:]
+
+
+def leia_tambem_de_cada_artigo(itens):
+    """Para cada artigo do indice, os QUANTOS_LEIA_TAMBEM mais recentes fora
+    ele proprio. Devolve dicionario de endereco para lista de itens."""
+    return {i["href"]: [o for o in itens if o["href"] != i["href"]][:QUANTOS_LEIA_TAMBEM]
+            for i in itens}
 
 
 # --------------------------------------------------------------------------
