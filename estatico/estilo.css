@@ -897,16 +897,18 @@ time,
 
 /* O retrato, acima do quadro de dados.
  *
- * Desde 18/11/2026 a página usa o retrato-escuro, já recortado em círculo
- * dentro do próprio arquivo. Desde 21/11/2026 o fundo dentro da imagem é o
- * #0f0f0f desta seção, e não mais o #1f1f1f que aparecia por um tom: o
- * disco some na página e fica só a pessoa. O retrato-branco, de fundo
- * branco, ficaria ali como um disco aceso. Por isso aqui não há cor de
- * fundo nem borda: o círculo é só o recorte.
+ * Desde 22/11/2026 a página usa o retrato-branco, já recortado em círculo
+ * dentro do próprio arquivo: sobre a página escura o disco branco é
+ * destaque, por decisão do titular. Por isso aqui não há cor de fundo nem
+ * borda — o círculo é só o recorte, e o branco vem de dentro da imagem.
  *
- * O fundo da imagem e o fundo desta seção andam juntos. Trocar o --bg do
- * bloco sem refazer a imagem faz o disco reaparecer, e é assim que se
- * percebe, numa revisão futura, se alguém mexeu só num dos dois.
+ * O caminho até aqui, porque ele já foi percorrido duas vezes: disco
+ * branco de 15/11 a 18/11, disco #1f1f1f de 18/11 a 21/11 (um tom acima
+ * do fundo), fundo igual ao da seção em 21/11, e branco de novo em
+ * 22/11. O que o terceiro ensinou: com o disco do tom exato da página
+ * ele some, e some junto a moldura que disfarça o corte circular nos
+ * ombros. Quem for tentar de novo, olhe a foto inteira, e não só a
+ * borda.
  *
  * width e height estão declarados também no HTML, para o navegador reservar
  * o espaço antes de a imagem chegar e a página não dar um salto. */
