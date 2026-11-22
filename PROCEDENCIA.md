@@ -205,14 +205,14 @@ antigos, que valiam até 20/11/2026, estão no commit anterior ao de
 
 | Par | Fundo dentro da imagem | Onde |
 |---|---|---|
-| `retrato-branco` | branco puro | `index.html`, seção da trajetória, desde 22/11/2026; e o bloco do autor dos artigos, sobre o `--inv-papel` do cartão, desde 21/11/2026 |
+| `retrato-branco` | branco puro | `index.html`, seção da trajetória; e o bloco do autor dos artigos. Nos dois, sobre fundo escuro |
 | `retrato-escuro` | #0f0f0f | sem uso em página desde 22/11/2026 |
 | `retrato-claro` | #ececea | sem uso em página |
 
-O mesmo par serve aos dois lugares, por dois motivos opostos: no cartão do
-autor o branco da imagem é o branco do cartão, e o disco não aparece; na
-página inicial o branco sobre o escuro é destaque, e o disco aparece de
-propósito.
+O mesmo par serve aos dois lugares porque os dois têm fundo escuro, e sobre
+escuro o disco branco é destaque. No bloco do autor isso vale desde
+22/11/2026, quando o cartão passou de branco a `--bg`; entre 21/11 e
+22/11/2026 o cartão era branco e o disco não aparecia.
 
 Nenhum dos dois pares fora de uso foi apagado: são registro do que esteve
 publicado. O `retrato-claro` foi feito para o `--papel-2` da versão clara do

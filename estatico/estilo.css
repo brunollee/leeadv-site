@@ -1691,21 +1691,38 @@ time,
  * mesmo que a faixa clara do contato já faz. */
 .artigo .folha a:focus-visible { outline-color: var(--inv-tx); }
 
-/* O cartão do autor, dentro da folha: branco puro sobre o branco quebrado,
- * com a borda escura. Sem isto ele entraria como o cartão escuro de .area
- * e abriria um buraco preto no fim do artigo. A elevação ao passar o
- * ponteiro sai junto: o cartão do autor não é clicável, e o .area empresta
- * a ele uma transição que aqui não tem para onde levar. */
+/* O cartão do autor, dentro da folha: ESCURO, por decisão do titular em
+ * 22/11/2026, para destacar quem assina ao fim do artigo. Foi branco puro
+ * sobre o branco quebrado entre 21/11 e 22/11, e ali ele se confundia com
+ * a folha justamente onde devia se afirmar.
+ *
+ * O fundo é o --bg, e não o --papel-2: dentro de uma folha clara o que
+ * destaca é a distância, e o --papel-2 existe para separar superfícies que
+ * já estão no escuro. O retrato continua o de fundo branco, pela mesma
+ * regra da página inicial: sobre escuro, o disco branco é o destaque.
+ *
+ * Sem borda. Entre o #0f0f0f do cartão e o #f7f6f3 da folha a diferença já
+ * é a maior da folha inteira, e um filete ali não teria o que marcar.
+ *
+ * A elevação ao passar o ponteiro sai: o cartão do autor não é clicável, e
+ * o .area empresta a ele uma transição que aqui não tem para onde levar. */
 .artigo .folha .area {
-    background: var(--inv-papel);
-    border-color: var(--inv-bd);
+    background: var(--bg);
+    border-color: transparent;
 }
 
 .artigo .folha .area:hover,
 .artigo .folha .area:focus-within {
     transform: none;
-    border-color: var(--inv-bd);
+    border-color: transparent;
 }
+
+/* Dentro do cartão escuro a escala de cor volta à do resto do site, e
+ * vence as regras da folha pela especificidade do seletor. Contraste
+ * sobre o --bg: 17,12:1 no nome, 9,24:1 na linha da inscrição. */
+.artigo .folha .area h2 { color: var(--tx); }
+.artigo .folha .area p { color: var(--tx2); }
+.artigo .folha .area a:focus-visible { outline-color: var(--tx); }
 
 /* O link de volta, no fim do texto. Mesma construção do original, com a
  * escala de cor invertida. */
