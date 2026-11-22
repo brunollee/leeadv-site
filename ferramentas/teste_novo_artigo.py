@@ -433,6 +433,68 @@ class TesteLeiaTambemDeTodos(unittest.TestCase):
         for href, escolhidos in na.leia_tambem_de_cada_artigo(itens).items():
             self.assertNotIn(href, [e["href"] for e in escolhidos])
 
+SITEMAP_FALSO = """<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://leeadv.com.br/</loc>
+    <lastmod>2026-11-16</lastmod>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://leeadv.com.br/artigos/</loc>
+    <lastmod>2026-11-16</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://leeadv.com.br/artigos/velho.html</loc>
+    <lastmod>2026-11-16</lastmod>
+    <priority>0.8</priority>
+  </url>
+</urlset>"""
+
+
+class TesteLastmodDoSitemap(unittest.TestCase):
+    def test_troca_so_o_lastmod_pedido(self):
+        saida = na.atualizar_lastmod(SITEMAP_FALSO, "https://leeadv.com.br/",
+                                     "2026-11-22")
+        self.assertIn("<loc>https://leeadv.com.br/</loc>\n    <lastmod>2026-11-22", saida)
+        self.assertIn("<loc>https://leeadv.com.br/artigos/velho.html</loc>\n    <lastmod>2026-11-16", saida)
+
+    def test_endereco_que_nao_esta_no_sitemap_reprova(self):
+        with self.assertRaises(na.ErroDeEntrada):
+            na.atualizar_lastmod(SITEMAP_FALSO,
+                                 "https://leeadv.com.br/artigos/nao-existe.html",
+                                 "2026-11-22")
+
+    def test_a_home_nao_e_confundida_com_o_indice(self):
+        """A home termina em barra, e o indice tambem. Trocar uma nao pode
+        trocar a outra: foi esse o erro de 22/11/2026."""
+        saida = na.atualizar_lastmod(SITEMAP_FALSO, "https://leeadv.com.br/",
+                                     "2026-11-22")
+        self.assertIn("<loc>https://leeadv.com.br/artigos/</loc>\n    <lastmod>2026-11-16", saida)
+
+    def test_publicar_artigo_mexe_em_tres_enderecos(self):
+        pares = na.lastmod_da_publicacao(cab(endereco="novo",
+                                             data_atualizacao="2026-12-01"))
+        self.assertEqual(set(pares), {"https://leeadv.com.br/artigos/novo.html",
+                                      "https://leeadv.com.br/artigos/",
+                                      "https://leeadv.com.br/"})
+        self.assertEqual(set(pares.values()), {"2026-12-01"})
+
+    def test_sincronizar_aplica_todos_de_uma_vez(self):
+        saida = na.sincronizar_lastmod(SITEMAP_FALSO, {
+            "https://leeadv.com.br/": "2026-11-22",
+            "https://leeadv.com.br/artigos/": "2026-11-22",
+            "https://leeadv.com.br/artigos/velho.html": "2026-11-20"})
+        self.assertEqual(re.findall(r"<lastmod>([\d-]+)</lastmod>", saida),
+                         ["2026-11-22", "2026-11-22", "2026-11-20"])
+
+    def test_um_endereco_errado_no_meio_nao_grava_nada_pela_metade(self):
+        with self.assertRaises(na.ErroDeEntrada):
+            na.sincronizar_lastmod(SITEMAP_FALSO, {
+                "https://leeadv.com.br/": "2026-11-22",
+                "https://leeadv.com.br/artigos/fantasma.html": "2026-11-22"})
+
 class TesteEtapas(unittest.TestCase):
     def test_preparar_e_conferir_ainda_nao_fazem_nada(self):
         for etapa in ("preparar", "conferir"):
