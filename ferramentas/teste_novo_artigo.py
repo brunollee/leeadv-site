@@ -351,6 +351,88 @@ class TesteGeracao(unittest.TestCase):
             self.assertNotIn("nome-do-artigo", i["href"])
 
 
+HOME_FALSA = """<section>
+    <!-- #CARTOES-HOME:INICIO -->
+    <ul class="grade-artigos">
+      <li class="cartao-artigo">
+        <p class="cartao-artigo-data"><time datetime="2026-11-20">20 de novembro de 2026</time></p>
+        <h3 id="destaque-apelido">Titulo velho</h3>
+        <p>Frase escrita a mao para este cartao.</p>
+        <a href="/artigos/artigo-velho.html" class="voltar" aria-describedby="destaque-apelido">Ler o artigo</a>
+      </li>
+    </ul>
+    <!-- #CARTOES-HOME:FIM -->
+</section>"""
+
+
+def item(endereco, iso, titulo="Titulo", resumo="Primeira frase. Segunda frase."):
+    return {"href": "/artigos/%s.html" % endereco, "titulo": titulo,
+            "resumo": resumo, "iso": iso,
+            "data": na.data_por_extenso(iso)}
+
+
+class TesteCartoesDaHome(unittest.TestCase):
+    def test_mostra_so_os_tres_mais_recentes_na_ordem_do_indice(self):
+        itens = [item("a", "2026-11-22"), item("b", "2026-11-21"),
+                 item("c", "2026-11-20"), item("d", "2026-11-19")]
+        saida = na.atualizar_home(HOME_FALSA, itens)
+        achados = re.findall(r'href="(/artigos/[^"]+)"', saida)
+        self.assertEqual(achados, ["/artigos/a.html", "/artigos/b.html",
+                                   "/artigos/c.html"])
+
+    def test_cartao_que_ja_existe_conserva_ancora_e_frase(self):
+        itens = [item("novo", "2026-11-22"), item("artigo-velho", "2026-11-20")]
+        saida = na.atualizar_home(HOME_FALSA, itens)
+        self.assertIn('id="destaque-apelido"', saida)
+        self.assertIn("Frase escrita a mao para este cartao.", saida)
+
+    def test_cartao_novo_sem_cabecalho_usa_a_primeira_frase_do_resumo(self):
+        itens = [item("novo-artigo", "2026-11-22")]
+        saida = na.atualizar_home(HOME_FALSA, itens)
+        self.assertIn("<p>Primeira frase.</p>", saida)
+        self.assertNotIn("Segunda frase.", saida)
+
+    def test_cabecalho_manda_na_ancora_e_na_frase_do_cartao_novo(self):
+        itens = [item("novo-artigo", "2026-11-22")]
+        saida = na.atualizar_home(
+            HOME_FALSA, itens,
+            {"ancora_cartao": "destaque-escolhido", "resumo_cartao": "Frase do cabecalho."})
+        self.assertIn('id="destaque-escolhido"', saida)
+        self.assertIn("<p>Frase do cabecalho.</p>", saida)
+
+    def test_ancora_padrao_junta_dois_pedacos_quando_o_primeiro_e_curto(self):
+        self.assertEqual(na.ancora_padrao("fisco-pode-fechar"), "destaque-fisco")
+        self.assertEqual(na.ancora_padrao("nota-fiscal-nao-e-titulo"),
+                         "destaque-nota-fiscal")
+
+    def test_aplicar_duas_vezes_nao_muda_nada_na_segunda(self):
+        itens = [item("a", "2026-11-22"), item("artigo-velho", "2026-11-20")]
+        uma = na.atualizar_home(HOME_FALSA, itens)
+        duas = na.atualizar_home(uma, itens)
+        self.assertEqual(uma, duas)
+
+    def test_home_sem_marcador_reprova_em_vez_de_adivinhar(self):
+        with self.assertRaises(na.ErroDeEntrada):
+            na.atualizar_home("<section><ul></ul></section>", [item("a", "2026-11-22")])
+
+
+class TesteLeiaTambemDeTodos(unittest.TestCase):
+    def test_cada_artigo_recebe_os_dois_mais_recentes_fora_ele_proprio(self):
+        itens = [item("a", "2026-11-22"), item("b", "2026-11-21"),
+                 item("c", "2026-11-20")]
+        mapa = na.leia_tambem_de_cada_artigo(itens)
+        self.assertEqual([i["href"] for i in mapa["/artigos/a.html"]],
+                         ["/artigos/b.html", "/artigos/c.html"])
+        self.assertEqual([i["href"] for i in mapa["/artigos/b.html"]],
+                         ["/artigos/a.html", "/artigos/c.html"])
+        self.assertEqual([i["href"] for i in mapa["/artigos/c.html"]],
+                         ["/artigos/a.html", "/artigos/b.html"])
+
+    def test_nenhum_artigo_aponta_para_si_mesmo(self):
+        itens = [item(x, "2026-11-2%d" % i) for i, x in enumerate("abcd", 1)]
+        for href, escolhidos in na.leia_tambem_de_cada_artigo(itens).items():
+            self.assertNotIn(href, [e["href"] for e in escolhidos])
+
 class TesteEtapas(unittest.TestCase):
     def test_preparar_e_conferir_ainda_nao_fazem_nada(self):
         for etapa in ("preparar", "conferir"):
