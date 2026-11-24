@@ -1818,24 +1818,73 @@ time,
  * de WhatsApp: linha do tempo de rolagem em CSS.
  */
 
-/* A abertura, no carregamento. Quatro elementos subindo 12px em escada de
- * 80ms, com o ultimo terminando em 640ms.
+/* A abertura, no carregamento. Quatro elementos subindo 18px em escada de
+ * 280ms, com o ultimo terminando em 2.640ms.
+ *
+ * MAIS LENTA DESDE 24/11/2026, por decisao do titular: estava quase
+ * imperceptivel. Eram 400ms de duracao, escada de 80ms e 12px de percurso,
+ * terminando em 640ms. Tres coisas mudaram juntas, e e a soma delas que se
+ * percebe:
+ *
+ *   duracao  400ms -> 1800ms   da tempo de o olho acompanhar
+ *   escada    80ms ->  280ms   separa os quatro degraus
+ *   percurso   12px ->   18px  movimento curto demais nao se ve, por mais
+ *                              devagar que seja
+ *
+ * Os tempos subiram em tres passos no mesmo dia, com o titular olhando a
+ * previa: 720ms/110ms, depois 900ms/140ms, e por fim o dobro deste ultimo,
+ * 1800ms/280ms, que foi o pedido dele em palavras. O percurso ficou nos
+ * 18px nas tres vezes: o pedido era de ritmo, nao de amplitude.
+ *
+ * ESTA DURACAO E DELIBERADAMENTE LONGA, e foi escolhida sabendo do custo.
+ * Nao e descuido nem numero de rascunho: nao reduzir sem nova decisao do
+ * titular. Dois efeitos foram apresentados a ele e aceitos:
+ *
+ *   1. A abertura termina de se assentar depois de o visitante ja estar
+ *      lendo. O texto esta legivel bem antes disso, pela curva, mas o
+ *      movimento ainda corre por baixo da leitura.
+ *   2. O custo de LCP abaixo, que subiu junto.
+ *
+ * A curva deixou de ser `ease-out` e passou a ser uma desaceleracao longa,
+ * e e ela que torna 1800ms suportavel. Com `ease-out` o movimento ficaria
+ * lento por igual, que e o jeito de parecer arrastado em vez de fluido.
+ * Nesta, o elemento sai depressa e vai se assentando: aos 30% do tempo ja
+ * percorreu cerca de 80% do caminho, e o resto e so o pouso. E por isso
+ * que o texto fica legivel na primeira meia duracao, embora o movimento
+ * leve 1800ms. Quem for mexer na duracao e na escada, mexa; NAO troque a
+ * curva por uma linear ou `ease`, ou o arrasto aparece de uma vez.
+ * Continua sem ultrapassagem, ao contrario da --curva-botao (1.2), que
+ * serve a um botao sob o ponteiro e nao a um texto que o leitor esta
+ * comecando a ler.
  *
  * O selo NAO entra aqui. A opacidade de 0.08 dele foi escolhida pelo titular
  * olhando a previa, com nota de nao mexer sem nova decisao, e animar a
  * opacidade seria mexer nela.
  *
- * CUSTO CONHECIDO: o h1 e provavelmente o elemento de maior pintura da tela
- * (LCP), e um elemento com opacidade zero nao conta como pintado. Com 80ms
- * de atraso e 400ms de duracao, o LCP medido atrasa cerca de meio segundo.
- * Decidido assim em 21/11/2026. Para desfazer so este ponto, tire o
- * `.abertura h1` da lista: o resto da escada continua valendo.
+ * CUSTO CONHECIDO, e ele CRESCEU com esta mudanca: o h1 e provavelmente o
+ * elemento de maior pintura da tela (LCP), e um elemento com opacidade zero
+ * nao conta como pintado. Com 80ms de atraso e 400ms de duracao o LCP medido
+ * atrasava cerca de meio segundo; com 280ms e 1800ms o h1 so se completa aos
+ * 2.080ms.
  *
- * A curva e `ease-out`, e nao a --curva-botao: aquela tem ultrapassagem
- * (1.2), que serve a um botao sob o ponteiro e nao a um texto que o leitor
- * esta comecando a ler. */
+ * Esses 2.080ms sao CONTA, e nao medicao: 280ms de atraso mais 1800ms de
+ * duracao, contados do primeiro quadro. A medicao de verdade some isso ao
+ * tempo de rede e de renderizacao, entao o valor real de campo e maior.
+ * O limite que o Google trata como bom e 2,5s, o que deixa pouca folga em
+ * rede lenta. O titular foi avisado disso em 24/11/2026 e manteve a
+ * decisao. Quem quiser o numero de campo, rode o PageSpeed Insights no
+ * endereco publico: aqui nao da para medir com a previa em segundo plano.
+ *
+ * O atraso continua sendo de MEDICAO, e nao de leitura: o texto comeca a
+ * aparecer nos primeiros quadros e, pela curva, esta quase opaco na
+ * primeira metade. Quem olhar so o relatorio de desempenho vera um numero
+ * pior do que a experiencia real.
+ *
+ * Para desfazer so este ponto, sem tocar no resto: tire o `.abertura h1`
+ * da lista de seletores. A escada continua valendo para os outros tres, e
+ * o LCP volta ao que seria sem animacao nenhuma. */
 @keyframes entrar-abertura {
-    from { opacity: 0; transform: translateY(12px); }
+    from { opacity: 0; transform: translateY(18px); }
     to   { opacity: 1; transform: none; }
 }
 
@@ -1843,13 +1892,13 @@ time,
 .abertura h1,
 .abertura .apoio,
 .abertura .botoes {
-    animation: entrar-abertura 400ms ease-out backwards;
+    animation: entrar-abertura 1800ms cubic-bezier(.16, 1, .3, 1) backwards;
 }
 
 .abertura .sobrelinha { animation-delay: 0ms; }
-.abertura h1          { animation-delay: 80ms; }
-.abertura .apoio      { animation-delay: 160ms; }
-.abertura .botoes     { animation-delay: 240ms; }
+.abertura h1          { animation-delay: 280ms; }
+.abertura .apoio      { animation-delay: 560ms; }
+.abertura .botoes     { animation-delay: 840ms; }
 
 /* A passagem de tema: cada secao entra quando cruza a borda de baixo da
  * tela, o cabecalho um instante antes do corpo.
