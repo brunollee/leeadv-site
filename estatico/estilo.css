@@ -280,9 +280,24 @@
     --larg: 1080px;
     --gutter: 32px;
 
-    /* Formas e movimento, seção 6.2.1. */
-    --raio-cartao: 16px;
-    --raio-bloco: 24px;
+    /* Formas e movimento, seção 6.2.1.
+     *
+     * Os dois raios subiram 1,5× em 25/11/2026 — cartão de 16 para 24px,
+     * bloco de 24 para 36px —, porque o site lia como quadradão. A razão
+     * entre eles continua a mesma de antes, 2 para 3: o cartão é o passo
+     * curto, o bloco largo é o passo longo, e quem lê a página de cima a
+     * baixo vê duas formas, não cinco.
+     *
+     * Toda esquina do site sai destes três números. Mexer aqui muda cartão,
+     * bloco largo, folha do artigo, faixa do autor, faixa de contato e
+     * recorte de uma vez — é de propósito, e é por isso que nenhum raio
+     * desta folha é escrito em número fora daqui (as exceções são as duas
+     * que não são raio de caixa: o 50% do retrato e do botão flutuante, e o
+     * anel de foco). As faixas que vão de ponta a ponta da tela, .areas e
+     * .artigos-destaque, não entram: raio em faixa sangrada arredondaria
+     * canto que não existe. */
+    --raio-cartao: 24px;
+    --raio-bloco: 36px;
     --raio-pilula: 999px;
     --transicao: 240ms;
     --curva-botao: cubic-bezier(.34, 1.2, .64, 1);
@@ -354,12 +369,17 @@ a {
 /* O anel de foco: 2px de traço e 2px de folga, desde 20/11/2026. Em fundo
  * escuro é branco-gelo (--tx), 17,12:1 sobre o --bg; nas faixas claras ele
  * troca para --inv-tx, 17,05:1 sobre o --inv-fundo (ver .inicio .contato).
- * Não remover: quem navega por teclado depende dele para saber onde está. */
+ * Não remover: quem navega por teclado depende dele para saber onde está.
+ *
+ * O raio é 6px desde 25/11/2026, e era 4px: acompanha os raios que subiram
+ * no mesmo dia. É número escrito, e não token, porque não é raio de caixa —
+ * é o canto do anel em volta de um link de texto, que não tem caixa
+ * nenhuma. Nos botões a regra da pílula vence esta; ver logo abaixo. */
 a:focus-visible,
 .menu-estado:focus-visible + .menu-botao {
     outline: 2px solid var(--tx);
     outline-offset: 2px;
-    border-radius: 4px;
+    border-radius: 6px;
 }
 
 img { display: block; max-width: 100%; }
@@ -616,7 +636,7 @@ time,
 .botao-zap:hover { transform: translateY(-3px); }
 
 /* O botão continua pílula sob o foco do teclado. A regra geral de foco põe
- * border-radius: 4px no link focado, e ela vence a do botão por
+ * border-radius: 6px no link focado, e ela vence a do botão por
  * especificidade: até 20/11/2026 a pílula virava retângulo ao receber foco,
  * e o anel, que segue o contorno, também. */
 .botao:focus-visible,
@@ -811,8 +831,8 @@ time,
 /* -- trajetória ------------------------------------------------------------ */
 
 /* Os três blocos largos — trajetória, recorte e contato — compartilham a
- * mesma caixa: borda inteira e raio de 24px. A trajetória e o contato são de
- * papel; o recorte é o bloco invertido.
+ * mesma caixa: borda inteira e o --raio-bloco, 36px desde 25/11/2026. A
+ * trajetória e o contato são de papel; o recorte é o bloco invertido.
  *
  * A largura é `calc(100% - 2 * gutter)` com teto em `--larg` e margens
  * automáticas, e não `margin: 0 var(--gutter)`. Com a margem fixa, numa tela
